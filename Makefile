@@ -54,13 +54,7 @@ test: .PHONY # test
 release: # release
 	${MAKE}	compile
 	${MAKE}	test
-	svn stat       .       >.obj/svn-stat.txt
-	svn info       .       >.obj/svn-info.txt
-	svn ls ${SVNROOT}/tags >.obj/releases.txt
-	./helpers/checkrelease .obj/svn-stat.txt .obj/releases.txt README
 	$(MAKE) dist
-	svn cp ${SVNROOT}/trunk ${SVNROOT}/tags/$(shell bin/ssprep --version) "-mRelease $(shell bin/ssprep --version)"
-	$(MAKE) upload
 
 regresion: .PHONY  # IGNORE
 	${MAKE}	-C regresion regresion
@@ -69,11 +63,15 @@ clean:  # IGNORE
 	rm -rf bin .obj
 	${MAKE} -C regresion $@
 	${MAKE} -C tests $@
+
+TARGET=ssprep-$(shell bin/ssprep --version)
+
 dist:
-	${RM} ssprep-$(shell bin/ssprep --version) -f
-	svn export . ssprep-$(shell bin/ssprep --version)
-	tar -czf     ssprep-$(shell bin/ssprep --version).tgz ssprep-$(shell bin/ssprep --version)
-	${RM} ssprep-$(shell bin/ssprep --version)
+	${RM} -rf  ${TARGET}
+	git clone  ${CURDIR} ${TARGET}
+	rm -rf ${TARGET}/.git
+	tar -czf   ${TARGET}.tgz ${TARGET} 
+	#${RM} ${TARGET}
 
 rebuild:
 	${MAKE} clean
@@ -81,32 +79,12 @@ rebuild:
 	${MAKE} test
 
 .PHONY: # IGNORE
-
-upload:
-	echo mkdir  /home/frs/project/s/ss/ssprep/ssprep/$(shell bin/ssprep --version) >cmd
-	echo cd /home/frs/project/s/ss/ssprep/ssprep/$(shell bin/ssprep --version) >>cmd
-	echo put ssprep-$(shell bin/ssprep --version).tgz  >>cmd
-	echo put README README.txt >>cmd
-	echo exit                  >>cmd
-	sftp ${SourceForgeUser},ssprep@frs.sourceforge.net <cmd
-	rm cmd
-
-
-rpm:
-	echo %_topdir ${CURDIR}/RPMbuild >.rpmmacros
-	mkdir -p ${CURDIR}/RPMbuild/{BUILD,RPMS,S{OURCE,PEC,RPM}S}
-	rpmbuild -tb ssprep-$(shell bin/ssprep --version).tgz
-
-
-
-Makefile.config:
+Makefile.config: # IGNOREs
 	echo CP=cp -f >$@
 	echo RM=rm -rf >>$@
 	echo TAR=tar >>$@
-	echo GPRBUILD=gnatmake -p >>$@
+	echo GPRBUILD=gptbuild -p >>$@
 	echo PREFIX=$(dir $(shell which gnatls)).. >>$@
-	echo SVNROOT=https://ssprep.svn.sourceforge.net/svnroot/ssprep >>$@
-	echo SourceForgeUser=sombody >>$@
 
 
 
