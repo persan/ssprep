@@ -1,0 +1,21 @@
+
+GNATLS Pro 18.2 (20180529-64)
+Copyright (C) 1997-2018, Free Software Foundation, Inc.
+
+Source Search Path:
+<Current_Directory>
+/usr/gnat/lib/gcc/x86_64-pc-linux-gnu/6.4.1/rts-native/adainclude
+
+
+Object Search Path:
+<Current_Directory>
+/usr/gnat/lib/gcc/x86_64-pc-linux-gnu/6.4.1/rts-native/adalib
+
+
+Project Search Path:
+<Current_Directory>
+/home/stprsa/Desktop/ssprep/regresion/0003_BuildOrderError
+/usr/gnat/x86_64-pc-linux-gnu/lib/gnat
+/usr/gnat/x86_64-pc-linux-gnu/share/gpr
+/usr/gnat/share/gpr
+/usr/gnat/lib/gnat

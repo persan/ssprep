@@ -12,4 +12,14 @@ b__*
 *.pyc
 Makefile.config
 output
-
+.outputs
+messages.txt
+config.py
+checkrelease
+deps2symbs
+rlimit
+ssfetch
+ssprep
+getbuildorder
+report-keywords
+testsuite.duration*
