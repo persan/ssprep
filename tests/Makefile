@@ -17,7 +17,7 @@ test:
 ifeq ("${MAKELEVEL}","0")
 	${MAKE}	-C .. ${@}
 else
-	./bin/ssprep-tests-testharnesses-test_all > test-results.xml
+	./bin/ssprep-tests-testharnesses-test_all 2>&1 |  tee test-results.xml
 endif
 
 release: # release

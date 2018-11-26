@@ -25,3 +25,13 @@ report-keywords
 testsuite.duration*
 gnatinspect.db*
 *.cgpr
+/regresion/0004_BuildOrderError/output.txt
+/regresion/0005_BuildOrderError/output.txt
+/regresion/0006_ExecutableProjectWidthAll/make.res
+/regresion/0006_ExecutableProjectWidthAllAddons/make.res
+/regresion/0007_ssfetch_simple/.ssprep/ssfetch-file.conf
+/regresion/testsuite.diff
+/regresion/testsuite.res
+/tests/bin/ssprep-tests-testharnesses-test_all
+/tests/symb.xml
+/tests/test-results.xml
