@@ -1,7 +1,6 @@
 with GNAT.Directory_Operations;
 with GNAT.OS_Lib;
 package body Ssprep.Savepoints is
-   use GNAT.Directory_Operations;
    use GNAT.Strings;
    ----------------
    -- Initialize --

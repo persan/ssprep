@@ -61,6 +61,12 @@ package body Ssprep.Translators is
                   Ada.Strings.Maps.To_Mapping (".ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ",
                                                "_abcdefghijklmnopqrstuvwxyzåäö");
 
+   Ada2File3  : constant Ada.Strings.Maps.Character_Mapping :=
+                  Ada.Strings.Maps.To_Mapping (".-ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ",
+                                               "__abcdefghijklmnopqrstuvwxyzåäö");
+   Name2File3  : constant Ada.Strings.Maps.Character_Mapping :=
+                  Ada.Strings.Maps.To_Mapping (".-",
+                                               "__");
 
    function Is_Windows return Boolean is
    begin
@@ -513,6 +519,12 @@ package body Ssprep.Translators is
             Templates_Parser.Insert
               (Set  => This,
                Item => Templates_Parser.Assoc (LC_Name & "_file2",  Translate (Value, Ada2File2)));
+            Templates_Parser.Insert
+              (Set  => This,
+               Item => Templates_Parser.Assoc (LC_Name & "_file3",  Translate (Value, Ada2File3)));
+            Templates_Parser.Insert
+              (Set  => This,
+               Item => Templates_Parser.Assoc (LC_Name & "_name",  Translate (Value, Name2File3)));
             Templates_Parser.Insert
               (Set  => This,
                Item => Templates_Parser.Assoc ("lc_" & LC_Name, Translate (Value, Lc)));

@@ -4,8 +4,8 @@ package Ssprep.Savepoints is
 
 
 
-   type Directory_Saver is tagged limited private;
-   pragma Unreferenced_Objects (Directory_Saver);
+   type Directory_Saver is tagged limited private
+     with Unreferenced_Objects;
    --  Saves the current directory and restores it when the
    --  object goes out of scope.
 

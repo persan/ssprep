@@ -84,7 +84,9 @@ procedure Ssprep.Main is
          "    -DSymbol=Value           Define a symbol value and coresponding support symbols" & LF &
          "                              {Symbol}_file the value with '.' replaced with '-' and in lower case" & LF &
          "                              {Symbol}_dir the value with '.' replaced with '-'." & LF &
-         "                              {Symbol}_file2 the value with '.' replaced with '_'." & LF &
+         "                              {Symbol}_file2 the value in lowercase with '.' replaced with '_'." & LF &
+         "                              {Symbol}_file3 the value in lowercase with '.' and '-' replaced with '_' ." & LF &
+         "                              {Symbol}_name t he value  with '.' and '-' replaced with '_' ." & LF &
          "                              lc_{Symbol} the value in lower case." & LF &
          "    -dSymbol=Value           Define a symbol value without filename." & LF &
          "                              If the value is enclosed in parantheses then" & LF &
@@ -458,4 +460,3 @@ exception
       Put_Line (GNAT.Traceback.Symbolic.Symbolic_Traceback (E));
       Ada.Command_Line.Set_Exit_Status (Ada.Command_Line.Failure);
 end Ssprep.Main;
-
