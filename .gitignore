@@ -23,3 +23,5 @@ ssprep
 getbuildorder
 report-keywords
 testsuite.duration*
+gnatinspect.db*
+*.cgpr
