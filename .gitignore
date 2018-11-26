@@ -1,0 +1,15 @@
+*.ali
+*.ci
+*.o
+*.so
+*.d
+*.stderr
+*.stdout
+*.bexch
+*.su
+*.cswi
+b__*
+*.pyc
+Makefile.config
+output
+
