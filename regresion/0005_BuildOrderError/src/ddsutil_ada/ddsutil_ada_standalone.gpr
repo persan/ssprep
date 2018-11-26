@@ -1,0 +1,122 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB AB
+--=============================================================================
+--    Creation Information:
+--          This file was generated
+--          By User       : stjwyu
+--          Creation Date : 2009-06-08
+--
+--
+--
+--=============================================================================
+with "dds.gpr";
+with "dds-libnddsada.gpr";
+with "com.saabgroup/com-saabgroup.gpr";
+project ddsutil_ada is
+   Name := "ddsutil_ada";
+
+   type Boolean is ("True","False");
+   Is_Standalone : Boolean := "True";
+
+   for Source_Dirs use ("private",
+                        "shared",
+                        "shared/qos");
+
+   case Is_Standalone is
+      when "True" =>
+         for Source_Dirs use project'Source_Dirs & ("shared/rootNames");
+      when "False" =>
+         null;
+   end case;
+
+   for Languages use ("Ada");
+   type Build_Kind is ("release","debug");
+   Build : Build_Kind := external ("BUILD","release");
+   -- ==========================================================================
+   --    Do not edit below this line
+   -- ==========================================================================
+   type Library_Kind_Type is ("static","relocatable");
+   library_kind : Library_Kind_Type := external ("LIBRARY_TYPE","static");
+
+   case Library_Kind is
+      when "static" =>
+         for library_kind use "static";
+      when "relocatable" =>
+         for library_kind use "dynamic";
+   end case;
+
+   for Externally_Built use   "False";
+
+
+   case Library_Kind is
+      when "static" | "relocatable" =>
+
+         for Object_Dir use  ".obj";
+
+         for Library_Name use Name;
+         for Library_Dir use "lib";
+
+         case Library_Kind is
+            when "relocatable" =>
+               for Library_Auto_Init use "True";
+               for Library_Interface use ("com.saabgroup.ddsutil",
+                        "com.saabgroup.ddsutil.data_reader_adapter_generic",
+                        "com.saabgroup.ddsutil.data_state_listener_generic",
+                        "com.saabgroup.ddsutil.domain_participant_facade",
+                        "com.saabgroup.ddsutil.domain_participant_factory_facade",
+                        "com.saabgroup.ddsutil.liveliness_observer",
+                        "com.saabgroup.ddsutil.partition_participant",
+                        "com.saabgroup.ddsutil.presentation_manager",
+                        "com.saabgroup.ddsutil.publisher_facade",
+                        "com.saabgroup.ddsutil.subscriber_facade",
+                        "com.saabgroup.ddsutil.topic_specification",
+                        "com.saabgroup.ddsutil.topic_specification_impl",
+                        "com.saabgroup.ddsutil.type_facade",
+                        "com.saabgroup.ddsutil.type_facade_generic",
+                        "com.saabgroup.ddsutil.qos",
+                        "com.saabgroup.ddsutil.qos.data_reader",
+                        "com.saabgroup.ddsutil.qos.data_reader.rti_extension",
+                        "com.saabgroup.ddsutil.qos.data_reader.standard_qos",
+                        "com.saabgroup.ddsutil.qos.data_writer",
+                        "com.saabgroup.ddsutil.qos.data_writer.rti_extension",
+                        "com.saabgroup.ddsutil.qos.data_writer.standard_qos",
+                        "com.saabgroup.ddsutil.qos.domain_participant",
+                        "com.saabgroup.ddsutil.qos.domain_participant_factory",
+                        "com.saabgroup.ddsutil.qos.domain_participant_factory.rti_extension",
+                        "com.saabgroup.ddsutil.qos.domain_participant_factory.standard_qos",
+                        "com.saabgroup.ddsutil.qos.domain_participant.rti_extension",
+                        "com.saabgroup.ddsutil.qos.domain_participant.standard_qos",
+                        "com.saabgroup.ddsutil.qos.publisher",
+                        "com.saabgroup.ddsutil.qos.publisher.rti_extension",
+                        "com.saabgroup.ddsutil.qos.publisher.standard_qos",
+                        "com.saabgroup.ddsutil.qos.qos_factory",
+                        "com.saabgroup.ddsutil.qos.subscriber",
+                        "com.saabgroup.ddsutil.qos.subscriber.rti_extension",
+                        "com.saabgroup.ddsutil.qos.subscriber.standard_qos",
+                        "com.saabgroup.ddsutil.qos.topic",
+                                          "com.saabgroup.ddsutil.qos.topic.rti_extension",
+                                          "com.saabgroup.ddsutil.qos.topic.standard_qos");
+               case Is_Standalone is
+               when "True" =>
+                  for Library_Interface use
+                    project'Library_Interface & ("com","com.saabgroup");
+               when "False" =>
+                  null;
+               end case;
+
+            when "static" =>
+               null;
+         end case;
+
+   end case;
+
+   package Builder is
+      for Default_Switches ("Ada") use ("-s","-k","-g");
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("Ada") use ("-O2","-gnat05");
+   end Compiler;
+
+
+end ddsutil_ada;

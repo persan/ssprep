@@ -1,0 +1,171 @@
+\input texinfo   @c -*-texinfo-*-
+
+@c %**start of header
+@setfilename ssprep_ug.info
+@settitle Source System PREParation User's Guide
+@setchapternewpage off
+@syncodeindex fn cp
+
+@iftex
+@afourpaper
+@end iftex
+
+@c ----------------------------------------- MACRO
+
+@c Macro used for all ssprep examples
+@c No cartouche on HTML as this is part of the css
+@macro TPEXP{TXT}
+@ifhtml
+@smallexample
+@group
+\TXT\
+@end group
+@end smallexample
+@end ifhtml
+@ifnothtml
+@cartouche
+@smallexample
+@group
+\TXT\
+@end group
+@end smallexample
+@end cartouche
+@end ifnothtml
+@end macro
+
+@c ----------------------------------------- END MACRO
+
+@titlepage
+
+@title ssprep User's Guide
+@subtitle Document revision level $Revision: 115993 $
+@subtitle Date: @today{}
+@author Per Sandberg
+
+@sp 1
+
+@vskip 0pt plus 1filll
+
+@page
+
+Copyright @copyright{} 2005-2009, Per Sandberg
+
+@*
+
+This document may be copied, in whole or in part, in any form or by any
+means, as is or with alterations, provided that (1) alterations are clearly
+marked as alterations and (2) this copyright notice is included
+unmodified in any copy.
+
+@end titlepage
+
+@ifhtml
+@c title page for the HTML documentation
+@html
+<font size="+2">
+<p>Document revision level $Revision: 115993 $
+<p>Id: $Id $
+<p>Date: @today{}
+<p>
+</font>
+
+<font size="+1">
+<p>@url{http://sandat.dyndns.org)
+</font>
+
+@page
+@end html
+@end ifhtml
+@finalout
+
+@contents
+
+@ifinfo
+@node Top
+@top ssprep
+
+@menu
+* Introduction::
+* Templates::
+* Template Database::
+* Index::
+@end menu
+@end ifinfo
+
+@c ----------------------------------------------------------------------
+@node Introduction
+@chapter Introduction
+@c ----------------------------------------------------------------------
+
+@noindent
+SSprep is a tool for generation of project structures and simple files from
+templates.
+The tool is using the Templates_Parser from the AWS project as template engine with
+XML files do define names for templates.
+The tool could read symbol defentions from properties files and XML files, it could also call itself
+with new argumets after expansion of a template.
+@noindent
+The main goal was to be able to generate project stubs with different content.
+@noindent
+
+@menu
+* Tags in template files::
+* Translations::
+@end menu
+
+@c ----------------------------------------------------------------------
+@node Tags in template files
+@section Tags in template files
+@c ----------------------------------------------------------------------
+TBD
+
+
+@c ----------------------------------------------------------------------
+@node Translations
+@section Translations
+@c ----------------------------------------------------------------------
+TBD
+
+@c ----------------------------------------------------------------------
+@node Templates
+@section Templates
+@c ----------------------------------------------------------------------
+TBD
+
+@c ----------------------------------------------------------------------
+@node Template Database
+@section Template Database
+@c ----------------------------------------------------------------------
+TBD
+
+@c ----------------------------------------------------------------------
+@node Symbols
+@section Symbols
+@c ----------------------------------------------------------------------
+TBD
+
+
+
+@c ----------------------------------------------------------------------
+@node Environment Variables
+@section Environment Variables
+@c ----------------------------------------------------------------------
+SSPREP_PATH
+SSPREP.verbose
+SSPREP.force
+SSPREP.java
+SSPREP.exceptions
+SSPREP.symbols
+@page
+@node ssprep
+@appendixsec ssprep
+@cindex ssprep
+
+@c ----------------------------------------------------------------------
+
+@node Index
+@unnumbered Index
+
+@printindex cp
+
+@bye

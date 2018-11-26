@@ -1,0 +1,63 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          This file was automatically generated
+--          Using         : make_gpr 1.3 (2006-08-24)
+--          By User       : stoma
+--          Creation Date : 2006-11-09
+--
+--
+--
+--=============================================================================
+
+with "syst_default.ss/syst_default.gpr";
+Project Evha_Event_Handler is
+
+   Base := "./"; --<Base>
+   --  Base identifies the sourcecode location
+   --  When using {Tower} development './'.
+   --  When using remote sources  '<full path to the source location>'.
+   --   sample "\\scupper\VSS_DB\VSS_Ada_Working_Views\aapt_code.nt.wrk\".
+   --  NOTE the trailing directory delimiter.
+
+
+
+   for Source_Dirs use ("private",
+                        "private/new",
+                        "capi",
+                        "shared",
+                        "dia_internal");
+   for Object_Dir use Syst_Default'Object_Dir;
+   for Exec_Dir use Syst_Default'Exec_Dir;
+
+   package Builder is
+      for Default_Switches ("Ada") use
+        Syst_Default.Builder'Default_Switches ("Ada");
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("Ada") use
+        Syst_Default.Compiler'Default_Switches ("Ada");
+   end Compiler;
+
+   package Binder renames Syst_Default.Binder;
+
+   package Linker is
+      for Default_Switches ("Ada") use
+        Syst_Default.Linker'Default_Switches ("Ada");
+   end Linker;
+
+   package Naming renames Syst_Default.Naming;
+   --  package Naming is
+   --     Switches
+   --  end Naming;
+
+
+   package IDE renames Syst_Default.IDE;
+   --  package IDE is
+   --     Switches
+   --  end IDE;
+
+
+end Evha_Event_Handler;

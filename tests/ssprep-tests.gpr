@@ -1,0 +1,36 @@
+with "../ssprep.gpr";
+with "aunit.gpr";
+with "../helpers/helpers.gpr";
+Project Ssprep.Tests is
+   for Main use ("ssprep-tests-testharnesses-test_all.adb");
+
+   for Source_Dirs use (".",
+                        "testcases");
+
+   for Object_Dir use ssprep'Object_Dir;
+   for Exec_Dir use ssprep'Exec_Dir;
+
+   for Library_Dir use ssprep'Library_Dir;
+
+   package Builder is
+      for Default_Switches ("ada") use
+        ssprep.Builder'Default_Switches ("ada");
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("ada") use
+        ssprep.Compiler'Default_Switches ("ada");
+   end Compiler;
+
+   package Binder is
+      for Default_Switches ("ada") use
+        ssprep.Binder'Default_Switches ("ada");
+   end Binder;
+
+   package Linker is
+      for Default_Switches ("ada") use
+        ssprep.Linker'Default_Switches ("ada");
+   end Linker;
+
+end ssprep.tests;
+

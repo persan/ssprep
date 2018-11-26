@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ssprep>
+<Templates>
+  <Template>
+     <Name>SimpleProject</Name>
+     <Location>simpleLibraryProject/@_project_dir_@</Location>
+  </Template>
+  <Template>
+     <Name>ssprep.simpleExecutableProject</Name>
+     <Location>simpleLibraryProject/@_project_dir_@</Location>
+  </Template>
+</Templates>
+</Ssprep>
+

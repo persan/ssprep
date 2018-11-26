@@ -1,0 +1,21 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          This file was automatically generated
+--          Using         : make_gpr 1.3 (2006-08-24)
+--          By User       : stoma
+--          Creation Date : 2006-10-12
+--
+--
+--
+--=============================================================================
+with "adin_code.ss/adin_code.gpr";
+with "adty_booch.ss/adty_booch.gpr";
+with "adty_utilities.ss/adty_utilities.gpr";
+with "evha_event_handler.ss/evha_event_handler.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "tipr_code.ss/tipr_code.gpr";
+project evha_trace is
+   for Source_Dirs use ();
+end evha_trace;

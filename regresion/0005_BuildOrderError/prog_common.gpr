@@ -1,0 +1,25 @@
+with "syst_default.ss/syst_default.gpr";
+
+abstract project Prog_Common is
+
+   for Source_Files use ();
+
+   for Exec_Dir use external ("SS2000_EXE","../../../runtime/prog");
+
+   for Object_Dir use "../../../temp/"& Project'Name & "/" & Syst_Default'Object_Dir;
+
+   package Builder is
+      for Default_Switches ("ada") use 
+        syst_default.Builder'Default_Switches ("ada")&("-x");
+   end Builder;
+
+   package Binder is
+      for Default_Switches ("ada") use ("-E");
+   end Binder;
+   
+   package Linker is
+      Linker_Switches := ("-mwindows");
+   end linker;
+   
+end Prog_Common;
+

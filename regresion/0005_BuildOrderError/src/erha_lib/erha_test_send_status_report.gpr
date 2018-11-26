@@ -1,0 +1,64 @@
+------------------------------------------------------------------------------
+-- Builds test/erha_send_status_report
+--
+--
+-- LSEN 10-03-27    Created
+------------------------------------------------------------------------------
+
+with "syst_default.ss/syst_default.gpr";
+with "erha_lib.gpr";
+
+project erha_test_send_status_report is
+
+   for Languages use ( "C++");
+
+   for Source_Dirs use ("test/send_status_report");
+
+   for Main use ("erha_send_status_report");
+
+   Build_Dir := "lib-obj/" & Syst_Default.Build & "-" & Project'Library_kind;
+   Build_Dir := Syst_Default.Result_Dir & "/" & project'Name & ".ss/" & Build_dir;
+   for Object_Dir use build_dir & "/obj";
+
+   package Builder is
+   end Builder;
+
+   package Linker is
+      case Syst_Default.Os is
+         when "Linux" =>
+            for Default_Switches ("C++") use
+              Syst_Default.Linker'Default_Switches ("C++");
+           -- Syst_Default.Linker'Default_Switches ("C++") & ("-ldl");
+
+         when "Windows_NT" =>
+            for Default_Switches ("C++") use
+              syst_default.Linker'Default_Switches ("C++") & ("-lws2_32");
+
+         when others =>
+            null;
+      end case;
+   end Linker;
+
+   package Compiler is
+
+      for Driver("C") use "gcc";
+
+      case Syst_Default.Os is
+         when "Linux" =>
+            for Default_Switches ("c++") use Syst_Default.Compiler'Default_switches ("C++");
+
+         when "Windows_NT" =>
+          for Default_Switches ("c++") use Syst_Default.Compiler'Default_switches ("C++");
+
+         when others =>
+            null;
+      end case;
+   end Compiler;
+
+   package Naming is
+      for Specification_Suffix ("C++") use ".h";
+   end Naming;
+
+   package IDE is
+   end IDE;
+end erha_test_send_status_report;

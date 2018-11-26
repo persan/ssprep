@@ -1,0 +1,3 @@
+#!/bin/sh
+ssprep ssprep.aunitTestSuite   "-DTEST_SUITE_PACKAGE=@_root_@.TestSuits.Test_All"  "-DTEST_SUITE_PACKAGES=(@_root_@.Testcases.Compile)"        "-DTEST_SUITE_TESTS=(Test_Case)" "-dTEST_SUITE_TESTS_KIND=(TEST_CASE)" "-dTEST_SUITE_NAME=Suite"
+ssprep ssprep.aunitTestHarness "-DHARNESS_NAME=@_root_@.TestHarnesses.Test_All"    "-DHARNESS_TEST_SUITE_PACKAGE=@_root_@.TestSuits.Test_All"  "-dHARNESS_TEST_SUITE=Suite"

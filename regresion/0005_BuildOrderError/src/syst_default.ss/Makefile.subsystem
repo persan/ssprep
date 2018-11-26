@@ -1,0 +1,37 @@
+RESULT_DIR=.
+PREFIX=${RESULT_DIR}
+
+MKDIR=mkdir -p
+CP=cp -rf
+RM=rm -rf
+
+
+SS:=$(strip $(basename $(notdir ${CURDIR})))
+
+.PHONY:
+
+build:.PHONY
+	gprbuild -p -P ${SS}.gpr -XBUILD=release -XLIBRARY_TYPE=relocateble
+	gprbuild -p -P ${SS}.gpr -XBUILD=release -XLIBRARY_TYPE=static
+	gprbuild -p -P ${SS}.gpr -XBUILD=debug   -XLIBRARY_TYPE=relocateble
+	gprbuild -p -P ${SS}.gpr -XBUILD=debug   -XLIBRARY_TYPE=static
+test:.PHONY
+	#${MAKE} -C test
+
+install_lib:.PHONY
+	${MKDIR} ${PREFIX}/${SS}.ss
+	${CP}    lib-obj/lib       ${PREFIX}/${SS}.ss
+	${CP}    lib-obj/include   ${PREFIX}/${SS}.ss
+	${CP}    ${SS}_.gpr        $(PREFIX)/${SS}.ss/${SS}.gpr
+	chmod a-w -R  ${PREFIX}/${SS}.ss
+
+install_bin:.PHONY
+	${MKDIR} ${PREFIX}/bin
+
+clean:.PHONY
+	${RM} ${PREFIX}/${SS}.ss
+	${RM} lib-obj
+
+all: build tests install_lib
+
+rebuild: clean all

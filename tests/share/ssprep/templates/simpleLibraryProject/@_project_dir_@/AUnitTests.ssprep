@@ -1,0 +1,3 @@
+# Test
+ssprep UnitTests -Dproject=@_project_@
+

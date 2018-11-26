@@ -1,0 +1,1 @@
+ssprep release_notes -Dproject=@_project_@ -E

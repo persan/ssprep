@@ -1,0 +1,12 @@
++RUncommented_BEGIN_In_Package_Bodies
++REnumeration_Ranges_In_CASE_Statements
++RExceptions_As_Control_Flow
++REXIT_Statements_With_No_Loop_Name
++RGOTO_Statements
++ROTHERS_In_Exception_Handlers
++ROTHERS_In_CASE_Statements
++ROTHERS_In_Aggregates
++RPositional_Actuals_For_Defaulted_Generic_Parameters
++RUnnamed_Blocks_And_Loops
++RUSE_PACKAGE_Clauses
++RUnassigned_OUT_Parameters

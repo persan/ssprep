@@ -1,0 +1,178 @@
+SSPREP
+Rev 1.7.0  / 2014-08-26
+   Use gnatcoll in get build order.
+
+Rev 1.6.0  / 2011-01-18
+   GPS integration: Use Templates as avalible in GPS 5.0 as driver.
+
+
+Rev 1.5.7  / 2011-01-18
+  ssprep: Reads config from ${HOME}/.ssprep
+          More robuset and better error reporting in invalid config files.
+          Templates for AWS and ASIS
+
+Rev 1.5.4  / 2011-01-14
+News:
+  ssprep: tries harder to resolve a temp folder
+
+Rev 1.5.3  / 2010-10-13
+News:
+   getbuildorder: Uses internal algoriotm to get the order.
+
+Rev 1.5.2  / 2010-10-08
+News:
+   getbuildorder: manages child projects and sorts correct
+
+Rev 1.5.1  / 2010-09-14
+News:
+  getbuildorder: Reworked
+  Regersion tests implemented
+  Many other small things
+
+
+----------------------------------------------------------
+Is a template system that creates files or directory trees
+from a template file/directory tree
+where the parser engine is the Templates_Parser.
+
+The intent of this tool is to provide a standalone extensible template engine
+not so much for generation of complex code but
+to provide more or less complex project stubs,
+for generation complex code other code generators
+such as Jam, Jet, XDoclet, CodeWorker....
+
+
+Dependencies:
+  Templates_Parser http://libre.act.com
+  XMLAda http://libre.act.com
+
+
+Contents:
+  ssprep                             The main templates engine.
+  deps2symb                          A utility that extracts information from
+                                       gnat list -v  (to get Source_Dirs, Object_Dirs and ADA_PROJECT_PATH)
+                                       gnat bind -R  (To get Source_Files for a specific binary target)
+  getbuildorder                      A tool that will extract dependency information from gnat project files.
+  net.sourceforge.ssprep.eclipse_ui  A very simple plugin for eclipse to be able to generate projects.
+
+Template structure:
+@_project_@/
+   @_project_file_@.text
+
+$ssprep @_project_@ -Dproject=find.bugs
+
+Result:
+ find.bugs/
+   find-bugs.text
+
+Where the all occurrences of @_project_@ is replaced both in the files and the filenames.
+
+How templates are resolved
+
+A template is a directory-tree or a simple file
+to be copied and transformed to the target,
+if names used for the template does not resolve to an object in
+the file system then the templates must be defined in the
+template database which i build from a set of config-files.
+The config files are loaded in the following order:
+
+ * system-configs "(location of ssprep)/../share/ssprep/templates/*.xml"
+ * *.xml found in in the directories listed in SSPREP_PATH.
+ * A config file is only loaded once.
+ * Template-names found in files loaded later overrides the old locations.
+
+Sematics of ssprep_config.xml
+
+Is an XML file with the following element
+
+    * "ssprep" The root node, only files containg this node is loded.
+       * "templates"
+          o "template" One Template.
+                +   "name" The string used to identify the template.
+                *   "location" The path to the template relative the config file or absolute, one or more.
+                [+] "simple" Boolean set to true if the template contains one simple file
+                [+] "helper" Boolean set to true if the template is meant to be used as a "subtemplate".
+                [+] "prompt" String  to be used as propt i a (GUI-Only).
+                [+] "hint"   String  Hint for this particular template (GUI-Only)
+                [+] "class"  String  Hint for rendering gui (GUI-Only)
+                [+] "path"   String  Hint for rendering gui (GUI-Only)
+                [+] "output" workspace|sourcedir|text  Hint to GUI on where to put the results.
+                [+] "load"   String Hint to editor on what file to load after expansion.
+                [+] "variables" Variables to be prompted for in GUI
+                   * "variable" Item to be promptet for has attributes:
+                           "type"   Variable type
+                               "boolean"    : simple boolean variable.
+                                  Optional children:
+                                     "switch"  String to put on button.
+                               "string"     : simple string variable.
+                               "file"       : file to be prompted for.
+                                  Optional children:
+                                     "must_exist"  Boolean True if file must exists.
+                               "directory"  : Directory to be prompted for.
+                                  Optional children:
+                                     "must_exist"  Boolean True if file must exists.
+                               "selection"  : Combo box with alternatives.
+                                  children:
+                                    "alternative"  Altrernative to put in combo box first is default.
+                                       Has attributes:
+                                          "prompt" : String to put in combo box.
+                                          "value"  : String to put in variable.
+                               "project"    : A string that is a valid package name in Ada and Java.
+                           "name"    Actual name in template.
+                           "tooltip" ToolTip text for GUI
+                           "prompt"  Prompt in GUI
+          o "link" Link a directory to be searched for *.xml.
+          o "link_file" Link to an existing config file (an error will be raised if the file isn't found.
+
+File and directory names may contain expandable names and if they do the
+actual values are read from the environment.
+
+The top node mus be Ssprep if the file shuld be parsed.
+Sample config-file:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<ssprep>
+  <templates>
+    <template>
+       <name>SimpleProject</name>
+       <location>simpleProject/@_project_dir_@</location>
+    </template>
+
+    <link>$HOME.ssprep</link> <!-- Loads templates and links defined in -->
+                              <!--$HOME.ssprep/ssprep_config.xml-->
+                              <!-- If that file exists
+    <template>
+       <name>documentationProject</name>
+       <location>documentationProject</location>
+    </template>
+
+    <Template>
+       <Simple>True</Simple>
+       <Alias>ss</Alias>
+       <Prompt>Simple Project</Prompt>
+       <Variables>
+         <Variable name="project" type="string">
+            <Prompt>Project Name</Prompt>
+            <Hint>Name of project</Hint>
+         </Variable>
+       </Variables>
+       <Name>GNU_Header</Name>
+       <Location>Common/LGPL_FileHeader.txt</Location>
+    </Template>
+  </Templates>
+</Ssprep>
+
+
+Execution:
+
+If files with suffix ".ssprep" is found in the expanded sources the contents of that file is read
+and executed using the current operation systems shell with the same context as the .ssprep-file.
+That way it is possible to build a full tree of projects by just defining the root.
+Template-file are read with the current files context as process context this makes it
+possible to use relative paths for includes in the Template-files.
+
+Lines where the first non blank character is "#", are treated as comments in .ssprep files on windows
+on Linux the normal Comment rules are for the language specified in the shebang are followed since
+ssprep fill try to launch the file for normal execution.
+
+The *.ssprep files is normally deleted after execution.

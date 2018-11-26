@@ -1,0 +1,11 @@
+#!/bin/sh
+# More complementary components to build project
+
+ssprep ssprep.AUnitTests     -Droot=Test0001.Tests -dparent=Test0001 -dparent_path=../test0001.gpr
+ssprep ssprep.release_notes  -Dproject=Test0001
+ssprep ssprep.INSTALL        -Dproject=Test0001
+
+# ssprep ssprep.Regression
+
+
+

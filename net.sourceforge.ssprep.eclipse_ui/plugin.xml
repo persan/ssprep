@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="net.sourceforge.ssprep.wizards.projectcategory.projects"
+            name="ssprep">
+      </category>
+      <wizard
+            category="net.sourceforge.ssprep.wizards.projectcategory.projects"
+            class="net.sourceforge.ssprep.NewIDLProjectGroupWizard"
+            icon="icons/icon.gif"
+            id="net.sourceforge.ssprep.wizards.newidlprojectgroupwizard"
+            name="New IDL Project Group"
+            project="true">
+      </wizard>
+      <primaryWizard
+            id="com.saabtech.wizards.newidlprojectgroupwizard">
+      </primaryWizard>
+   </extension>
+
+</plugin>

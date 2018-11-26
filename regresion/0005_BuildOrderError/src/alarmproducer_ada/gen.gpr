@@ -1,0 +1,12 @@
+project Gen is
+
+   for Languages use ("C++");
+   for Main use ("gen.cpp");
+   for source_dirs use (".");
+   for object_dir use ".genobj";
+   package Compiler is
+      for Default_Switches ("c++") use ("-fdump-ada-spec");
+   end Compiler;
+
+end Gen;
+

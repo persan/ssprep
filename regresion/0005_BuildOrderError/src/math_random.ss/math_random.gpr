@@ -1,0 +1,11 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB SYSTEMS
+--=============================================================================
+--
+--
+--=============================================================================
+with "math_elementary.ss/math_elementary.gpr";
+with "syst_default.ss/syst_default.gpr";
+project math_random is
+   for Source_Dirs use ();
+end math_random;

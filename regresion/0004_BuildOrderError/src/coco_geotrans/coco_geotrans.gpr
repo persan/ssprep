@@ -1,0 +1,11 @@
+-- ---------------------------------------------
+--
+--
+--
+--
+-- ---------------------------------------------
+with "geotrans2/geotrans2.gpr";
+with "syst_default.ss/syst_default.gpr";
+project coco_Geotrans is
+   for Source_Dirs use ();
+end coco_Geotrans;

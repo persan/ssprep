@@ -1,0 +1,45 @@
+--=============================================================================
+-- Copyright (C)  2003 SAABTECH AB , SWEDEN
+--=============================================================================
+--
+--  UNIT NAME
+--          FISE SYMBOLS EVHA
+--
+--  ABSTRACT
+--          All the FISE SYMBOLS used by the SF EVHA
+--
+--  KEYWORDS
+--          FISE, EVHA, fise symbols
+--
+--
+--  CONTENTS
+--
+--    Creation Information:
+--          PROGRAMMER    : Bo Karlsson/BOKA
+--          CREATION DATE : 2003-09-12
+--          DEPARTMENT    : CB
+--          PROJECT       : SS2000
+--
+--    Revision History:
+--          1.1/BOKA/2003-09-16/Removed evha_ensure_file_location
+--                              and evha_ensure_pgm_location (these are
+--                              not used in the NT environment).
+--                              Added <block list file>, N_MK3:SPR_25713.      
+--    Dependencies:
+--          None
+--    Improvements:
+--          No suggestions
+--
+--=============================================================================
+
+--
+-- <block list file> is only used in special cases when event reports
+-- from one or more system function shall be discarded.
+-- NOTE. It is not enough to define the <block list file> symbol here,
+--       the command line option BLK= must also be set.
+--       See the evha_block_list template file.
+--<block list file>  %SS2000_ROOT%/data/text/evha/evha_block_list
+
+
+
+

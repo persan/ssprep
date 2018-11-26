@@ -1,0 +1,42 @@
+project libgeotrans2 is
+
+   Version := "1";
+
+   for Languages use ("C");
+   for Library_Name use "geotrans";
+
+   type Os_Type is ("Linux","Windows_NT");
+   OS : Os_Type := external ("OS","Linux");
+
+   type Library_Kind_Type is
+     ("static", "relocatable");
+   Library_Kind : Library_Kind_Type := external ("LIBRARY_TYPE", "static");
+
+   for Library_Dir use "..";
+
+   for externally_Built use "True";
+   case Library_Kind is
+      when "static" =>
+         for Library_Kind use "static";
+      when "relocatable" =>
+         for Library_Kind use "dynamic";
+
+         case os is
+            when "Linux" =>
+               for Library_Version use project'Library_Name & ".so." & Version;
+            when "Windows_NT" =>
+               null;
+         end case;
+   end case;
+
+   case os is
+      when "Linux" =>
+         for Library_Version use project'Library_Name & ".so." & Version;
+      when "Windows_NT" =>
+         null;
+   end case;
+
+   for Source_Dirs use ("../../include/geotrans");
+
+end libgeotrans2;
+

@@ -1,0 +1,17 @@
+with "com.hcm.hcmenterprisebus.common.structures.idl/com_hcm_hcmenterprisebus_common_structures.gpr";
+project com_hcm_hcmenterprisebus_common_structures_hmilocatordistribution is
+   for Languages use ("Idl");
+   for Object_Dir use ".obj/generate";
+
+  for Externally_Built use "True";
+
+   package Compiler is
+      for Driver("Idl") use "nddsgen";
+      for Required_Switches ("Idl") use ("-replace","-d" , "../../src");
+      for Include_Switches ("Idl") use ("-I");
+   end Compiler;
+   package Naming is
+      for Body_Suffix("Idl") use ".idl";
+   end Naming;
+
+end com_hcm_hcmenterprisebus_common_structures_hmilocatordistribution;

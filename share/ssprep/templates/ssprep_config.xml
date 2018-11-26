@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ssprep>
+<Templates>
+
+  <Template>
+     <helper>true</helper>
+     <simple>true</simple>
+     <Name>ssprep.release_notes</Name>
+     <Location>Common/release_notes.txt</Location>
+  </Template>
+
+  <Template>
+     <helper>true</helper>
+     <simple>true</simple>
+     <Name>ssprep.INSTALL</Name>
+     <Location>Common/INSTALL</Location>
+  </Template>
+
+  <Template>
+     <Name>ssprep.projectCommon</Name>
+     <Location>regresion</Location>
+  </Template>
+
+  <Template>
+     <Name>ssprep.Regression</Name>
+     <Location>projectCommon/@_project_dir_@</Location>
+  </Template>
+
+  <Template>
+     <Name>ssprep.ASIS</Name>
+     <Location>ApplicationSpecific/ASIS/src</Location>
+  </Template>
+
+  <Template>
+     <Name>ssprep.AWS</Name>
+     <Location>ApplicationSpecific/AWS/src</Location>
+  </Template>
+
+  <Template>
+     <Name>ssprep.XMLAda</Name>
+     <Location>ApplicationSpecific/XMLAda/src</Location>
+  </Template>
+
+  <Template>
+     <Name>ssprep.GTKAda</Name>
+     <Location>ApplicationSpecific/GTKAda/src</Location>
+  </Template>
+
+  <Template>
+     <variables>
+        <variable type="project"
+                  name="project"
+                  prompt="Project Name:"
+                  tooltip="Name for the project."/>
+        <variable type="boolean"
+                  name="has_aws"
+                  prompt="use AWS:"
+                  tooltip="Name for the project."/>
+     </variables>
+     <prompt>Simple Library Project</prompt>
+     <tooltip>Basic library project</tooltip>
+     <hint>@_output_dir_@/@_project_dir_@/@_project_file_@.gpr</hint>
+     <class>project</class>
+     <Name>ssprep.simpleLibraryProject</Name>
+     <Location>projectCommon/@_project_dir_@</Location>
+     <Location>simpleLibraryProject/@_project_dir_@</Location>
+  </Template>
+
+  <Template>
+     <variables>
+        <variable type="project"
+                  name="project"
+                  prompt="Project Name:"
+                  tooltip="Name for the project."/>
+     </variables>
+     <prompt>Simple Executable Project</prompt>
+     <tooltip>Basic Executable project</tooltip>
+     <hint>@_output_dir_@/@_project_dir_@/@_project_file_@.gpr</hint>
+     <class>project</class>
+     <Name>ssprep.simpleExecutableProject</Name>
+     <Location>projectCommon/@_project_dir_@</Location>
+     <Location>simpleExecutableProject/@_project_dir_@</Location>
+  </Template>
+
+  <Template>
+     <helper>true</helper>
+     <Name>ssprep.documentationProject</Name>
+     <Location>documentationProject</Location>
+  </Template>
+
+  <Template>
+     <helper>true</helper>
+     <Name>ssprep.extra-src.ASIS</Name>
+     <Location>ApplicationSpecific/ASIS/src</Location>
+  </Template>
+
+  <Template>
+     <helper>true</helper>
+     <Name>ssprep.extra-src.XMLAda</Name>
+     <Location>ApplicationSpecific/XMLAda/src</Location>
+  </Template>
+
+  <Template>
+     <helper>true</helper>
+     <simple>true</simple>
+     <Name>ssprep.GNU_Header</Name>
+     <Location>Common/LGPL_FileHeader.txt</Location>
+  </Template>
+
+  <Link>$HOME/.ssprep</Link> <!-- Search the home directory for templates-->
+
+</Templates>
+</Ssprep>
+

@@ -1,0 +1,15 @@
+Prerequsits:
+ Validate thet the folowing projecs 
+   xmlada.gpr aws.gpr aunit.gpr gnatcoll.gpr
+ are avlible in
+ ${GNAT_ROOT}/lib/gnat 
+   where xmlada.gpr,aws.gpr and aunit.gpr are installed by default.
+ or on ADA_PROJECT_PATH.
+
+   
+XMLAda and Templates_Parser are  availible on https://libre.adacore.com/
+ 
+when the above prerequisits are fullfiled just
+ $make compile
+ $make install
+ 

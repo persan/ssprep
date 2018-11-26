@@ -1,0 +1,16 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          By User       : stjxka
+--          Creation Date : 2009-04-16
+--
+--
+--
+--=============================================================================
+with "baty_code.ss/baty_code.gpr";
+with "syst_default.ss/syst_default.gpr";
+Project sypa_symb is
+   for Source_Dirs use ();
+--               for Library_Auto_Init use "True";
+end sypa_symb;

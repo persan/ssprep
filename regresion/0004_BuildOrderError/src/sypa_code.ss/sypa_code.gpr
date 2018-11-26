@@ -1,0 +1,13 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB SYSTEMS
+--=============================================================================
+--
+--
+--=============================================================================
+with "adin_code.ss/adin_code.gpr";
+with "sypa_symb.ss/sypa_symb.gpr";
+with "evha_event_handler.ss/evha_event_handler.gpr";
+with "syst_default.ss/syst_default.gpr";
+project sypa_code is
+   for Source_Dirs use ();
+end sypa_code;

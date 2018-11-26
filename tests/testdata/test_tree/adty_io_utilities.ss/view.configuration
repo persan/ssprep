@@ -1,0 +1,5 @@
+Import => %Object Ada%\lib
+Import => %Object Ada%\lib\rts
+
+IMPORT => %Ada Tower%\baty_code.ss
+Import => %Ada Tower%\ipco_code.ss

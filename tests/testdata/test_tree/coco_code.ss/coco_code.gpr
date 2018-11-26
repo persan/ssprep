@@ -1,0 +1,71 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          This file was automatically generated
+--          Using         : make_gpr 1.3 (2006-08-24)
+--          By User       : stoma
+--          Creation Date : 2006-11-10
+--
+--    1.1 / STJGU / 2007-05-31 / Added math_random
+--
+--
+--=============================================================================
+
+with "baty_code.ss/baty_code.gpr";
+with "coco_hidden_code.ss/coco_hidden_code.gpr";
+with "coco_hidden_defs.ss/coco_hidden_defs.gpr";
+with "coco_hidden_ellipsoid.ss/coco_hidden_ellipsoid.gpr";
+with "evha_event_handler.ss/evha_event_handler.gpr";
+with "math_elementary.ss/math_elementary.gpr";
+with "math_random.ss/math_random.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "win32ada.gpr";
+project coco_code extends "coco_defs.ss/coco_defs.gpr" is
+
+  Base := "./"; --<Base>
+  --  Base identifies the sourcecode location
+  --  When using {Tower} development './'.
+  --  When using remote sources  '<full path to the source location>'.
+  --   sample "\\scupper\VSS_DB\VSS_Ada_Working_Views\aapt_code.nt.wrk\".
+  --  NOTE the trailing directory delimiter.
+
+
+
+  for Source_Dirs use (Base & "shared/geodetic_calculations",
+                       Base & "private/geodetic_calculations",
+                       Base & "shared/cartesian_calculations",
+                       Base & "capi",
+                       Base & "shared/formats_and_conversions",
+                       Base & "private/formats_and_conversions");
+  for Object_Dir use syst_default'Object_Dir;
+  for Exec_Dir use syst_default'Exec_Dir;
+
+  package Builder is
+     for Default_Switches ("Ada") use
+       syst_default.Builder'Default_Switches ("Ada");
+  end Builder;
+
+  package Compiler is
+     for Default_Switches ("Ada") use
+       syst_default.Compiler'Default_Switches ("Ada");
+  end Compiler;
+
+  package Linker is
+     for Default_Switches ("Ada") use
+       syst_default.Linker'Default_Switches ("Ada");
+  end Linker;
+
+  package Naming renames syst_default.Naming;
+  --  package Naming is
+  --     Switches
+  --  end Naming;
+
+
+  package IDE renames syst_default.IDE;
+  --  package IDE is
+  --     Switches
+  --  end IDE;
+
+
+end coco_code;

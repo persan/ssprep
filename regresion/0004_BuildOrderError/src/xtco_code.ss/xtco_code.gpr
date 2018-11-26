@@ -1,0 +1,20 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB TECH SYSTEMS AB
+--=============================================================================
+--    Creation Information:
+--          This file was automaticly generated
+--          Using         : make_gpr 1.2w (2005-05-24)
+--          By User       : maaha
+--          Creation Date : 2005-05-26
+--
+--
+--
+--=============================================================================
+with "baty_code.ss/baty_code.gpr";
+with "evha_event_handler.ss/evha_event_handler.gpr";
+with "fise_code.ss/fise_code.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "xtco/xtco.gpr";
+project xtco_code is
+   for Source_Dirs use ();
+end xtco_code;

@@ -1,0 +1,101 @@
+<project name="com.hcm.hcmenterprisebus.common.topics.trainers.idl" default="all">
+  <description>
+This buildfile is used to build the IDL subprojects.
+</description>
+
+  <target name="all" depends="generate,update,build,build_java"/>
+
+  <target name="configure"
+    description="Do specifig configuration.">
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_c"    target="configure"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_cpp"  target="configure"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_ada"  target="configure"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_java" target="configure"/>
+  </target>
+
+  <target name="generate"
+          description="If nececary do code generation.">
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_c"    target="generate"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_cpp"  target="generate"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_ada"  target="generate"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_java" target="generate"/>
+  </target>
+
+
+  <target name="build"
+        description="Build all parts." depends="build_c,build_cpp,build_ada,build_java">
+  </target>
+
+  <target name="c_dir_exists"
+        description="Check existence of C directory." >
+    <available file="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_c" property="dds_c.present" />
+  </target>
+
+  <target name="build_c"
+        description="Build C." depends="c_dir_exists" if="dds_c.present">
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_c" target="build"/>
+  </target>
+
+  <target name="cpp_dir_exists"
+        description="Check existence of C++ directory." >
+    <available file="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_cpp" property="dds_cpp.present" />
+  </target>
+
+  <target name="build_cpp"
+        description="Build C++." depends="cpp_dir_exists" if="dds_cpp.present">
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_cpp" target="build"/>
+  </target>
+
+  <target name="ada_dir_exists"
+        description="Check existence of Ada directory." >
+    <available file="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_ada" property="dds_ada.present" />
+  </target>
+
+  <target name="build_ada"
+        description="Build Ada." depends="ada_dir_exists" if="dds_ada.present">
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_ada" target="build"/>
+  </target>
+
+  <target name="java_dir_exists"
+        description="Check existence of Java directory." >
+    <available file="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_java" property="dds_java.present" />
+  </target>
+
+  <target name="build_java"
+        description="Build Java." depends="java_dir_exists" if="dds_java.present">
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_java" target="build"/>
+  </target>
+
+  <target name="test"
+        description="Test the compinent if possible" >
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_c"    target="test"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_cpp"  target="test"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_ada"  target="test"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_java" target="test"/>
+  </target>
+
+  <target name="install"
+        description="Install the component." >
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_c"    target="install"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_cpp"  target="install"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_ada"  target="install"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_java" target="install"/>
+  </target>
+
+  <target name="clean"
+        description="Clen all interemidtaits">
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_c"    target="clean"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_cpp"  target="clean"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_ada"  target="clean"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_java" target="clean"/>
+  </target>
+
+  <target name="update"
+        description="Update the imports in target projects">
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_c"    target="update"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_cpp"  target="update"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_ada"  target="update"/>
+    <ant inheritAll="False" dir="../com.hcm.hcmenterprisebus.common.topics.trainers.dds_java" target="update"/>
+  </target>
+
+</project>

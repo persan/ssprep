@@ -1,0 +1,7 @@
+with "osif/osif.gpr";
+-- with "adin/adin.gpr";
+with "ipcc/ipcc.gpr";
+with "syst_default.ss/syst_default.gpr";
+project ipcc_test is
+   for Source_Dirs use ();
+end ipcc_test;

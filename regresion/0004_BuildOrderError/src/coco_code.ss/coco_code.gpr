@@ -1,0 +1,17 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB SYSTEMS
+--=============================================================================
+--
+--
+--=============================================================================
+with "baty_code.ss/baty_code.gpr";
+with "coco_defs.ss/coco_defs.gpr";
+with "coco_hidden_code.ss/coco_hidden_code.gpr";
+with "coco_hidden_defs.ss/coco_hidden_defs.gpr";
+with "coco_hidden_ellipsoid.ss/coco_hidden_ellipsoid.gpr";
+with "evha_event_handler.ss/evha_event_handler.gpr";
+with "math_elementary.ss/math_elementary.gpr";
+with "syst_default.ss/syst_default.gpr";
+project coco_code is
+   for Source_Dirs use ();
+end coco_code;

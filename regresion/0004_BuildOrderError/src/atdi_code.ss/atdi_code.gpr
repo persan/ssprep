@@ -1,0 +1,31 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          This file was automatically generated
+--          Using         : make_gpr 1.2w (2005-06-17)
+--          By User       : tepo
+--          Creation Date : 2005-11-08
+--    2997-09-23 TEPO splitt of .gpr files (3 subsystems)
+--
+--
+--
+--=============================================================================
+with "adin_code.ss/adin_code.gpr";
+with "baty_code.ss/baty_code.gpr";
+with "evha_event_handler.ss/evha_event_handler.gpr";
+with "sypa_code.ss/sypa_code.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "tipr_code.ss/tipr_code.gpr";
+--with "dds.gpr";
+--  with "com.hcm.hcmenterprisebus/com-hcm-hcmenterprisebus.gpr";
+--  with "com.hcm.hcmenterprisebus.common.structures.dds_ada/com-hcm-hcmenterprisebus-common-structures-dds_ada.gpr";
+--  with "com.hcm.hcmenterprisebus.common.topics.tactical/com-hcm-hcmenterprisebus-common-topics-tactical.gpr";
+--  with "com.hcm.hcmenterprisebus.common.topics.tactical.dds_ada/com-hcm-hcmenterprisebus-common-topics-tactical-dds_ada.gpr";
+--  with "com.saabgroup.enterprisebus/com-saabgroup-enterprisebus.gpr";
+--  with "com.saabgroup.enterprisebus.basictypes.dds_ada/com-saabgroup-enterprisebus-basictypes-dds_ada.gpr";
+--  with "com.saabgroup.enterprisebus.ddstopics/com-saabgroup-enterprisebus-ddstopics.gpr";
+--  with "com.saabgroup.enterprisebus.ddstopics.attitudedata.dds_ada/com-saabgroup-enterprisebus-ddstopics-attitudedata-dds_ada.gpr";
+project atdi_code is
+   for Source_Dirs use ();
+end atdi_code;

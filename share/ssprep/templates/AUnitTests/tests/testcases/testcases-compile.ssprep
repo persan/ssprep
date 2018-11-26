@@ -1,0 +1,3 @@
+#!/bin/sh
+ssprep ssprep.aunitTestCase -Dtest_case_package=@_root_@.Testcases.Basic  -DTEST_CASE_TYPE=Test_Case -DTEST_CASE_DESCRIPTION=BasicTest
+ssprep ssprep.aunitTestCase -Dtest_case_package=@_root_@.Testcases.Compile -DTEST_CASE_TYPE=Test_Case -DTEST_CASE_DESCRIPTION=Compile_It

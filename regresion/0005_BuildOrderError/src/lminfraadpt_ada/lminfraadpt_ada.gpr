@@ -1,0 +1,11 @@
+------------------------------------------------------------------------------
+-- Builds LmInfraAdpt_Ada.so
+--
+--
+-- LSEN 10-02-01 Created.
+------------------------------------------------------------------------------
+with "syst_default.ss/syst_default.gpr";
+with "lminfraadpt_cpp/lminfraadpt_cpp.gpr";
+project lminfraadpt_ada is
+   for Source_Dirs use ();
+end LmInfraAdpt_Ada;

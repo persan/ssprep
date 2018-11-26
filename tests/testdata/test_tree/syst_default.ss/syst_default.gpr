@@ -1,0 +1,282 @@
+-- Default project setings for SS2000 systems.
+--
+-- 2002-07-10 Added support for different release and debug configurations.
+-- 2004-11-29 Removed -fstack-check since it is not mandatory under windows.
+-- 2005-12-12 Removed frontend inlining after recomendatios from AdaCore
+--              the backend is is doing a better job when left alone.
+-- 2005-02-17 Remove acceptance of Ada05 reserver words.
+--             The Code Must Now Be Both Ada95 and Ada05 Compliant.
+-- 2005-02-17 Enable Full Ada05
+-- 2006-08-07 Default CPU is Pentium 2
+-- 2006-10-23 Default CPU is pentium3
+--            Added "minimal" warning_level.
+--
+-- Some useful Compile switches valid as of GNAT 3.16w
+-- ===================================================
+-- -gnatq         - Don't quit, try semantics, even if parse errors
+-- -gnatE         - Dynamic elaboration checking mode enabled
+-- -gnatc         - Turn on constant conditional Warnings
+-- -gnatf         - Turn on unreferenced formal warnings
+-- -gnatf         - Turn on warnings for hiding variables
+-- -gnatl         - Turn on elaboration warnings
+-- -gnatp         - Turn on warnings for ineffective pragma inline
+-- -gnatr         - Turn on redundant construct warnings
+-- -gnate         - Treat all warnings as errors
+-- -gnatQ         - Don't quit, write ali/tree file even if compile errors
+-- -fstack-check  - Generate code to verify that you do not go
+--                  beyond the boundary of the stack.
+--                  See GCC manual for further info.
+-- -gnatwaL       - Generate optional warnings (Most of them above).
+--                  But suppress elaboration warnings. See GNAT UG.
+-- -gnato         - Numeric overflow checks.
+-- -gnatR[1..3]   - Level of rep spec info. 1 - least, 3 - most
+-- -pg            - Generate profiling information usable with the
+--                  gprof tool. Must link with -gmon and
+--                  use the gcrt2.o runtime.
+-- -O0            - No optimization (the default)
+-- -O1            - Medium level optimization
+-- -O2            - Full optimization
+-- -Os            - Full opimisation but dont trade size for speed.
+-- -O3            - Full optimization, and also attempt automatic
+--                  inlining of small subprograms within a unit
+--
+-- Some useful gnatmake swithces.
+-- ==============================
+-- -g             - Generate debugging information.
+-- -C             - Cache source mappings: invoke the compiler
+--                  with a mapping file.
+-- -s             - Recompile if compiler switches have changed.
+-- -k             - Keep going after compilation errors.
+-- -j n           - Use n number of processors processes to compile.
+--
+-- Some useful gnatlink switches.
+-- ==============================
+-- -f             - "On some targets, the command line length is limited,
+--                  and gnatlink will generate a separate file for the linker
+--                  if the list of object files is too long.
+--                  The -f flag forces this file to be generated even if
+--                  the limit is not exceeded. This is useful in some cases
+--                  to deal with special situations where the command line
+--                  length is exceeded." -- GNAT User Guide, 3.16w1
+--                  THIS PARAMETER SHOULD ALWAYS BE SPECIFIED.
+--
+-- ========================================================================
+with "apex.gpr";
+Project Syst_Default is
+   type OS_Type is ("Windows_NT","Linux","Solaris","Lynx");
+
+   -- type Build_Type is ("release", "debug");
+   type Build_Type is ("release", "debug","normal");
+
+   -- type Library_Kind_Type is ("static", "dynamic");
+   type Library_Kind_Type is ("static", "dynamic","None");
+
+   type Boolean is ("False", "True");
+   type Architecture_Type is ("i386",
+                              "pentium",
+                              "pentium2",
+                              "pentium3",
+                              "pentium4",
+                              "athlon",
+                              "athlon-mp",
+                              "athlon-fx");
+
+
+   OS            : OS_Type            := External ("OS", "Linux");
+   Architecture  : Architecture_Type  := External ("Architecture", "pentium3");
+   Library_Kind  : Library_Kind_Type  := External ("Library_Kind", "static");
+
+   LayoutChecks  : Boolean            := External ("LayoutChecks", "False");
+   Build         : Build_Type         := External ("Build", "debug");
+
+
+   Dynamic_Lib_Sufix := "_dyn";
+   Static_Lib_Sufix := "";
+
+   Release_Lib_Sufix := "";
+   Debug_Lib_Sufix := "d";
+   Normal_Lib_Sufix := "n";
+
+   -- ========================================================================
+   -- Directories
+   -- ========================================================================
+   for Source_Files use ();
+   for Source_Dirs use ();
+
+   for Object_Dir use "lib-obj/" & Build;
+   for Exec_Dir use External ("EXEC_DIR", ".");
+
+   -- ========================================================================
+   -- Library
+   -- ========================================================================
+
+   case Library_Kind is
+      when "static" =>
+         for Object_Dir use Project'Object_Dir & "-" & Library_Kind;
+         for Library_Dir use Project'Object_Dir & "/lib";
+         for Library_Src_Dir use Project'Object_Dir & "/src";
+         for Library_Kind use Library_Kind;
+      when "dynamic" =>
+         for Object_Dir use Project'Object_Dir & "-" & Library_Kind;
+         for Library_Dir use Project'Object_Dir & "/lib";
+         for Library_Src_Dir use Project'Object_Dir & "/src";
+         for Library_Kind use Library_Kind;
+         for Library_Auto_Init use "True";
+      when others =>
+         null;
+   end case;
+
+   -- ========================================================================
+   -- BUILDER
+   -- ========================================================================
+   package Builder is
+      for Default_Switches ("Ada") use
+        ("-C", -- Cache source mappings
+         "-k", -- Keep going after compilation errors
+         "-s", -- Recompile if compiler switches have changed
+         "-g", -- Enable debug information
+         "-j" &  External ("NUMBER_OF_PROCESSORS", "1"));
+   end Builder;
+
+   -- ========================================================================
+   -- COMPILER
+   -- ========================================================================
+   package Compiler is
+      for Default_Switches ("Ada") use
+        ("-gnatf",  -- Full source path in brief error messages
+         "-gnatq",  -- Don't quit, try semantics, even if parse errors
+         "-gnatQ",  -- Don't quit, write ali/tree file even if compile errors
+         "-gnat05", -- Full Ada05
+         "-gnato",  -- Overflow checking enabled.
+         "-fcallgraph-info=su",  -- Output callgraph information
+         "-fstack-usage", -- Output stack usage information
+         "-march=" & Architecture, -- Target processor
+         "-fstack-check",          -- Since we are running multiple threads.
+         "-gnateDOS=" & OS,
+         "-gnatwa"
+        );
+
+      for Default_Switches ("c") use ("-DOS=" & OS);
+      for Default_Switches ("c++") use ("-DOS=" & OS);
+
+      case LayoutChecks is
+         when "True" =>
+            for Default_Switches ("Ada") use
+              Compiler'Default_Switches ("Ada") &
+            ("-gnaty" &
+             "3" & --  check indentation
+             "a"  & --  check attribute casing
+             "A"  & --  check array attribute indexes
+             "b"  & --  check no blanks at end of lines
+             "c"  & --  check comment format
+             -- "d"  & --  check no DOS line terminators
+             "e"  & --  check end/exit labels present
+             "f"  & --  check no form feeds/vertical tabs in source
+             "h"  & --  check no horizontal tabs in source
+             "i"  & --  check if-then layout
+             "I"  & --  check mode in
+             "k"  & --  check casing rules for keywords
+             "l"  & --  check reference manual layout
+             --- "L4" & -- check max nest level < nn
+             "n"  & --  check casing of package Standard identifiers
+             "M128" &  -- check line length <= nn  characters
+             "o"  & --  check subprogram bodies in alphabetical order
+             "p"  & --  check pragma casing
+             "r"  & --  check casing for identifier references
+             "s"  & --  check separate subprogram specs present
+             "t"  & --  check token separation rules
+             -- "u"  & --  check no unnecessary blank lines
+             "x"  & -- check extra parens around conditionals
+             "");
+         when "False" =>
+            null;
+      end case;
+
+      case Build is
+         when "release" =>
+            for Default_Switches ("Ada") use
+              Compiler'Default_Switches ("Ada") &
+            ("-O2",    -- Full optimisation.
+             "-gnatn"); -- Inlining of subprograms.
+            for Default_Switches ("C") use
+              Compiler'Default_Switches ("C") & ("-O2");
+            for Default_Switches ("C++") use
+              Compiler'Default_Switches ("C++") & ("-O2");
+
+         when "debug" =>
+            for Default_Switches ("Ada") use
+              Compiler'Default_Switches ("Ada") &
+            ("-g",
+             "-gnatVa", -- Turn on all validity checking options
+             "-O0",     -- Optimisation level 0 (-Wuninitialized inefective)
+             "-gnato",  -- Enable overflow checking (off by default)
+             "-gnata"); -- Enable assertions.
+            for Default_Switches ("C") use
+              Compiler'Default_Switches ("C") & ("-O0", "-g");
+            for Default_Switches ("C++") use
+              Compiler'Default_Switches ("C++") & ("-O0", "-g");
+      end case;
+
+   end Compiler;
+
+   -- ========================================================================
+   -- LINKER
+   -- ========================================================================
+   package Linker is
+      case Build is
+         when "debug" =>
+            for Default_Switches ("Ada") use
+              Linker'Default_Switches ("Ada") &
+            ("-g");
+            for Default_Switches ("C") use
+              Linker'Default_Switches ("C") &
+            ("-g");
+            for Default_Switches ("C++") use
+              Linker'Default_Switches ("C++") &
+            ("-g");
+         when "release" =>
+            null;
+      end case;
+   end Linker;
+
+   -- ========================================================================
+   -- GNATLS
+   -- ========================================================================
+   package Gnatls is
+      for Switches use ("-v");
+   end Gnatls;
+
+   -- ========================================================================
+   -- Binder
+   -- ========================================================================
+   package Binder is
+      for Default_Switches ("Ada") use
+        ("-E"); -- Include Stack traceback in Exception message.
+   end Binder;
+
+   -- ========================================================================
+   -- NAMING
+   -- ========================================================================
+   package Naming renames APEX.Naming;
+
+   -- ========================================================================
+   -- IDE
+   -- ========================================================================
+   package Ide is
+      for VCS_Kind use "Subversion";
+   end Ide;
+
+   -- ========================================================================
+   -- Gnatstub
+   -- ========================================================================
+   package Gnatstub is
+      for Default_Switches ("ada") use ("-gnat05", "-t");
+   end Gnatstub;
+
+   package Pretty_Printer is
+      for Default_Switches ("ada") use ("-M128", "-c3", "-c4", "-A1", "-A2", "-A3", "-A4", "-e");
+   end Pretty_Printer;
+
+
+end Syst_Default;
+

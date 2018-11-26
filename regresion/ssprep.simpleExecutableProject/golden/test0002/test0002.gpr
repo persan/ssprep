@@ -1,0 +1,82 @@
+-- ---------------------------------------------
+--
+--
+--
+--
+-- ---------------------------------------------
+project test0002 is
+
+   for Source_Dirs use ("src");
+
+   type OS_Kind is ("Windows_NT","Linux");
+   type Boolean is ("True","False");
+
+   OS : OS_Kind := external ("OS","Linux");
+
+   for Object_Dir use ".obj";
+
+   for Main use ("test0002-main.adb");
+
+   for Exec_Dir use "bin";
+   -- ========================================================================
+   -- BUILDER
+   -- ========================================================================
+
+   package Builder is
+      for Default_Switches ("Ada") use
+        ("-C", -- Cache source mappings
+         "-k", -- Keep going after compilation errors
+         "-j" &  External ("NUMBER_OF_PROCESSORS", "1"));
+      for Default_Switches ("C") use Builder'Default_Switches ("Ada");
+      for Default_Switches ("C++") use Builder'Default_Switches ("Ada");
+
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("Ada") use
+        ("-gnatf",  -- Full source path in brief error messages
+         "-gnatq",  -- Don't quit, try semantics, even if parse errors
+         "-gnatQ",  -- Don't quit, write ali/tree file even if compile errors
+         "-gnat05", -- Full Ada05
+         "-gnato",  -- Overflow checking enabled.
+         "-fcallgraph-info=su",  -- Output callgraph information
+         "-fstack-usage", -- Output stack usage information
+         "-fstack-check",  -- Since we are running multiple threads.
+         "-gnaty" &
+             "3" & --  check indentation
+             "a"  & --  check attribute casing
+             "A"  & --  check array attribute indexes
+             "b"  & --  check no blanks at end of lines
+             "c"  & --  check comment format
+             "e"  & --  check end/exit labels present
+             "f"  & --  check no form feeds/vertical tabs in source
+             "h"  & --  check no horizontal tabs in source
+             "i"  & --  check if-then layout
+             "I"  & --  check mode in
+             "k"  & --  check casing rules for keywords
+             "l"  & --  check reference manual layout
+             "n"  & --  check casing of package Standard identifiers
+             "M256" &  -- check line length <= nn  characters
+             "p"  & --  check pragma casing
+             "r"  & --  check casing for identifier references
+             "s"  & --  check separate subprogram specs present
+             "t"  & --  check token separation rules
+             "x"  & -- check extra parens around conditionals
+             "");
+
+
+      for Default_Switches ("c") use ();
+      for Default_Switches ("c++") use ();
+   end Compiler;
+
+   package Binder is
+      for Default_Switches ("Ada") use
+        ("-E"); -- Include Stack traceback in Exception message.
+   end Binder;
+
+
+   package IDE is
+      for Vcs_Kind use "Subversion";
+   end IDE;
+
+end test0002;

@@ -1,0 +1,4 @@
+with "../trdi_code.gpr";
+project trdi_code.program is
+   for Source_Dirs use ();
+end trdi_code.program;

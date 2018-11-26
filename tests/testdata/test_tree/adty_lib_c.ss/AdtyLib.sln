@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdtyLib", "AdtyLib.vcproj", "{2190DAD8-45A8-454F-BDB5-85389E135FBE}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 1
+		SccProjectUniqueName0 = AdtyLib.vcproj
+		SccProjectName0 = \u0022$/adty_lib_c.ss/dev/nt.wrk\u0022,\u0020ABAAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{2190DAD8-45A8-454F-BDB5-85389E135FBE}.Debug.ActiveCfg = Debug|Win32
+		{2190DAD8-45A8-454F-BDB5-85389E135FBE}.Debug.Build.0 = Debug|Win32
+		{2190DAD8-45A8-454F-BDB5-85389E135FBE}.Release.ActiveCfg = Release|Win32
+		{2190DAD8-45A8-454F-BDB5-85389E135FBE}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

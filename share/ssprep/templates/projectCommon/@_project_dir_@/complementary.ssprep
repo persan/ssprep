@@ -1,0 +1,24 @@
+#!/bin/sh
+# More complementary components to build project
+
+ssprep ssprep.AUnitTests     -Droot=@_project_@.Tests -dparent=@_project_@ -dparent_path=../@_project_file_@.gpr
+ssprep ssprep.release_notes  -Dproject=@_project_@
+ssprep ssprep.INSTALL        -Dproject=@_project_@
+@@IF@@ @_WITH_ASIS_@ = True
+ssprep ssprep.ASIS -Droot=@_project_@
+@@END_IF@@
+@@IF@@ @_WITH_AWS_@ = True
+ssprep ssprep.AWS -Droot=@_project_@
+@@END_IF@@
+@@IF@@ @_WITH_XMLADA_@ = True
+ssprep ssprep.XMLAda -Droot=@_project_@
+@@END_IF@@
+@@IF@@ @_WITH_GTKADA_@ = True
+ssprep ssprep.GTKADA -Droot=@_project_@
+@@END_IF@@
+
+# ssprep ssprep.Regression
+
+
+
+

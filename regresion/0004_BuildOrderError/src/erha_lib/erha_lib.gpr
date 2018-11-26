@@ -1,0 +1,15 @@
+--=============================================================================
+-- Copyright (C)  2010 SAAB SYSTEMS
+--=============================================================================
+-- Builds liberha.so
+--
+-- To use gprbuild and compile do: export USE_SDK=False
+--
+-- LSEN 10-06-16 created
+--=============================================================================
+
+with "syst_default.ss/syst_default.gpr";
+project erha_lib is
+    for Source_Dirs use ();
+end erha_lib;
+

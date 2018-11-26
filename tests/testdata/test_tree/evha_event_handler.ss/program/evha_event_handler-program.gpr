@@ -1,0 +1,54 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+
+with "../evha_event_handler.gpr";
+Project Evha_Event_Handler.Program is
+
+
+   for Main use ("evha_program.2.ada",
+                 "evha_local_logger.2.ada",
+                 "evha_central_logger.2.ada",
+                 "evha_pi_send_program.2.ada",
+                 "evha_pi_show_program.2.ada");
+
+   for Source_Dirs use ( ".");
+
+   for Object_Dir use Evha_Event_Handler'Object_Dir;
+   for Exec_Dir use Evha_Event_Handler'Exec_Dir;
+
+   package Builder is
+      for Default_Switches ("Ada") use
+        Evha_Event_Handler.Builder'Default_Switches ("Ada");
+
+      for Executable ("evha_central_logger.2.ada")  use "evha_central_logger_m";
+      for Executable ("evha_local_logger.2.ada")    use "evha_local_logger_m";
+      for Executable ("evha_pi_send_program.2.ada") use "evha_pi_send";
+      for Executable ("evha_pi_show_program.2.ada") use "evha_pi_show";
+      for Executable ("evha_program.2.ada")         use "evha_main";
+
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("Ada") use
+        Evha_Event_Handler.Compiler'Default_Switches ("Ada");
+   end Compiler;
+
+   package Linker is
+      for Default_Switches ("Ada") use
+        Evha_Event_Handler.Linker'Default_Switches ("Ada");
+   end Linker;
+
+   package Naming renames Evha_Event_Handler.Naming;
+   --  package Naming is
+   --     Switches
+   --  end Naming;
+
+
+   package IDE renames Evha_Event_Handler.IDE;
+   --  package IDE is
+   --     Switches
+   --  end IDE;
+
+
+end Evha_Event_Handler.Program;

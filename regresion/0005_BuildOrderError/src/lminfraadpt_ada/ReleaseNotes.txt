@@ -1,0 +1,84 @@
+Release note for view:  lminfraadpt/.../lminfraadpt_ada
+======================
+
+Changes since latest release:
+==============================
+Release: 0.4.0  2010-06-16 /lsen
+
+This release requires lminfraadpt_cpp 0.4.0 or later
+
+1)
+Added a procedure. This uses IDL "ControlInterfaceStateResponse"
+
+   Procedure Send_Interface_State_Response
+     (InterfaceName        : in String;
+      Accepted             : in Boolean;
+      RequestId            : in Long_Long_Integer;
+      RequestingInstanceId : in String);
+
+Note: There is an old version with a similar name that uses IDL "InterfaceState"
+      It is still present but will be removed in a future release.
+
+   Procedure Send_InterfaceState_Response
+     (InterfaceName        : in String;
+      Accepted             : in Boolean;
+      Enabled              : in Boolean;
+      RequestId            : in Long_Long_Integer;
+      RequestingInstanceId : in String);
+
+2) Updated test program to test the new procedure
+
+Note: A line corresponding to this must be added to LmInfraAdpt.xml
+    <qos_profile name ="ControlInterfaceStateResponse"
+                 base_name="SaabGroup9LvLMInfrastructure::DefaultProfile"/>
+
+TODO in a future release
+1)
+Remove code for IDL "SoftwareComponentStatus",  "AdaptedComponentStatus"
+since they are only used by ERHA which uses own implementations.
+
+2) Remove Procedure Send_InterfaceState_Response
+
+=========================================================================
+Release: 0.3.0  2010-06-11 /lsen
+
+Removed BuiltInTests functions
+
+Note that BuiltInTests functions are also removed in lminfraadpt_cpp 0.3.0
+so when the new lminfraadpt_cpp 0.3.0 is used, previous versions of 
+lminfraadpt_ada will not compile.
+
+=========================================================================
+
+Release: 0.2.3  2010-03-22 /jath
+1) Corrected two errors
+
+Release: 0.2.2  2010-03-22 /jath
+1) Changed buffer handling, now only 1 buffer per message.
+2) Data is to be processed during rendezvous, enabling return values.
+3) The Service sends initial status on some of the interfaces.
+4) More comments on how to use the service package
+
+Release: 0.2.1  2010-03-04 /jath
+1) Updated for changes in lminfraadpt_cpp 0.2.2
+2) Removed one operation that is to be used by EVHA only 
+3) Updated test code
+4) More comments on how to use the service package
+
+Release: 0.1.6  2010-03-01 /jath
+1) Added package lminfraadpt.service
+
+Release: 0.1.5  2010-02-23 /jath
+1) tests/lminfraadpt_ada_test.gpr
+   Added "-ld" to liker switches. Without this we get:
+   libnddscore.so: unsolved ref dlopen,dlclose,dlerror,dlsym
+2) Made the Ada code more Ada-like.
+   Uses Ada.Strings.Unbounded for out parameters with variable length
+   Uses procedures that may raise an exception instead of functions with return codes.
+   Moved mapping of Ada-enumerations to C++-enum to the bodies, this enables
+   the mappings to change without recompiling code that uses the specs.
+
+Release: 0.1.4   2010-02-17 /lsen
+1) File private/lminfraadpt-builtintest.adb
+   Added "& Ascii.NUL" to some String parameters passed to C-code.
+   The C-code didn't like 'Not NULL terminiated' strings.

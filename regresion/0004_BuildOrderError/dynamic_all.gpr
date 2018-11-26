@@ -1,0 +1,72 @@
+--=============================================================================
+-- Copyright (C)  2002 SAAB TECH SYSTEMS AB
+--=============================================================================
+--    Creation Information:
+--          This file was automaticly generated
+--          Creation Date : 2003-10-20
+--
+--
+--
+--=============================================================================
+
+with "prog_common";
+with "adty_booch.ss/adty_booch.gpr";
+with "adty_utilities.ss/adty_utilities.gpr";
+with "adin/adin.gpr";
+with "alha_code.ss/alha_code.gpr";
+with "alarmproducer_ada/alarmproducer_ada.gpr";
+with "alarmproducer_cpp/alarmproducer_cpp.gpr";
+--with "almasproducer_cpp/almasproducer_cpp.gpr";
+with "atdi_code.ss/atdi_code.gpr";
+with "baty_code.ss/baty_code.gpr";
+--coco 3d begin
+with "coco_coco3d/coco_coco3d.gpr";
+with "coco_geotrans/coco_geotrans.gpr";
+with "geotrans2/geotrans2.gpr";
+with "jnigeotrans/jnigeotrans.gpr";
+--coco 3d end
+
+with "coco_code.ss/coco_code.gpr";
+with "coco_hidden_defs.ss/coco_hidden_defs.gpr";
+with "coco_hidden_ellipsoid.ss/coco_hidden_ellipsoid.gpr";
+with "coco_defs.ss/coco_defs.gpr";
+with "coco_hidden_code.ss/coco_hidden_code.gpr";
+with "ddsutil_ada/ddsutil_ada.gpr";
+with "ddsutil_cpp/ddsutil_cpp.gpr";
+with "dram_defs.ss/dram_defs.gpr";
+with "dram_code.ss/dram_code.gpr";
+with "dram_ada/dram_ada.gpr";
+with "dram_cpp/dram_cpp.gpr";
+with "evha_event_handler.ss/evha_event_handler.gpr";
+with "evha_trace.ss/evha_trace.gpr";
+with "erha_lib/erha_lib.gpr";
+with "fise_code.ss/fise_code.gpr";
+with "ipcc/ipcc_test.gpr";
+with "ipco_code.ss/ipco_code.gpr";
+with "lminfraadpt_ada/lminfraadpt_ada.gpr";
+with "lminfraadpt_cpp/lminfraadpt_cpp.gpr";
+with "math_code.ss/math_code.gpr";
+with "math_elementary.ss/math_elementary.gpr";
+with "math_geometry.ss/math_geometry.gpr";
+with "math_matrix.ss/math_matrix.gpr";
+with "math_interpolation.ss/math_interpolation.gpr";
+with "math_random.ss/math_random.gpr";
+with "opda_code.ss/opda_code.gpr";
+with "piut_code.ss/piut_code.gpr";
+with "sock_code.ss/sock_code.gpr";
+--with "syco_code.ss/syco_code.gpr";
+with "sypa_code.ss/sypa_code.gpr";
+with "sypa_symb.ss/sypa_symb.gpr";
+with "syst_default.ss/syst_default.gpr";
+--with "tool/tool_prog.gpr";
+with "taco_code.ss/taco_code.gpr";
+--with "tiha/tiha_prog.gpr";
+with "tiha_code.ss/tiha_code.gpr";
+with "tipr_code.ss/tipr_code.gpr";
+with "trdi_code.ss/trdi_code.gpr";
+with "xtco/xtco.gpr";
+with "xtco_code.ss/xtco_code.gpr";
+project dynamic_all  is
+   for Source_Dirs use ();
+
+end dynamic_all;

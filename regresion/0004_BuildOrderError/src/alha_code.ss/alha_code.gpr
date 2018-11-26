@@ -1,0 +1,34 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          This file was automatically generated
+--          Using         : make_gpr 1.2w (2005-06-17)
+--          By User       : rifr
+--          Creation Date : 2006-04-27
+-- 2006-05-12 PrSa Added package Binder
+--
+--
+--
+--=============================================================================
+
+with "adin_code.ss/adin_code.gpr";
+with "adty_booch.ss/adty_booch.gpr";
+with "baty_code.ss/baty_code.gpr";
+with "evha_event_handler.ss/evha_event_handler.gpr";
+with "fise_code.ss/fise_code.gpr";
+with "ipco_code.ss/ipco_code.gpr";
+with "sypa_code.ss/sypa_code.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "tipr_code.ss/tipr_code.gpr";
+with "alarmproducer_ada/alarmproducer_ada.gpr";
+--with "ddsutil_ada/ddsutil_ada.gpr";
+--with "org_omg/org-omg.gpr";
+--with "org.omg.almas_datamodel.dds_ada/org-omg-almas_datamodel-dds_ada.gpr";
+--with "org.omg.almas_management.dds_ada/org-omg-almas_management-dds_ada.gpr";
+--with "com.saabgroup.enterprisebus.basictypes.dds_ada/com-saabgroup-enterprisebus-basictypes-dds_ada.gpr";
+project alha_code is
+   for Source_Dirs use ();
+
+
+end alha_code;

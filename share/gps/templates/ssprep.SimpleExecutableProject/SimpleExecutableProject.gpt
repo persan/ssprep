@@ -1,0 +1,16 @@
+# Header
+Name: Simple Executabe Project
+Category: ssprep
+
+post_hook:post_hook.py
+
+# Variables
+Project_Name : demo  : The name of the project.
+WITH_AWS     : False : True If AWS template is needed
+WITH_ASIS    : False : True If ASIS template is needed
+WITH_XMLADA  : False : True If XMLAda  is needed
+
+# Description
+[Description]
+A fairly complete project structure with
+ unit tests and other bells and wistles.

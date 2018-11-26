@@ -1,0 +1,19 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB SYSTEMS
+--=============================================================================
+--
+--
+--
+--=============================================================================
+with "baty_code.ss/baty_code.gpr";
+with "tiha_code.ss/tiha_code.gpr";
+with "syst_default.ss/syst_default.gpr";
+-- with "dds.gpr";
+-- with "dds-libnddsada.gpr";
+-- with "com.hcm.hcmenterprisebus.common.structures.dds_ada/com-hcm-hcmenterprisebus-common-structures-dds_ada.gpr";
+
+-- with "org.omg.timebase.dds_ada/org-omg-timebase-dds_ada.gpr";
+Project tipr_code extends "tipr_base.ss/tipr_base.gpr" is
+   for Source_Dirs use ();
+
+end Tipr_Code;

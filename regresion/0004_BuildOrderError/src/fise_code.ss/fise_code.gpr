@@ -1,0 +1,20 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB TECH SYSTEMS AB
+--=============================================================================
+--
+--
+--=============================================================================
+with "adin_code.ss/adin_code.gpr";
+with "adty_booch.ss/adty_booch.gpr";
+with "adty_utilities.ss/adty_utilities.gpr";
+with "baty_code.ss/baty_code.gpr";
+with "evha_event_handler.ss/evha_event_handler.gpr";
+with "ipco_code.ss/ipco_code.gpr";
+with "sypa_symb.ss/sypa_symb.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "tipr_code.ss/tipr_code.gpr";
+with "iman/iman.gpr";
+Project fise_code is
+   for Source_Dirs use ();
+--             for Library_Name use Project'Library_Name & Syst_Default.Dynamic_Lib_Sufix;
+end fise_code;

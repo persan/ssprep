@@ -1,0 +1,20 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          This file was automatically generated
+--          Using         : make_gpr 1.2w (2005-06-17)
+--          By User       : rifr
+--          Creation Date : 2005-12-29
+--
+--
+--
+--=============================================================================
+with "baty_code.ss/baty_code.gpr";
+with "coco_code.ss/coco_code.gpr";
+with "coco_defs.ss/coco_defs.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "tipr_code.ss/tipr_code.gpr";
+project math_code is
+   for Source_Dirs use ();
+end Math_Code;

@@ -1,0 +1,19 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          This file was automatically generated
+--          Using         : make_gpr 1.3 (2006-08-24)
+--          By User       : stoma
+--          Creation Date : 2006-11-10
+--
+--
+--
+--=============================================================================
+
+with "syst_default.ss/syst_default.gpr";
+Project math_elementary is
+   for Source_Dirs use ();
+
+
+end math_elementary;

@@ -1,0 +1,9 @@
+project Apex is
+    for Source_Dirs use ();
+    package Naming is
+      for Specification_Suffix ("ada") use ".1.ada";
+      for Implementation_Suffix ("ada") use ".2.ada";
+      for Separate_Suffix use ".2.ada";
+      for Dot_Replacement use ".";
+   end Naming;
+end Apex;

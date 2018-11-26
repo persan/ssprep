@@ -1,0 +1,5 @@
+with "alarmproducer_cpp/alarmproducer_cpp.gpr";
+with "syst_default.ss/syst_default.gpr";
+project alarmproducer_ada is
+   for Source_Dirs use ();
+end alarmproducer_ada;

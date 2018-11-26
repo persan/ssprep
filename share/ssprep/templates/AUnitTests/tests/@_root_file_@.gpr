@@ -1,0 +1,31 @@
+@@INCLUDE@@ ../../Common/FileHeader.txt  @_root_file_@.gpr
+with "@_parent_path_@";
+with "aunit.gpr";
+Project @_root_@ is
+   for Main use ("@_root_file_@-testharnesses-test_all.adb");
+
+   for Source_Dirs use (".",
+                        "testcases");
+
+   for Object_Dir use @_parent_@'Object_Dir;
+   for Exec_Dir use @_parent_@'Exec_Dir;
+
+   for Library_Dir use @_parent_@'Library_Dir;
+
+   package Builder is
+      for Default_Switches ("ada") use
+        @_parent_@.Builder'Default_Switches ("ada");
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("ada") use
+        @_parent_@.Compiler'Default_Switches ("ada") & ("-gnaty-s");
+   end Compiler;
+
+   package Binder is
+      for Default_Switches ("ada") use
+        @_parent_@.Binder'Default_Switches ("ada");
+   end Binder;
+
+end @_root_@;
+

@@ -1,0 +1,15 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB SYSTEMS
+--=============================================================================
+-- Builds libosif.so
+--
+-- LSEN 10-08-25 added with "erha_lib/erha_lib.gpr";
+--=============================================================================
+
+with "syst_default.ss/syst_default.gpr";
+with "erha_lib/erha_lib.gpr";
+
+project osif is
+   for Source_Dirs use ();
+end osif;
+

@@ -1,0 +1,10 @@
+with "syst_default.ss/syst_default.gpr";
+project geotrans2 is
+   for Source_Dirs use ();
+--     case os is
+--        when "Windows_NT" =>
+--           for Source_Dirs use project'Source_Dirs & (Base_dt_cc & "win");
+--        when others =>
+--           for Source_Dirs use project'Source_Dirs & (Base_dt_cc & "unix");
+--     end case;
+end geotrans2;

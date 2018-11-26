@@ -1,0 +1,15 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB TECH SYSTEMS AB
+--=============================================================================
+--
+-- LSEN 10-09-07 added with "osif/osif.gpr"
+-- LSEN 09-10-28 removed with adin/osif
+--=============================================================================
+with "osif/osif.gpr";
+-- with "adin/adin.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "libjni.gpr";
+project tiha is
+   for Source_Dirs use ();
+end tiha;
+

@@ -1,0 +1,18 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB TECH SYSTEMS AB
+--=============================================================================
+--    Creation Information:
+--          This file was automaticly generated
+--          Using         : make_gpr 1.2w (2005-04-13)
+--          By User       : prsa
+--          Creation Date : 2005-04-13
+--
+--
+--
+--=============================================================================
+with "adin/adin.gpr";
+with "baty_code.ss/baty_code.gpr";
+with "syst_default.ss/syst_default.gpr";
+project adin_code is
+   for Source_Dirs use ();
+end adin_code;

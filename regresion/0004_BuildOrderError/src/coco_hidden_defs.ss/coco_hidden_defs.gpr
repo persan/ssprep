@@ -1,0 +1,10 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB SYSTEMS
+--=============================================================================
+--
+--=============================================================================
+with "baty_code.ss/baty_code.gpr";
+with "syst_default.ss/syst_default.gpr";
+project coco_hidden_defs is
+   for Source_Dirs use ();
+end coco_hidden_defs;

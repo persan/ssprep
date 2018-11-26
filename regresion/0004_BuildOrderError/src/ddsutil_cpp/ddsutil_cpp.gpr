@@ -1,0 +1,27 @@
+-- ---------------------------------------------
+--
+--
+--
+--
+-- ---------------------------------------------
+--  with "dds.gpr";
+--  with "dds-libnddscpp.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "osif/osif.gpr";
+project ddsutil_cpp is
+   for Source_Dirs use ();
+--     package Compiler is
+--        for Driver("C++") use "g++";
+--        --for Include_Path        ("C++") use  Syst_Default.Compiler'Include_Path("C++");
+--        --for Include_Path        ("C") use Syst_Default.Compiler'Include_Path("C");
+--        case Syst_Default.Sdk_Library_Kind is
+--           when "relocatable" =>
+--  	      for Default_switches ("C++") use Syst_Default.Compiler'Default_switches ("C++") &
+--              --("-fvisibility=hidden","-DUSE_EXPORTS") &
+--              dds.Compiler'Default_switches ("C++");
+--              when "static"  =>
+--  	      for Default_switches ("C++") use Syst_Default.Compiler'Default_switches ("C++");
+--           end case;
+--        for Default_switches ("C") use Syst_Default.Compiler'Default_switches ("C");
+--     end Compiler;
+end ddsutil_cpp;

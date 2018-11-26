@@ -1,0 +1,16 @@
+--=============================================================================
+-- Copyright (C)  2002 SAAB TECH SYSTEMS AB
+--=============================================================================
+--    Creation Information:
+--
+--    LSEN 2009-05-07 created
+--=============================================================================
+with "baty_code.ss/baty_code.gpr";
+with "adin/adin.gpr";
+with "adin_code.ss/adin_code.gpr";
+with "evha_event_handler.ss/evha_event_handler.gpr";
+with "tipr_code.ss/tipr_code.gpr";
+with "syst_default.ss/syst_default.gpr";
+Project sock_code is
+   for Source_Dirs use ();
+end sock_code;

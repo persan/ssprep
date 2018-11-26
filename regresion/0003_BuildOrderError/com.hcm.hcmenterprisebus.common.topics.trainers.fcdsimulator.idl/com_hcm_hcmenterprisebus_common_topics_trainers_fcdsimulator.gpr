@@ -1,0 +1,23 @@
+-- generates error
+with "com.hcm.hcmenterprisebus.common.topics.trainers.idl/com_hcm_hcmenterprisebus_common_topics_trainers.gpr";
+with "com.hcm.hcmenterprisebus.common.structures.basictypes.idl/com_hcm_hcmenterprisebus_common_structures_basictypes.gpr";
+with "com.hcm.hcmenterprisebus.common.structures.fcdcommontypes.idl/com_hcm_hcmenterprisebus_common_structures_fcdcommontypes.gpr";
+with "com.hcm.hcmenterprisebus.common.structures.fcdsimulatortypes.idl/com_hcm_hcmenterprisebus_common_structures_fcdsimulatortypes.gpr";
+limited with "com.hcm.hcmenterprisebus.common.structures.fcdsimulatortarget.idl/com_hcm_hcmenterprisebus_common_structures_fcdsimulatortarget.gpr";
+
+project com_hcm_hcmenterprisebus_common_topics_trainers_fcdsimulator is
+   for Languages use ("Idl");
+   for Object_Dir use ".obj/generate";
+
+  for Externally_Built use "True";
+
+   package Compiler is
+      for Driver("Idl") use "nddsgen";
+      for Required_Switches ("Idl") use ("-replace","-d" , "../../src");
+      for Include_Switches ("Idl") use ("-I");
+   end Compiler;
+   package Naming is
+      for Body_Suffix("Idl") use ".idl";
+   end Naming;
+
+end com_hcm_hcmenterprisebus_common_topics_trainers_fcdsimulatortar;

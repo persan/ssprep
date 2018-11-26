@@ -1,0 +1,83 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          This file was automatically generated
+--          Using         : make_gpr 1.3 (2006-08-24)
+--          By User       : stoma
+--          Creation Date : 2006-10-12
+--          Clean up of project file.
+--
+--
+--
+--=============================================================================
+
+with "syst_default.ss/syst_default.gpr";
+Project Math_Matrix is
+
+
+   for Source_Dirs use ("shared");
+   for Object_Dir use Syst_Default'Object_Dir;
+   for Exec_Dir use Syst_Default'Exec_Dir;
+
+
+   Name    := "math_matrix";
+
+   case Syst_Default.Library_Kind is
+      when "static" | "dynamic" =>
+         for Library_Kind    use Syst_Default'Library_Kind;
+         for Library_Dir     use Syst_Default'Library_Dir;
+         for Library_Src_Dir use Syst_Default'Library_Src_Dir;
+         for Library_Name use Name;
+         case Syst_Default.Library_Kind is
+            when "dynamic" =>
+               for Library_Auto_Init use "True";
+               for Library_Name use Project'Library_Name & Syst_Default.Dynamic_Lib_Sufix;
+               for Library_Interface use ("matrix_generic");
+            when "static" =>
+               for Library_Name use Project'Library_Name & Syst_Default.Static_Lib_Sufix;
+            when "None" =>
+               null;
+         end case;
+
+         case Syst_Default.Build is
+            when "release" =>
+               for Library_Name use Project'Library_Name & Syst_Default.Release_Lib_Sufix;
+            when "debug" =>
+               for Library_Name use Project'Library_Name & Syst_Default.Debug_Lib_Sufix;
+            when "normal" =>
+               for Library_Name use Project'Library_Name & Syst_Default.Normal_Lib_Sufix;
+         end case;
+
+      when "None" =>
+         null;
+   end case;
+
+   package Builder is
+      for Default_Switches ("Ada") use
+        Syst_Default.Builder'Default_Switches ("Ada");
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("Ada") use
+        Syst_Default.Compiler'Default_Switches ("Ada");
+   end Compiler;
+
+   package Linker is
+      for Default_Switches ("Ada") use
+        Syst_Default.Linker'Default_Switches ("Ada");
+   end Linker;
+
+   package Naming renames Syst_Default.Naming;
+   --  package Naming is
+   --     Switches
+   --  end Naming;
+
+
+   package IDE renames Syst_Default.IDE;
+   --  package IDE is
+   --     Switches
+   --  end IDE;
+
+
+end Math_Matrix;

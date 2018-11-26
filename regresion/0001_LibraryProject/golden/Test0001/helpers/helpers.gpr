@@ -1,0 +1,17 @@
+with "../test0001.gpr";
+
+project Helpers is
+
+   for Object_Dir use "lib-obj";
+   for Exec_Dir use ".";
+   for Main use ("checkrelease.adb");
+
+   package Builder is
+      for Default_Switches ("ada") use ("-k");
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("ada") use ("-gnatwa", "-gnat05", "-g");
+   end Compiler;
+
+end Helpers;

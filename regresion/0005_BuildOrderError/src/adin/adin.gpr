@@ -1,0 +1,13 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB TECH SYSTEMS AB
+--=============================================================================
+--
+--=============================================================================
+with "osif/osif.gpr";
+with "erha_lib/erha_lib.gpr";
+
+with "syst_default.ss/syst_default.gpr";
+project adin is
+   for Source_Dirs use ();
+end adin;
+

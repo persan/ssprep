@@ -1,0 +1,113 @@
+with "apex.gpr";
+with "syst_default.gpr";
+project syst_default_legacy is
+
+        for Languages use ();
+        for Source_Dirs use ();
+        for Object_Dir use syst_default'Exec_Dir;
+        for Exec_Dir use syst_default'Exec_Dir;
+
+        package Builder renames Syst_Default.Builder;
+
+        -- ========================================================================
+        -- COMPILER
+        -- ========================================================================
+        package Compiler is
+                for Default_Switches("Ada") use
+                  ("-gnatf",  -- Full source path in brief error messages
+                  "-gnatwa", -- Turn on all optional warnings (except d,h,l)
+                  "-gnatq",  -- Don't quit, try semantics, even if parse errors
+                  "-gnatQ",  -- Don't quit, write ali/tree file even if compile errors
+                  "-gnat05", -- Full Ada05
+                  "-fcallgraph-info=su",  -- Output callgraph information
+                  "-fstack-usage",-- Output stack usage information
+                  "-march=" & Syst_Default.Architecture , -- Target processor
+                  "-gnatX"   -- Language extensions permitted (Mixed C++/Ada05 development)
+                  --  "-fstack-check",  -- Since we are running multiple threads.
+                 );
+
+                case Syst_Default.LayoutChecks is
+                when "True" =>
+                        for Default_Switches("Ada") use
+                          Compiler'Default_Switches("Ada") & ("-gnaty" &
+                                                              "3"& --  check indentation
+                                                              "a"  & --  check attribute casing
+                                                              "A"  & --  check array attribute indexes
+                                                              "b"  & --  check no blanks at end of lines
+                                                              "c"  & --  check comment format
+                                                              -- "d"  & --  check no DOS line terminators
+                                                              "e"  & --  check end/exit labels present
+                                                              "f"  & --  check no form feeds/vertical tabs in source
+                                                              "h"  & --  check no horizontal tabs in source
+                                                              "i"  & --  check if-then layout
+                                                              "I"  & --  check mode in
+                                                              "k"  & --  check casing rules for keywords
+                                                              "l"  & --  check reference manual layout
+                                                              --- "L4" & -- check max nest level < nn
+                                                              "n"  & --  check casing of package Standard identifiers
+                                                              -- "M79"  -- check line length <= nn  characters
+                                                              "o"  & --  check subprogram bodies in alphabetical order
+                                                              "p"  & --  check pragma casing
+                                                              "r"  & --  check casing for identifier references
+                                                              "s"  & --  check separate subprogram specs present
+                                                              "t"  & --  check token separation rules
+                                                              -- "u"  & --  check no unnecessary blank lines
+                                                              "x"  & -- check extra parens around conditionals
+                                                              "");
+                when "False" =>
+                        null;
+                end case;
+                case Syst_Default.Build is
+                when "release" =>
+                        for Default_Switches("Ada") use
+                          Compiler'Default_Switches("Ada") &
+                        ("-Os",    -- Full optimisation dont trade size for speed.
+                         "-Wuninitialized", -- Use backend to find uninitialized
+                         "-gnatn");-- Inlining of subprograms.
+
+                when "debug" =>
+                        for Default_Switches("Ada") use
+                          Compiler'Default_Switches("Ada") &
+                        ("-g",
+                         "-gnatVa", -- Turn on all validity checking options
+                         "-O0",     -- Optimisation level 0 (-Wuninitialized inefective)
+                         "-gnato",  -- Enable overflow checking (off by default)
+                         "-gnata"); -- Enable assertions.
+
+                when "normal" =>
+                        for Default_Switches("Ada") use
+                          Compiler'Default_Switches("Ada") &
+                        ("-gnatVa", --turn on all validity checking options
+                         "-Wuninitialized", -- Use backend to find uninitialized
+                         "-O1");     --Optimisation level 1
+                when "gcov" | "gperf" =>
+                        for Default_Switches("Ada") use
+                          Compiler'Default_Switches("Ada");
+                end case;
+
+                case Syst_Default.Warning_Level is
+                when "Elaboration" =>
+                        for Default_Switches("Ada") use
+                          Compiler'Default_Switches("Ada") & ("-gnatwl");
+                        -- Warn for possible elaboration problem.
+                when "Full" =>
+                        for Default_Switches("Ada") use
+                          Compiler'Default_Switches("Ada") & ("-gnatwbdhl");
+                        -- Warn for every thing.
+                when  "Default" =>
+                        for Default_Switches("Ada") use
+                          Compiler'Default_Switches("Ada");
+                end case;
+        end Compiler;
+        package Linker renames Syst_Default.linker;
+
+        package Gnatls renames Syst_Default.Gnatls;
+
+        package Binder renames Syst_Default.Binder;
+
+        package Naming renames Apex.Naming;
+
+        package Ide renames Syst_Default.Ide;
+
+end syst_default_legacy;
+

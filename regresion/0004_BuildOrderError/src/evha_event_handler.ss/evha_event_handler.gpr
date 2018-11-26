@@ -1,0 +1,16 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+--
+--=============================================================================
+
+with "adin_code.ss/adin_code.gpr";
+with "baty_code.ss/baty_code.gpr";
+with "ipco_code.ss/ipco_code.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "tipr_code.ss/tipr_code.gpr";
+Project evha_event_handler is
+   for Source_Dirs use ();
+
+
+end Evha_Event_Handler;

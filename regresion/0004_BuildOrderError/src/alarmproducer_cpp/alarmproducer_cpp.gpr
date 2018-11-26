@@ -1,0 +1,10 @@
+--  with "dds-libnddscpp.gpr";
+--  with "dds.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "osif/osif.gpr";
+with "ddsutil_cpp/ddsutil_cpp.gpr";
+with "tiha/tiha.gpr";
+-- with "com.hcm.hcmenterprisebus.common.topics.tactical.dds_cpp/com-hcm-hcmenterprisebus-common-topics-tactical-dds_cpp.gpr";
+project alarmproducer_cpp is
+   for Source_Dirs use ();
+end alarmproducer_cpp;

@@ -1,0 +1,5 @@
+with "trdi_code.ss/program/trdi_code-program.gpr";
+project dynamic_all  is
+   for Source_Dirs use ();
+
+end dynamic_all;

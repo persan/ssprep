@@ -1,0 +1,6 @@
+with "geotrans2/geotrans2.gpr";
+with "libjni.gpr";
+with "syst_default.ss/syst_default.gpr";
+project jnigeotrans is
+   for Source_Dirs use ();
+end jnigeotrans;

@@ -1,0 +1,31 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          This file was automatically generated
+--          Using         : make_gpr 1.2w (2005-06-17)
+--          By User       : rifr
+--          Creation Date : 2006-04-26
+--
+--
+--
+--=============================================================================
+--  with "dds.gpr";
+--  with "com.hcm.hcmenterprisebus.common.structures.dds_ada/com-hcm-hcmenterprisebus-common-structures-dds_ada.gpr";
+--  with "com.hcm.hcmenterprisebus.common.topics.tactical.dds_ada/com-hcm-hcmenterprisebus-common-topics-tactical-dds_ada.gpr";
+--  with "com.hcm.hcmenterprisebus.common.topics.tactical.datafusion.dds_ada/com-hcm-hcmenterprisebus-common-topics-tactical-datafusion-dds_ada.gpr";
+--  with "com.hcm.hcmenterprisebus.common.topics.tactical.dfspecifictrack.dds_ada/com-hcm-hcmenterprisebus-common-topics-tactical-dfspecifictrack-dds_ada.gpr";
+--  with "com.hcm.hcmenterprisebus.common.topics.tactical.upx43upx505.iffspecifictrack.dds_ada/com-hcm-hcmenterprisebus-common-topics-tactical-upx43upx505-iffspecifictrack-dds_ada.gpr";
+with "baty_code.ss/baty_code.gpr";
+with "coco_code.ss/coco_code.gpr";
+with "coco_defs.ss/coco_defs.gpr";
+with "evha_event_handler.ss/evha_event_handler.gpr";
+with "ipco_code.ss/ipco_code.gpr";
+with "math_elementary.ss/math_elementary.gpr";
+with "piut_code.ss/piut_code.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "sypa_code.ss/sypa_code.gpr";
+with "tipr_code.ss/tipr_code.gpr";
+project trdi_code is
+   for Source_Dirs use ();
+end trdi_code;

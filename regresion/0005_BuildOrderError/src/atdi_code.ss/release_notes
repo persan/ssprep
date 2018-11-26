@@ -1,0 +1,57 @@
+Release note for view: atdi/atdi_code.ss/  branch Canaccs
+=====================
+
+Changes since latest release    Canaccs branch
+============================
+opda_code.ss/rel/canaccs.1.1.3.rel: 2010-04-13 /BRGE
+-----------------------------------------------
+Corrected initial value for the validity of the internal attitude record, before storing values in it.
+
+opda_code.ss/rel/canaccs.1.1.2.rel: 2010-04-13 /BRGE
+-----------------------------------------------
+Added enum value GPS and NONE to tod_stat_source enumeration type.
+
+opda_code.ss/rel/canaccs.1.1.1.rel: 2010-04-09 /BRGE
+-----------------------------------------------
+Corrected startup procedure. Ok variable was given a value at INIT DDS.
+When Invalid all values recieved from DDS topic the attitude data is set to invalid.
+
+opda_code.ss/rel/canaccs.1.1.0.rel: 2010-03-12 /BRGE
+-----------------------------------------------
+Updated .gpr file to use the new structure for finding customer own ship data topics
+
+opda_code.ss/rel/canaccs.1.0.4.rel: 2010-02-17 /BRGE
+-----------------------------------------------
+Modified so that atdi starts correctly at start of interface from user.
+
+release 1.0.2.rel and 1.0.3.rel are integration modification releases
+-----------------------------------------------
+No comment
+
+opda_code.ss/rel/canaccs.1.0.1.rel: 2010-02-01 /BRGE
+-----------------------------------------------
+Added compatibility files in gpr file.
+
+opda_code.ss/rel/canaccs.1.0.0.rel: 2010-01-28 /BRGE
+-----------------------------------------------
+Complete functionality. must be saved because new virtaul machine
+
+opda_code.ss/rel/canaccs.0.2.1.rel: 2009-12-16 /BRGE
+-----------------------------------------------
+Removed project names and modified .gpr file
+
+opda_code.ss/rel/canaccs.0.2.0.rel: 2009-12-15 /BRGE
+-----------------------------------------------
+Converted 1.ada and 2.ada to .ads and .adb
+
+opda_code.ss/rel/canaccs.0.1.1.rel: 2009-12-14 /BRGE
+-----------------------------------------------
+Dummy release for converting 1.ada and 2.ada to .ads and .adb
+
+opda_code.ss/rel/canaccs.0.1.0.rel: 2009-10-21 /BRGE
+-----------------------------------------------
+Derived from Mk4.2.4.0.rel for implementation of retrieving ATDI data from DDS.
+Removed not allowed words.
+Only user interface to read data with needed code on private exists in this release. 
+No connection to DDS exist.
+

@@ -1,0 +1,18 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB AB
+--=============================================================================
+--    Creation Information:
+--          This file was generated
+--          By User       : stjwyu
+--          Creation Date : 2009-06-08
+--
+--
+--
+--=============================================================================
+--  with "com.saabgroup/com-saabgroup.gpr";
+with "syst_default.ss/syst_default.gpr";
+--  with "dds.gpr";
+--  with "dds-libnddsada.gpr";
+project ddsutil_ada is
+   for Source_Dirs use ();
+end ddsutil_ada;

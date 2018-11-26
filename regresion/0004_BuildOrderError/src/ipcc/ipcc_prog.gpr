@@ -1,0 +1,55 @@
+with "osif/osif.gpr";
+-- with "adin/adin.gpr";
+with "ipcc/ipcc.gpr";
+with "syst_default.ss/syst_default.gpr";
+project ipcc_prog is
+
+
+   for Languages use ("C++");
+
+   for Source_Dirs use ("util/ipcc_agent"
+                        ,"util/ipcc_control"
+                        ,"util/show_shm"
+                       );
+   for Main use ("ipcc_agent"
+                ,"ipc_ctrl_main"
+                ,"show_shm"
+                );
+
+  Build_Dir := "lib-obj/" & Syst_Default.Build & "-" & Project'Library_kind;
+  Build_Dir := Syst_Default.Result_Dir & "/" & project'Name & ".ss/" & Build_dir;
+  for Object_Dir use build_dir & "/obj";
+
+   package Builder is
+      for Executable ("ipc_ctrl_main.cpp") use  "ipcc_control";
+   end Builder;
+
+   package Linker is
+      case Syst_Default.Os is
+         when "Linux" =>
+            for Default_Switches ("C++") use
+              Syst_Default.Linker'Default_Switches ("C++") ;
+         when others =>
+            for Default_Switches ("C++") use
+              Syst_Default.Linker'Default_Switches ("C++") & "-lws2_32";
+            null;
+      end case;
+   end Linker;
+
+   package Compiler is
+      for Driver("C++") use "g++";
+      for Include_Path        ("C++") use  Syst_Default.Compiler'Include_Path("C++");
+      for Include_Path        ("C") use Syst_Default.Compiler'Include_Path("C");
+      for Default_switches ("C++") use Syst_Default.Compiler'Default_switches ("C++");
+      for Default_switches ("C") use Syst_Default.Compiler'Default_switches ("C");
+   end Compiler;
+
+   package Naming is
+      for Specification_Suffix ("C++") use ".h";
+   end Naming;
+   package IDE is
+
+   end IDE;
+
+end ipcc_prog;
+

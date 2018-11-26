@@ -1,0 +1,14 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB SYSTEMS
+--=============================================================================
+--
+--
+--
+--=============================================================================
+with "baty_code.ss/baty_code.gpr";
+with "tiha_code.ss/tiha_code.gpr";
+with "syst_default.ss/syst_default.gpr";
+Project tipr_base is
+   for Source_Dirs use ();
+
+end Tipr_base;

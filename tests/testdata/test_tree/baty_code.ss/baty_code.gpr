@@ -1,0 +1,105 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          This file was automatically generated
+--          Using         : make_gpr 1.3 (2006-08-24)
+--          By User       : stoma
+--          Creation Date : 2006-10-12
+--
+--
+--
+--=============================================================================
+
+with "adty_booch.ss/adty_booch.gpr";
+with "math_elementary.ss/math_elementary.gpr";
+with "math_geometry.ss/math_geometry.gpr";
+with "math_matrix.ss/math_matrix.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "win32ada.gpr";
+Project Baty_Code is
+
+
+   Name :=  "Baty_Code";
+   for Source_Dirs use ("shared",
+                        "private");
+   for Object_Dir use Syst_Default'Object_Dir;
+   
+   case Syst_Default.Library_Kind is
+      when "static" | "dynamic" =>
+         for Library_Kind    use Syst_Default'Library_Kind;
+         for Library_Dir     use Syst_Default'Library_Dir;
+         for Library_Src_Dir use Syst_Default'Library_Src_Dir;
+         for Library_Name use Name;
+         case Syst_Default.Library_Kind is
+            when "dynamic" =>
+               for Library_Auto_Init use "True";
+               for Library_Name use Project'Library_Name & Syst_Default.Dynamic_Lib_Sufix;
+               for Library_Interface use ("baty",
+                                          "baty_bounded_string",
+                                          "baty_byte_string_utilities",
+                                          "baty_convert",
+                                          "baty_integer_utilities",
+                                          "baty_network_string_utilities",
+                                          "baty_version",
+                                          "mathematical_constants",
+                                          "si_long_string_utilities",
+                                          "si_long_types",
+                                          "si_string_utilities",
+                                          "si_types",
+                                          -------------------------------
+                                          "Baty_Network_Angle_Conversion",
+                                          "Baty_Network_Bit_Conversion",
+                                          "Baty_Network_Float_Conversion",
+                                          "baty_network_ieee_float_conversion",
+                                          "Baty_Network_Integer_Conversion",
+                                          "Baty_Angle_Conversion",
+                                          "Baty_Bit_Conversion",
+                                          "Baty_Float_Conversion",
+                                          "Baty_Integer_Conversion");
+            when "static" =>
+               for Library_Name use Project'Library_Name & Syst_Default.Static_Lib_Sufix;
+            when "None" =>
+               null;
+         end case;
+
+         case Syst_Default.Build is
+            when "release" =>
+               for Library_Name use Project'Library_Name & Syst_Default.Release_Lib_Sufix;
+            when "debug" =>
+               for Library_Name use Project'Library_Name & Syst_Default.Debug_Lib_Sufix;
+            when "normal" =>
+               for Library_Name use Project'Library_Name & Syst_Default.Normal_Lib_Sufix;
+         end case;
+
+      when "None" =>
+         null;
+   end case;
+   package Builder is
+      for Default_Switches ("Ada") use
+        Syst_Default.Builder'Default_Switches ("Ada");
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("Ada") use
+        Syst_Default.Compiler'Default_Switches ("Ada");
+   end Compiler;
+
+   package Linker is
+      for Default_Switches ("Ada") use
+        Syst_Default.Linker'Default_Switches ("Ada");
+   end Linker;
+
+   package Naming renames Syst_Default.Naming;
+   --  package Naming is
+   --     Switches
+   --  end Naming;
+
+
+   package IDE renames Syst_Default.IDE;
+   --  package IDE is
+   --     Switches
+   --  end IDE;
+
+
+end Baty_Code;

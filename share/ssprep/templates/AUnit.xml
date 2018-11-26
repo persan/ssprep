@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ssprep>
+<Templates>
+
+  <Template>
+     <Name>ssprep.aunitTestCase</Name>
+     <Location>AUnitBase/@_test_case_package_file_@.ads</Location>
+     <Location>AUnitBase/@_test_case_package_file_@.adb</Location>
+  </Template>
+
+  <Template>
+     <Name>ssprep.aunitTestSuite</Name>
+     <Location>AUnitBase/@_test_suite_package_file_@.adb</Location>
+     <Location>AUnitBase/@_test_suite_package_file_@.ads</Location>
+  </Template>
+
+  <Template>
+     <Name>ssprep.aunitTestHarness</Name>
+     <Location>AUnitBase/@_harness_name_file_@.adb</Location>
+  </Template>
+
+  <Template>
+     <Name>ssprep.AUnitTests</Name>
+     <Location>AUnitTests/tests</Location>
+  </Template>
+
+</Templates>
+</Ssprep>
+

@@ -1,0 +1,47 @@
+--=============================================================================
+-- Copyright (C)  2003 SAABTECH AB , SWEDEN
+--=============================================================================
+--
+--  UNIT NAME
+--          EVHA_BLOCK_LIST
+--
+--  ABSTRACT
+--          Defines criteria for event reports that shall be discarded
+--          (blocked) by EVHA. All hardware and / or software reports from
+--          the system functions listed in this file will be ignored.
+--
+--          Syntax:
+--          -- This is a comment line
+--          SF=ABCD  -- Ignore all reports from system function ABCD
+--                   -- Only one SF per line is allowed
+--          SF=ABCE KIND=HW  -- Ignore HW reports from system function ABCE
+--          SF=ABCF KIND=SW  -- Ignore SW reports from system function ABCF
+--
+--          All parameters are case-insentitive.
+--
+--          The SFs to be blocked are printed on the IpcoDump log.
+--
+--          The number of blocked reports can be printed on the IpcoDump
+--          log using the command evpr_sw_generator_main 'zzzz' e 55-55
+--
+--          The name of the block list file must be defined by the
+--          evha_program_main command line parameter BLK=  e.g.
+--
+--           evha_program_main BLK=%SS2000_ROOT%/data/text/evha/evha_block_list
+--
+--          Note. The BLK= name may also be a FISE symbol e.g.
+--                BLK=EVHA_BLOCK_LIST
+--
+--  CONTENTS
+--
+--    Revision History:
+--          1.0/BOKA/2003-09-16/Created, N_MK3:SPR_25713.
+--      
+--=============================================================================
+
+SF=ABCD
+SF=XXXX KIND=HW
+--SU=ZZZZ
+SF=YYYY
+
+-- End of EVHA_BLOCK_LIST

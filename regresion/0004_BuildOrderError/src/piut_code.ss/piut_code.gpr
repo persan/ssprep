@@ -1,0 +1,32 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          This file was automatically generated
+--          Using         : make_gpr 1.2w (2005-06-17)
+--          By User       : rifr
+--          Creation Date : 2005-12-29
+--
+--
+--
+--=============================================================================
+with "adin_code.ss/adin_code.gpr";
+with "adty_booch.ss/adty_booch.gpr";
+--with "alha_code.ss/alha_code.gpr";
+with "baty_code.ss/baty_code.gpr";
+with "coco_code.ss/coco_code.gpr";
+with "coco_defs.ss/coco_defs.gpr";
+with "evha_event_handler.ss/evha_event_handler.gpr";
+with "fise_code.ss/fise_code.gpr";
+with "ipco_code.ss/ipco_code.gpr";
+with "math_code.ss/math_code.gpr";
+with "rnsu_code.ss/rnsu_code.gpr";
+with "sypa_code.ss/sypa_code.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "taco_code.ss/taco_code.gpr";
+with "tipr_code.ss/tipr_code.gpr";
+--with "win32ada.gpr";
+with "xtco_code.ss/xtco_code.gpr";
+project piut_code is
+   for Source_Dirs use ();
+end piut_code;

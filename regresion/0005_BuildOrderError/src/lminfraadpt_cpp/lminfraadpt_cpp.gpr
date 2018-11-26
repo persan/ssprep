@@ -1,0 +1,22 @@
+------------------------------------------------------------------------------
+-- Builds LmInfraAdpt.so
+--
+-- NOTE: Environment var "NDDSHOME" and "TOWER" must be set
+-- NOTE: "-lcom_lmcda_...." libs must be on External("TOWER",".") & "/lib"
+--
+--
+-- LSEN 10-01-26/02-01 Created.
+------------------------------------------------------------------------------
+-- $NDDSHOME
+--  with "dds-libnddscpp.gpr";
+--  with "dds";
+-- $JAVA_HOME via $GNAT_HOME
+with "libjni.gpr";
+with "osif/osif.gpr";
+with "syst_default.ss/syst_default.gpr";
+--  with "com.lmcda.infrastructure.systemmanagementinterface.timemanagementservices.dds_cpp/com-lmcda-infrastructure-systemmanagementinterface-timemanagementservices-dds_cpp.gpr";
+--  with "com.lmcda.infrastructure.systemmanagementinterface.adapterservices.dds_cpp/com-lmcda-infrastructure-systemmanagementinterface-adapterservices-dds_cpp.gpr";
+--  with "com.lmcda.infrastructure.systemmanagementinterface.systemmanagementservices.dds_cpp/com-lmcda-infrastructure-systemmanagementinterface-systemmanagementservices-dds_cpp.gpr";
+project lminfraadpt_cpp is
+   for Source_Dirs use ();
+end lminfraadpt_cpp;

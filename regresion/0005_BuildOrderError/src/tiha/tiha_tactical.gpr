@@ -1,0 +1,49 @@
+with "tiha/tiha.gpr";
+with "lminfraadpt_cpp/lminfraadpt_cpp.gpr";
+with "syst_default.ss/syst_default.gpr";
+
+project tiha_tactical is
+
+   for Languages use ("C++");
+
+   for Source_Dirs use ("tactical/TacticalAgent");
+
+   for Main use ("TihaTacticalAgent");
+
+  Build_Dir := "lib-obj/" & Syst_Default.Build & "-" & Project'Library_kind;
+  Build_Dir := Syst_Default.Result_Dir & "/" & project'Name & ".ss/" & Build_dir;
+  for Object_Dir use build_dir & "/obj";
+
+   package Builder is
+   end Builder;
+
+   package Linker is
+      case Syst_Default.Os is
+         when "Linux" =>
+            for Default_Switches ("C++") use
+              Syst_Default.Linker'Default_Switches ("C++") ;
+         when "Windows_NT" =>
+            for Default_Switches ("C++") use
+              syst_default.Linker'Default_Switches ("C++") ;
+         when others =>
+            null;
+      end case;
+   end Linker;
+
+   package Compiler is
+      for Driver("C++") use "g++";
+      for Include_Path     ("C++") use  Syst_Default.Compiler'Include_Path("C++");
+      for Include_Path     ("C") use Syst_Default.Compiler'Include_Path("C");
+      for Default_switches ("C++") use Syst_Default.Compiler'Default_switches ("C++");
+      for Default_switches ("C") use Syst_Default.Compiler'Default_switches ("C");
+   end Compiler;
+
+   package Naming is
+      for Specification_Suffix ("C++") use ".h";
+   end Naming;
+   package IDE is
+
+   end IDE;
+
+end tiha_tactical;
+

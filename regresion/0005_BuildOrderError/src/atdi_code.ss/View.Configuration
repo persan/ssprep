@@ -1,0 +1,28 @@
+----------------------------------------
+-- Imports
+----------------------------------------
+IMPORT => %Object Ada%\lib\rts
+IMPORT => %Ada Tower%\sypa_code.ss
+IMPORT => %Ada Tower%\math_random.ss
+IMPORT => %Ada Tower%\mmif_code.ss
+IMPORT => %Object Ada%\win32ada\binding\lib
+IMPORT => %Ada Tower%\adin_code.ss
+IMPORT => %Ada Tower%\ipco_code.ss
+IMPORT => %Ada Tower%\fise_code.ss
+IMPORT => %Ada Tower%\math_elementary.ss
+IMPORT => %Ada Tower%\evha_event_handler.ss
+IMPORT => %Ada Tower%\taco_code.ss
+IMPORT => %Ada Tower%\dram_code.ss
+IMPORT => %Ada Tower%\tipr_code.ss
+IMPORT => %Ada Tower%\baty_code.ss
+
+----------------------------------------
+-- Compile Options
+----------------------------------------
+COMPILE_OPTIONS => <default> -ga -gc
+
+----------------------------------------
+-- Compile Options
+----------------------------------------
+LINK_OPTIONS => <default> -rd -g
+

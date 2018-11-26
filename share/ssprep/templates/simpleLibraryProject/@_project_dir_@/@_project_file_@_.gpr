@@ -1,0 +1,23 @@
+--
+-- Import file for  @_project_@
+--  This file is intended to be copied to $GNAT_ROOT/lib/gnat/@_project_file_@.gpr
+--
+project @_project_@ is
+   for Source_Dirs use ("../../include/@_LOWER:REPLACE(\.,_):project_@");
+
+
+   
+   type Library_Kind_Type is ("static", "relocatable");
+   type OS_Kind is ("Windows_NT","Linux");
+   type Boolean is ("True","False");
+
+   OS : OS_Kind := external ("OS","Linux");
+
+   Library_Kind  : Library_Kind_Type := External ("LIBRARY_TYPE", "static");
+   for Library_Dir use "../lib/@_LOWER:REPLACE(\.,_):project_@/" & Library_Kind;
+
+   for Library_Kind use Library_Kind;
+   for Externally_Built use "True";
+   for Library_Name use "@_LOWER:REPLACE(\.,_):project_@";
+
+end @_project_@;

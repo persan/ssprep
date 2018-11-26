@@ -1,0 +1,38 @@
+with "syst_default.ss/syst_default.gpr";
+Project adty_booch is
+
+   Name := "adty_booch";
+
+   for Source_Dirs use ("include");
+
+   -- ==========================================================================
+   --   Do not edit items below this line.
+   -- ==========================================================================
+
+   for Externally_Built use  "true";
+
+   case Syst_Default.Sdk_Library_Kind is
+      when "static" =>
+         for library_kind use "static";
+      when "relocatable" =>
+         for library_kind use "dynamic";
+   end case;
+
+   for Library_Name use Name;
+   for Library_Dir use "lib/" &Syst_Default.Build;
+
+
+   case Syst_Default.Build is
+      when "release" =>
+         for Library_Name use Project'Library_Name & Syst_Default.Release_Lib_Sufix;
+      when "debug" =>
+         for Library_Name use Project'Library_Name & Syst_Default.Debug_Lib_Sufix;
+   end case;
+   case Syst_Default.Library_Type is
+      when "static" =>
+         for Library_Name use Project'Library_Name & Syst_Default.Static_Lib_Sufix;
+      when "relocateble" =>
+         for Library_Name use Project'Library_Name & Syst_Default.Dynamic_Lib_Sufix;
+   end case;
+
+end adty_booch;

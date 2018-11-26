@@ -1,0 +1,259 @@
+Release note for view:  lminfraadpt/..../lminfraadpt_cpp
+======================
+
+Changes since latest release:
+==============================
+
+Release: 0.4.1  2010-06-21 /aeba
+--------------------------------
+
+Updated the included xml-file for QoS:s. Two different profiles are used.
+These are:
+ - base_name="SaabGroup9LvLMInfrastructure::TransientLocalTopicProfile"
+ - base_name="SaabGroup9LvLMInfrastructure::VolatileTopicProfile"
+ 
+Qos profiles for BuiltInTest topics are removed from the xml-file.
+
+
+Release: 0.4.0  2010-06-16 /lsen
+--------------------------------
+
+This release is required by lminfraadpt_ada 0.4.0 or later
+
+--- 1 ---
+New API to support new IDL = "ControlInterfaceStateResponse".
+
+LmInfraAdpt_Send_Interface_State_Response(const char *pInterfaceName,
+                                          int         bRequestResult,
+                                          long64      RequestId,
+                                          const char *pRequestingInstanceId);
+
+Note: There is an old version with a similar name that uses IDL "InterfaceState"
+      It is still present but will be removed in a future release.
+
+LmInfraAdpt_Send_InterfaceState_Response(const char *pInterfaceName,       //64
+                                        const char *pAdaptedComponentName, //64
+                                        int         bRequestResult,
+                                        int         Enabled,
+                                        LONG64      RequestId64,
+                                        const char *pRequestingInstanceId) //64
+--- 2 ---
+Updated simulator - LmInfraAdpt_Sim_Test to test the new API.
+
+
+Note: A line corresponding to this must be added to LmInfraAdpt.xml
+    <qos_profile name ="ControlInterfaceStateResponse"
+                 base_name="SaabGroup9LvLMInfrastructure::DefaultProfile"/>
+--- 3 ---
+TODO in a future release
+1)
+Remove code for IDL "SoftwareComponentStatus",  "AdaptedComponentStatus"
+since they are only used by ERHA which uses own implementations.
+
+2) Remove Procedure Send_InterfaceState_Response
+
+==========================================================================
+
+Release: 0.3.0  2010-06-11 /lsen
+--------------------------------
+
+Short description
+-----------------
+- Using LilianTime in DDS message timestamps.
+
+- IDL for BuiltInTest not used any more. Code removed.
+  Java interface for these are kept as dummies. (To be removed in a future release)
+  Ada interface for these are NOT kept. New Ada package (lminfraadpt_cpp 0.3.0) is required.
+
+
+Detailed description
+--------------------
+1)
+Now using LilianTime in timestamps in DDS messages.
+Liabas_Util.cpp - Modified lia_GetUtcTime() so it returns LilianTime
+
+2) 
+IDLs BuiltInTestResult and ControlBuiltInTest not used any more
+ - Removed files liapub_BuiltInTestResult.cpp and liasub_ControlBuiltInTest.cpp
+ - src/makefile modified
+ - src/liabas_jni.cpp - The APIs using BuiltInTest are now dummies.
+   To be removed when Java packages are modified. 
+ - tests/LmInfraAdpt_Test.cpp - removed code using the BuiltInTest APIs. 
+
+ - Dir simulate: Removed two .cpp files dealing with BuiltInTest
+   Modified makefile, modified LmInfraAdpt_Sim_Test.cpp.
+
+-  test_support/lminfraadpt_simtest.gpr - removed BuiltInTest files
+
+=====================================================================
+
+Release: 0.2.7  2010-06-07 /lsen
+--------------------------------
+
+Purpose: Update for new IDLs style.
+
+liapub_AdaptedComponentStatus.cpp
+---------------------------------
+Added new API because
+IDL parameters "pAdaptedSubComponentName" and "pAdaptedLruName" are new.
+
+EXPORT_LIB_API_EXTC int 
+LmInfraAdpt_Send_Report_AdaptedComponentStatus_3 (const char *pInterfaceName,
+                            const char *pAdaptedComponentName,
+                            const char *pAdaptedSubComponentName,   // NEW
+                            const char *pAdaptedLruName,            // NEW
+                            const char *pStatus,
+                            const char *pDescription,
+                            const char *pSystemConfig,
+                            const char *pInstanceId)
+
+The old APIc LmInfraAdpt_Send_Report_AdaptedComponentStatus_2() calls the new as: 
+
+    LmInfraAdpt_Send_Report_AdaptedComponentStatus_3 (pInterfaceName,
+                                       pAdaptedComponentName,
+                                       "adaptedSubcomponentName_to_be_defined",
+                                       "adaptedLruName_to_be_defined",
+                                       pStatus,
+                                       pDescription,
+                                       pSystemConfig,
+                                       pInstanceId);
+
+I think only ERHA is using this. So this is a preparation for Erha modification.
+
+ 
+Lm_InfraAdpt_Defs.h
+-------------------
+Added prototype for the new API
+
+liapub_SoftwareComponentOperationalMode.cpp
+-------------------------------------------
+The IDL was changed, but the change was to remove 3 parameters that not was used.
+uniqueId, compterNodename, instanceId.
+This means: Nothing was changed. 
+
+liasimpub_ControlSoftwareComponentOperationalMode.cpp
+-----------------------------------------------------
+Removed using  uniqueId, compterNodename, instanceId.
+(since they are removed from IDL).
+
+=======================================================================
+
+Release: 0.2.6  2010-06-04 /lsen
+--------------------------------
+
+Currected BUG
+Routine LmInfraAdpt_Send_Report_InterfaceStatus (...)
+did not copy parameter pAdaptedComponentName to sendbuffer.
+
+
+Release: 0.2.5  2010-05-03 /lsen
+--------------------------------
+
+1)
+There was an error in Java interface for receiving DDS messages.
+
+Variable 'Requestid' which is 64 bit was handled as a 32 bit.
+As a result, RequestId with value >= 2**32 or value < 0 was not correctly
+passed to Java applications.
+
+2)
+Removed some annoying printf().
+
+File liabas_Jni.cpp modified.
+
+
+
+Release: 0.2.4  2010-04-22 /lsen
+--------------------------------
+
+1) Improved LmInfraAdpt_Sim_Test and LmInfraAdpt_Test
+2) Env variable names was BS_LM_xxx, now new style SAABGROUP_9LV_LMCDA_xxxx
+   Old style still supported if new style names not exist.
+3) New API LmInfraAdpt_Send_Report_AdaptedComponentStatus_2()
+   Erha needs it.
+
+
+Corrected errors when getting some BS_LM_xxxx environment variables
+
+
+Release: 0.2.3  2010-03-05 /lsen
+--------------------------------
+Corrected errors when getting some BS_LM_xxxx environment variables
+
+
+Release: 0.2.2  2010-03-05 /lsen
+--------------------------------
+
+
+1) Added API int LmInfraAdpt_WakeUpAll(void);
+   This wakes up all blocking calls to  LmInfraAdpt_WaitForAll() and all 
+   LmInfraAdpt_WaitFor_xxxx().
+   Intended usage:
+   Support to terminate Ada programs which should set a 'StopFlag' that task
+   can read, then call LmInfraAdpt_WakeupAll(void);
+
+2) API LmInfraAdpt_WaitForAll();
+   is changed to
+   LmInfraAdpt_WaitForAll(int TimeoutMs);
+
+   Test programs are modified for the new WaitForAll().
+   Note that ADA and JAVA interface must be changed.
+
+3) Added API 
+   LmInfraAdpt_ReportSwError(int ErrCode,
+                             const char *pReportingFunction,
+                             const char pErrorMessage, int Length );
+   which sends an ERHA error report with severity 'ERROR'.
+   is a wrapper to osif::ReportSwError().
+
+4) Added API
+   int LmInfraAdpt_Send_Report_Module_Status_2(
+                                 LmInfraAdpt::SoftwareComponentStatus_E Status,
+                                 const char *pDescription,
+                                 const char *pSystemConfig,
+                                 const char *pSoftwareName,
+                                 const char *pInstanceId,
+                                 const char *pUniqueId)
+   The already existing was:
+   int LmInfraAdpt_Send_Report_Module_Status(
+                                 LmInfraAdpt::SoftwareComponentStatus_E Status,
+                                 const char *pDescription);
+
+   Note that this API is for ERHA only.
+   The new is used by ERHA statusreportagent which receives messages from
+   applications with other BS_LM_xxx environment.
+
+5) Reception of TraniningTimeOffset/State now have a filter that ignores
+   DDS messages without matching 'SystemConfigurationName'.
+
+6) Some makefiles used "libLmInfraAdpt.so" now "liblminfraadpt.so"
+   test/makefile, src/makefile, example/makefile
+   Note that this affects 'makefile users' (if any) only.
+
+7) New Library names in XML file. Added lminfraadpt.xml
+
+-------------------------------------------------
+
+Release: 0.2.1  2010-03-01 /lsen
+---------------------------------
+
+Purpose: 
+1) Some makefiles used "libLmInfraAdpt.so" now "liblminfraadpt.so"
+   test/makefile, src/makefile, example/makefile
+   Note that this affects 'makefile users' (if any) only.
+2) Corrected spelling of "SUCCES" to "SUCCESS"  in a couple of files.
+3) Added result "NONE" to bitestresult
+
+-------------------------------------------------
+
+Release: 0.2.0   2010-02-17 /lsen
+----------------------------------
+Purpose: Modifications to make JNI interface compatible with infraadpt_java rel 0.1.0
+
+Checked out source from trunk which was identical to tags/infraadpt_cpp/0.1.3
+
+Modified files:
+1) src/liabas_Jni.cpp                        - Support for new java style
+2) simulate/liasimpub_ControlBuiltInTest.cpp - better debug print
+3) simulate/LmInfraAdpt_Sim_Test.cpp         - improved
+4) tests/LmInfraAdpt_Test.cpp                - improved

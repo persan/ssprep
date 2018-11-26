@@ -1,0 +1,68 @@
+--=============================================================================
+-- Copyright (C)  2009 SAAB TECH SYSTEMS AB
+--=============================================================================
+--
+--=============================================================================
+with "iman/iman.gpr";
+with "syst_default.ss/syst_default.gpr";
+project xtco_pt334 is
+   Name:= project'name;
+   for Languages use ("C");
+
+   for Source_Dirs use ("xtco_pt334","shared");
+
+   EXT_BUILD : Syst_Default.Boolean := "False";
+   -- ==========================================================================
+   --    Do not edit below this line
+   -- ==========================================================================
+
+   for Library_Name use Name;
+
+   case Syst_Default.Sdk_Library_Kind is
+      when "static" =>
+         for library_kind use "static";
+      when "relocatable" =>
+         for library_kind use "dynamic";
+   end case;
+
+   for Externally_Built use  EXT_BUILD;
+
+   Build_Dir := "lib-obj/" & Syst_Default.Build & "-" & Syst_Default.Sdk_Library_Kind;
+
+   case EXT_BUILD is
+      when "False" =>
+         Build_Dir := Syst_Default.Result_Dir & "/" & project'Name & "/" & Build_dir;
+         for Object_Dir use build_dir & "/obj";
+         for Library_Src_Dir use build_dir & "/src";
+      when "True" =>
+         for Source_Dirs use ();
+   end case;
+
+   for Library_Dir use build_dir & "/lib";
+
+   package Builder is
+   end Builder;
+
+   package Compiler is
+      for Driver("C++") use "g++";
+      for Include_Path        ("C++") use  Syst_Default.Compiler'Include_Path("C++");
+      for Include_Path        ("C") use Syst_Default.Compiler'Include_Path("C");
+      for Default_switches ("C") use Syst_Default.Compiler'Default_switches ("C");
+      case Syst_Default.Sdk_Library_Kind is
+         when "relocatable" =>
+	      for Default_switches ("C++") use Syst_Default.Compiler'Default_switches ("C++") &
+	      ("-fvisibility=hidden","-DUSE_EXPORTS");
+            when "static"  =>
+	      for Default_switches ("C++") use Syst_Default.Compiler'Default_switches ("C++");
+         end case;
+   end Compiler;
+
+   package Naming is
+      for Specification_Suffix ("C++") use ".h";
+   end Naming;
+
+   package IDE is
+   end IDE;
+
+end xtco_pt334;
+

@@ -1,0 +1,100 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          This file was automatically generated
+--          Using         : make_gpr 1.3 (2006-08-24)
+--          By User       : stoma
+--          Creation Date : 2006-10-12
+--
+--
+--
+--=============================================================================
+
+with "math_elementary.ss/math_elementary.gpr";
+with "math_matrix.ss/math_matrix.gpr";
+with "syst_default.ss/syst_default.gpr";
+Project Math_Geometry is
+
+   Base := "./"; --<Base>
+   --  Base identifies the sourcecode location
+   --  When using {Tower} development './'.
+   --  When using remote sources  '<full path to the source location>'.
+   --   sample "\\scupper\VSS_DB\VSS_Ada_Working_Views\aapt_code.nt.wrk\".
+   --  NOTE the trailing directory delimiter.
+
+
+
+   for Source_Dirs use (Base & "private",
+                        Base & "shared");
+   for Object_Dir use Syst_Default'Object_Dir;
+   for Exec_Dir use Syst_Default'Exec_Dir;
+   Name    := "math_geometry";
+
+   case Syst_Default.Library_Kind is
+      when "static" | "dynamic" =>
+         for Library_Kind    use Syst_Default'Library_Kind;
+         for Library_Dir     use Syst_Default'Library_Dir;
+         for Library_Src_Dir use Syst_Default'Library_Src_Dir;
+         for Library_Name use Name;
+         case Syst_Default.Library_Kind is
+            when "dynamic" =>
+               for Library_Auto_Init use "True";
+               for Library_Name use Project'Library_Name & Syst_Default.Dynamic_Lib_Sufix;
+               for Library_Interface use ("cartesian_2d_arithmetic_generic",
+                                          "cartesian_2d_polar_converter_generic",
+                                          "cartesian_2d_transformation_generic",
+                                          "cartesian_3d_arithmetic_generic",
+                                          "cartesian_3d_polar_converter_generic",
+                                          "cartesian_3d_polar_negoriented_converter_generic",
+                                          "cartesian_3d_transformation_generic",
+                                          "coordinate_type_generic",
+                                          "line_segment_sequential_bounded_managed_noniterator",
+                                          "Polyline_Nonpriority_Nonbalking_Sequential_Bounded_Managed_Iterator");
+            when "static" =>
+               for Library_Name use Project'Library_Name & Syst_Default.Static_Lib_Sufix;
+            when "None" =>
+               null;
+         end case;
+
+         case Syst_Default.Build is
+            when "release" =>
+               for Library_Name use Project'Library_Name & Syst_Default.Release_Lib_Sufix;
+            when "debug" =>
+               for Library_Name use Project'Library_Name & Syst_Default.Debug_Lib_Sufix;
+            when "normal" =>
+               for Library_Name use Project'Library_Name & Syst_Default.Normal_Lib_Sufix;
+         end case;
+
+      when "None" =>
+         null;
+   end case;
+
+   package Builder is
+      for Default_Switches ("Ada") use
+        Syst_Default.Builder'Default_Switches ("Ada");
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("Ada") use
+        Syst_Default.Compiler'Default_Switches ("Ada");
+   end Compiler;
+
+   package Linker is
+      for Default_Switches ("Ada") use
+        Syst_Default.Linker'Default_Switches ("Ada");
+   end Linker;
+
+   package Naming renames Syst_Default.Naming;
+   --  package Naming is
+   --     Switches
+   --  end Naming;
+
+
+   package IDE renames Syst_Default.IDE;
+   --  package IDE is
+   --     Switches
+   --  end IDE;
+
+
+end Math_Geometry;

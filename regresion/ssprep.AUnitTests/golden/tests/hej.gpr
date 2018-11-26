@@ -1,0 +1,35 @@
+-- ---------------------------------------------
+--
+--
+--
+--
+-- ---------------------------------------------
+with "gnat_default.gpr";
+with "aunit.gpr";
+Project hej is
+   for Main use ("hej-testharnesses-test_all.adb");
+
+   for Source_Dirs use (".",
+                        "testcases");
+
+   for Object_Dir use Gnat_Default'Object_Dir;
+   for Exec_Dir use Gnat_Default'Exec_Dir;
+
+   for Library_Dir use Gnat_Default'Library_Dir;
+
+   package Builder is
+      for Default_Switches ("ada") use
+        Gnat_Default.Builder'Default_Switches ("ada");
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("ada") use
+        Gnat_Default.Compiler'Default_Switches ("ada") & ("-gnaty-s");
+   end Compiler;
+
+   package Binder is
+      for Default_Switches ("ada") use
+        Gnat_Default.Binder'Default_Switches ("ada");
+   end Binder;
+
+end hej;

@@ -1,0 +1,5 @@
+with "coco_geotrans/coco_geotrans.gpr";
+with "syst_default.ss/syst_default.gpr";
+project coco_Coco3D is
+   for Source_Dirs use ();
+end coco_Coco3D;

@@ -1,0 +1,61 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          This file was automatically generated
+--          Using         : make_gpr 1.2w (2005-06-17)
+--          By User       : rifr
+--          Creation Date : 2005-12-29
+--
+--
+--
+--=============================================================================
+
+with "baty_code.ss/baty_code.gpr";
+with "coco_code.ss/coco_code.gpr";
+with "coco_defs.ss/coco_defs.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "tipr_code.ss/tipr_code.gpr";
+with "win32ada.gpr";
+project Math_Code is
+
+  Base := "./"; --<Base>
+  --  Base identifies the sourcecode location 
+  --  When using {Tower} development './'. 
+  --  When using remote sources  '<full path to the source location>'.
+  --   sample "\\scupper\VSS_DB\VSS_Ada_Working_Views\Math_Code.xp.wrk\".
+  --  NOTE the trailing directory delimiter.
+
+
+
+  for Source_Dirs use (Base & "shared");
+  for Object_Dir use syst_default'Object_Dir;
+  for Exec_Dir use syst_default'Exec_Dir;
+
+  package Builder is
+     for Default_Switches ("Ada") use
+       syst_default.Builder'Default_Switches ("Ada");
+  end Builder;
+
+  package Compiler is
+     for Default_Switches ("Ada") use
+       syst_default.Compiler'Default_Switches ("Ada");
+  end Compiler;
+
+  package Linker is
+     for Default_Switches ("Ada") use
+       syst_default.Linker'Default_Switches ("Ada");
+  end Linker;
+
+  package Naming is
+  --     Switches
+  end Naming;
+
+
+  package IDE renames syst_default.IDE;
+  --  package IDE is
+  --     Switches
+  --  end IDE;
+
+
+end Math_Code;

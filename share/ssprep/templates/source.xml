@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ssprep>
+<Templates>
+  <Template>
+     <variables>
+        <variable type="project"
+                  name="root"
+                  prompt="Root for package:"
+                  hint="Root for generated packages"/>
+     </variables>
+     <prompt>String Containers</prompt>
+     <tooltip>Container packages for String</tooltip>
+     <class>support</class>
+     <output>sourcedir</output>
+     <Name>ssprep.stringContainers.String</Name>
+     <Location>source/@_root_file_@-string_hashed_maps.ads</Location>
+     <Location>source/@_root_file_@-string_hashed_sets.ads</Location>
+     <Location>source/@_root_file_@-string_ordered_sets.ads</Location>
+     <Location>source/@_root_file_@-string_vectors.ads</Location>
+  </Template>
+
+  <Template>
+     <variables>
+        <variable type="project"
+                  name="root"
+                  prompt="Root for package:"
+                  hint="Root for generated packages"/>
+     </variables>
+     <prompt>Wide_String Containers</prompt>
+     <tooltip>Container packages for Wide_String</tooltip>
+     <class>support</class>
+     <output>sourcedir</output>
+     <Name>ssprep.stringContainers.Wide_String</Name>
+     <Location>source/@_root_file_@-wide_string_hashed_maps.ads</Location>
+     <Location>source/@_root_file_@-wide_string_hashed_sets.ads</Location>
+     <Location>source/@_root_file_@-wide_string_ordered_sets.ads</Location>
+     <Location>source/@_root_file_@-wide_string_vectors.ads</Location>
+  </Template>
+
+  <Template>
+     <variables>
+        <variable type="project"
+                  name="root"
+                  prompt="Root for package:"
+                  hint="Root for generated packages"/>
+     </variables>
+     <prompt>Wide_Wide_String Containers</prompt>
+     <tooltip>Container packages for Wide_Wide_String</tooltip>
+     <Name>ssprep.stringContainers.Wide_Wide_String</Name>
+     <output>sourcedir</output>
+     <class>support</class>
+     <Location>source/@_root_file_@-wide_wide_string_hashed_maps.ads</Location>
+     <Location>source/@_root_file_@-wide_wide_string_hashed_sets.ads</Location>
+     <Location>source/@_root_file_@-wide_wide_string_ordered_sets.ads</Location>
+     <Location>source/@_root_file_@-wide_wide_string_vectors.ads</Location>
+  </Template>
+
+
+  <Template>
+     <Name>ssprep.stringContainers.Unbounded_String</Name>
+     <variables>
+        <variable type="project"
+                  name="root"
+                  prompt="Root for package:"
+                  hint="Root for generated packages"/>
+     </variables>
+     <prompt>Unbounded_String Containers</prompt>
+     <tooltip>Container packages for Unbounded_String</tooltip>
+     <class>support</class>
+     <output>sourcedir</output>
+     <Location>source/@_root_file_@-unbounded_string_hashed_maps.ads</Location>
+     <Location>source/@_root_file_@-unbounded_string_hashed_sets.ads</Location>
+     <Location>source/@_root_file_@-unbounded_string_ordered_sets.ads</Location>
+     <Location>source/@_root_file_@-unbounded_string_vectors.ads</Location>
+  </Template>
+
+  <Template>
+     <Name>ssprep.stringContainers.Wide_Unbounded_String</Name>
+     <variables>
+        <variable type="project"
+                  name="root"
+                  prompt="Root for package:"
+                  hint="Root for generated packages"/>
+     </variables>
+     <prompt>Wide_Unbounded_String Containers</prompt>
+     <tooltip>Container packages for Wide_Unbounded_String</tooltip>
+     <class>support</class>
+     <output>sourcedir</output>
+     <Location>source/@_root_file_@-wide_unbounded_string_hashed_maps.ads</Location>
+     <Location>source/@_root_file_@-wide_unbounded_string_hashed_sets.ads</Location>
+     <Location>source/@_root_file_@-wide_unbounded_string_ordered_sets.ads</Location>
+     <Location>source/@_root_file_@-wide_unbounded_string_vectors.ads</Location>
+  </Template>
+
+  <Template>
+     <Name>ssprep.stringContainers.Wide_Wide_Unbounded_String</Name>
+     <variables>
+        <variable type="project"
+                  name="root"
+                  prompt="Root for package:"
+                  hint="Root for generated packages"/>
+     </variables>
+     <prompt>Wide_Wide_Unbounded_String Containers</prompt>
+     <tooltip>Container packages for Wide_Wide_Unbounded_String</tooltip>
+     <class>support</class>
+     <output>sourcedir</output>
+     <hint>Container packages for Wide_Wide_Unbounded_String</hint>
+     <Location>source/@_root_file_@-wide_wide_unbounded_string_hashed_maps.ads</Location>
+     <Location>source/@_root_file_@-wide_wide_unbounded_string_hashed_sets.ads</Location>
+     <Location>source/@_root_file_@-wide_wide_unbounded_string_ordered_sets.ads</Location>
+     <Location>source/@_root_file_@-wide_wide_unbounded_string_vectors.ads</Location>
+  </Template>
+
+</Templates>
+</Ssprep>
+

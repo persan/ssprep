@@ -1,0 +1,27 @@
+--=============================================================================
+-- Copyright (C)  2005 SAAB SYSTEMS
+--=============================================================================
+--    Creation Information:
+--          This file was automatically generated
+--          Using         : make_gpr 1.3 (2006-08-24)
+--          By User       : stoma
+--          Creation Date : 2006-10-18
+--
+--
+--
+--=============================================================================
+with "adin_code.ss/adin_code.gpr";
+with "baty_code.ss/baty_code.gpr";
+with "evha_event_handler.ss/evha_event_handler.gpr";
+with "fise_code.ss/fise_code.gpr";
+with "ipco_code.ss/ipco_code.gpr";
+--with "mmif_code.ss/mmif_code.gpr";
+with "sypa_code.ss/sypa_code.gpr";
+with "syst_default.ss/syst_default.gpr";
+with "taco_code.ss/taco_code.gpr";
+with "tipr_code.ss/tipr_code.gpr";
+project rnsu_code is
+   for Source_Dirs use ();
+----------------------------------
+--   package Naming renames syst_default.Naming;
+end rnsu_code;

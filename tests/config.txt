@@ -1,0 +1,10 @@
+Default-Form: net.sourceforge
+Default: 999
+
+[bulle]
+String: $(Integer).$(foo)
+Integer: 1
+Float: 2.20000E+00
+foo: Hej
+[Kalle]
+String: 1

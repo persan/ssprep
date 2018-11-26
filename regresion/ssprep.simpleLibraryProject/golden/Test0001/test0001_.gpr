@@ -1,0 +1,22 @@
+--
+-- Import file for  Test0001
+--  This file is intended to be copied to $GNAT_ROOT/lib/gnat/test0001.gpr
+--
+project Test0001 is
+   for Source_Dirs use ("../../include/test0001");
+
+
+   type Library_Kind_Type is ("static", "relocatable");
+   type OS_Kind is ("Windows_NT","Linux");
+   type Boolean is ("True","False");
+
+   OS : OS_Kind := external ("OS","Linux");
+
+   Library_Kind  : Library_Kind_Type := External ("LIBRARY_TYPE", "static");
+   for Library_Dir use "../lib/test0001/" & Library_Kind;
+
+   for Library_Kind use Library_Kind;
+   for Externally_Built use "True";
+   for Library_Name use "test0001";
+
+end Test0001;

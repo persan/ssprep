@@ -1,0 +1,100 @@
+with "aws";
+with "xmlada.gpr";
+with "gnatcoll";
+Project Ssprep is
+
+   for Languages use ("Ada");
+
+   for Main use ("ssprep-ssfetch-main.adb",
+                 "ssprep-getbuildorder-main.adb",
+                 "ssprep-main.adb",
+                 "ssprep-deps2symbs.adb",
+                 "ssprep-report_keywords-main.adb");
+
+   for Source_Dirs use ("src");
+
+   for Object_Dir use ".obj";
+   for Exec_Dir use "bin";
+
+   package Builder is
+      for Default_Switches ("ada") use
+        ("-C", -- Cache source mappings
+         "-g",
+         "-s",
+         "-k", -- Keep going after compilation errors
+         "-j" &  External ("NUMBER_OF_PROCESSORS", "1"));
+
+      for Executable ("ssprep-main.adb") use "ssprep";
+      for Executable ("ssprep-deps2symbs.adb") use "deps2symbs";
+      for Executable ("ssprep-getbuildorder-main.adb") use "getbuildorder";
+      for Executable ("ssprep-report_keywords-main.adb") use "report-keywords";
+      for Executable ("ssprep-ssfetch-main.adb") use "ssfetch";
+
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("Ada") use
+        ("-gnatf",  -- Full source path in brief error messages
+         "-gnatq",  -- Don't quit, try semantics, even if parse errors
+         "-gnatQ",  -- Don't quit, write ali/tree file even if compile errors
+         "-gnat12", -- Full Ada12
+         "-gnatyM256",
+         "-gnatwae",
+         "-g",
+         "-gnato",  -- Overflow checking enabled.
+         "-fcallgraph-info=su",  -- Output callgraph information
+         "-fstack-usage", -- Output stack usage information
+         "-fstack-check"  -- Since we are running multiple threads.
+        );
+
+      for Default_Switches ("c") use ();
+      for Default_Switches ("c++") use ();
+
+      for Default_Switches ("Ada") use
+        Compiler'Default_Switches ("Ada") &
+      ("-gnaty" &
+         "3" & --  check indentation
+         "a"  & --  check attribute casing
+         "A"  & --  check array attribute indexes
+         "b"  & --  check no blanks at end of lines
+         "c"  & --  check comment format
+       -- "d"  & --  check no DOS line terminators
+         "e"  & --  check end/exit labels present
+         "f"  & --  check no form feeds/vertical tabs in source
+         "h"  & --  check no horizontal tabs in source
+         "i"  & --  check if-then layout
+       -- "I"  & --  check mode in
+         "k"  & --  check casing rules for keywords
+         "l"  & --  check reference manual layout
+       --- "L4" & -- check max nest level < nn
+         "n"  & --  check casing of package Standard identifiers
+       -- "M128" &  -- check line length <= nn  characters
+       -- "o"  & --  check subprogram bodies in alphabetical order
+         "p"  & --  check pragma casing
+         "r"  & --  check casing for identifier references
+       -- "s"  & --  check separate subprogram specs present
+         "t"  & --  check token separation rules
+       -- "u"  & --  check no unnecessary blank lines
+         "x"  & -- check extra parens around conditionals
+         "");
+
+      for Default_Switches ("Ada") use
+        Compiler'Default_Switches ("Ada") & "-gnatwa";
+   end Compiler;
+
+
+   package Binder is
+      for Default_Switches ("ada") use ("-E");
+   end Binder;
+
+   package Linker is
+      for Default_Switches ("ada") use ("-lz");
+   end Linker;
+
+   package IDE is
+      for Vcs_Kind use "Subversion";
+   end IDE;
+
+
+end Ssprep;
+

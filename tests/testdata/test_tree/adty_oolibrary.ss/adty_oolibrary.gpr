@@ -1,0 +1,88 @@
+--=============================================================================
+-- Copyright (C) SaabSystems
+--=============================================================================
+--
+--
+--  SECURITY CLASSIFICATION
+--    <TBD>
+--
+--  ABSTRACT
+--    <TBD>
+--
+--  KEYWORDS
+--
+--  CONTENTS
+--
+--     Creation information:
+--
+--         Programmer      : Per Sandberg/prsa
+--         Creation date   : 2006-03-06
+--         Department      : L/NOPO
+--         Project         : SS2000
+--
+--     Revision history:
+--           2006-03-06/prsa/Created
+--
+--     Dependencies:
+--       <TBD>
+--
+--     Improvements:
+--       No suggestions
+--
+--=============================================================================
+
+
+
+with "syst_default.ss/syst_default.gpr";
+-- No SS2000 imports apart from syst_default.ss
+-- is allowed since this is a pure library.
+
+
+project Adty_Oolibrary is
+        for Languages use ("Ada");
+        Base := "./"; --<Base>
+        --  Base identifies the sourcecode location
+        --  When using {Tower} development './'.
+        --  When using remote sources  '<full path to the source location>'.
+        --   sample "\\scupper\VSS_DB\VSS_Ada_Working_Views\aapt_code.nt.wrk\".
+        --  NOTE the trailing directory delimiter.
+
+        for Main use ();
+        for Source_Dirs use (-- Base & "private",
+                             -- Base & "test_support",
+                             Base ,
+                             Base & "shared",
+                             Base & "shared/Timeout",
+                             Base & "shared/Container",
+                             Base & "shared/Pattern"
+                            );
+
+        for Object_Dir use Syst_Default'Object_Dir;
+        for Exec_Dir use Syst_Default'Exec_Dir;
+
+        package Builder is
+                for Default_Switches ("Ada") use
+                  Syst_Default.Builder'Default_Switches ("Ada");
+        end Builder;
+
+        package Compiler is
+                for Default_Switches ("Ada") use
+                  Syst_Default.Compiler'Default_Switches ("Ada") & "-gnat05";
+        end Compiler;
+
+        package Linker is
+                for Default_Switches ("Ada") use
+                  Syst_Default.Linker'Default_Switches ("Ada");
+        end Linker;
+
+        package Naming is
+                --     Switches
+        end Naming;
+
+
+        package IDE renames Syst_Default.IDE;
+        --  package IDE is
+        --     Switches
+        --  end IDE;
+
+end Adty_Oolibrary;
