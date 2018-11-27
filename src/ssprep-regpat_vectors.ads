@@ -1,5 +1,5 @@
 --  ---------------------------------------------------------------------------
---  Copyright 2008 Per Sandberg  <per.sandberg@bredband.net>
+--  Copyright 2008 Per Sandberg  <per.s.sandberg@bahnhof.se>
 --  ---------------------------------------------------------------------------
 
 --  $Id$

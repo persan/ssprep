@@ -1,5 +1,5 @@
 --  ---------------------------------------------------------------------------
---  Copyright 2008 Per Sandberg  <per.sandberg@bredband.net>
+--  Copyright 2008 Per Sandberg  <per.s.sandberg@bahnhof.se>
 --  ---------------------------------------------------------------------------
 
 --  $Id$
@@ -29,6 +29,6 @@ package Ssprep is
    Java_Suffix          : constant String := ".java";
    Default_Delimiter    : constant Character := ',';
    Default_Dont_Expand  : constant String := ".*\.(gif|ico|exe|dll|png|icns|so|a)";
-   Default_Ignore       : constant String := "\.svn|CVS|#.*|.*\.bak|.*\.old";
+   Default_Ignore       : constant String := "\.svn|CVS|#.*|.*\.bak|.*\.old|.git";
 
 end Ssprep;

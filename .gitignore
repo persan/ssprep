@@ -25,6 +25,9 @@ report-keywords
 testsuite.duration*
 gnatinspect.db*
 *.cgpr
+.#*#
+clang_ref_cache.db
+*loc.xml
 /regresion/0004_BuildOrderError/output.txt
 /regresion/0005_BuildOrderError/output.txt
 /regresion/0006_ExecutableProjectWidthAll/make.res
