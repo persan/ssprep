@@ -31,10 +31,6 @@ endif
 	${MAKE}	-C .. regresion
 
 clean:  # IGNORE
-ifeq ("${MAKELEVEL}","0")
 	${MAKE}	-C .. ${@}
-else
-	rm -rf *.exe obj
-endif
 
 

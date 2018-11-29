@@ -3,11 +3,12 @@
 include Makefile.config
 export HOME=${CURDIR}
 
-
+export PATH:=$(shell bin/calculatePATH .)
 ifeq (${PREFIX},..)
 $(error   No GNAT Found)
 endif
-
+a:
+	echo ${PATH}
 info: # IGNORE
 	@echo "targets is"
 	@echo "   compile"
@@ -16,11 +17,11 @@ info: # IGNORE
 	@echo "   release"
 	@echo "   dist"
 	@echo "   upload"
-	
+
 
 compile: # compile
-	gnatmake -p -P ssprep.gpr
-	gnatmake -p -P helpers/helpers.gpr
+	gprbuild -p -P ssprep.gpr
+	gprbuild -p -P helpers/helpers.gpr
 
 
 all:compile install  # IGNORE
@@ -46,7 +47,7 @@ install: .PHONY # install
 docs: # docs
 	echo not implemented
 	env | sort
-test: .PHONY # test
+test: .PHONY compile # test
 	${MAKE} -C regresion regresion
 	${MAKE} -C tests compile
 	${MAKE} -C tests test
@@ -60,9 +61,7 @@ regresion: .PHONY  # IGNORE
 	${MAKE}	-C regresion regresion
 
 clean:  # IGNORE
-	rm -rf bin .obj
-	${MAKE} -C regresion $@
-	${MAKE} -C tests $@
+	git clean -xdf
 
 TARGET=ssprep-$(shell bin/ssprep --version)
 
@@ -70,7 +69,7 @@ dist:
 	${RM} -rf  ${TARGET}
 	git clone  ${CURDIR} ${TARGET}
 	rm -rf ${TARGET}/.git
-	tar -czf   ${TARGET}.tgz ${TARGET} 
+	tar -czf   ${TARGET}.tgz ${TARGET}
 	#${RM} ${TARGET}
 
 rebuild:
@@ -83,9 +82,5 @@ Makefile.config: # IGNOREs
 	echo CP=cp -f >$@
 	echo RM=rm -rf >>$@
 	echo TAR=tar >>$@
-	echo GPRBUILD=gptbuild -p >>$@
+	echo GPRBUILD=gprbuild -p >>$@
 	echo PREFIX=$(dir $(shell which gnatls)).. >>$@
-
-
-
-		

@@ -1,0 +1,35 @@
+-- ---------------------------------------------
+--
+--
+--
+--
+-- ---------------------------------------------
+with "../test0002.gpr";
+with "aunit.gpr";
+Project test0002.Tests is
+   for Main use ("test0002-tests-testharnesses-test_all.adb");
+
+   for Source_Dirs use (".",
+                        "testcases");
+
+   for Object_Dir use test0002'Object_Dir;
+   for Exec_Dir use test0002'Exec_Dir;
+
+   for Library_Dir use test0002'Library_Dir;
+
+   package Builder is
+      for Default_Switches ("ada") use
+        test0002.Builder'Default_Switches ("ada");
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("ada") use
+        test0002.Compiler'Default_Switches ("ada") & ("-gnaty-s");
+   end Compiler;
+
+   package Binder is
+      for Default_Switches ("ada") use
+        test0002.Binder'Default_Switches ("ada");
+   end Binder;
+
+end test0002.Tests;

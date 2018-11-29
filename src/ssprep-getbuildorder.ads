@@ -7,7 +7,7 @@
 
 with GNAT.Strings;
 with Ssprep.String_Vectors;
-package Ssprep.getBuildOrder is
+package Ssprep.GetBuildOrder is
 
 
 
@@ -23,4 +23,4 @@ package Ssprep.getBuildOrder is
    DumpFormat         : DumpFormatType := Format_Dir;
    Verbosity_Level    : Integer := 0;
    Ignored_Projects   : String_Vectors.Vector;
-end  Ssprep.getBuildOrder;
+end  Ssprep.GetBuildOrder;

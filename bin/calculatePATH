@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+import os
+from os.path import *
+import sys
+
+
+if len(sys.argv) > 1:
+    thisDir = abspath(sys.argv[1])
+else:
+    thisDir = os.getcwd()
+
+_PATH=os.getenv("PATH").split(os.pathsep)
+for root,dirs,files in os.walk(thisDir):
+    for dir in dirs:
+        dir = join(root,dir)
+        if ("/bin" in dir) and ("/regresion/" not in dir):
+            _PATH.insert(0,dir)
+PATH=[]
+for p in _PATH:
+    if p not in PATH:
+        PATH.append(p)
+print os.pathsep.join(PATH)
+
+

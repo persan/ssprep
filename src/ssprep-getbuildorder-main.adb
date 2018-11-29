@@ -28,9 +28,9 @@ procedure Ssprep.GetBuildOrder.Main is
      (Ada.Command_Line.Command_Name);
    use GNAT.OS_Lib;
    Children_Failed : exception;
-   root            : GNATCOLL.Projects.Project_Tree;
-   env             : GNATCOLL.Projects.Project_Environment_Access;
-   function "=" (l, r : String) return Boolean renames Ada.Strings.Fixed.Equal_Case_Insensitive;
+   Root            : GNATCOLL.Projects.Project_Tree;
+   Env             : GNATCOLL.Projects.Project_Environment_Access;
+   function "=" (L, R : String) return Boolean renames Ada.Strings.Fixed.Equal_Case_Insensitive;
    procedure Print_Help;
 
    procedure Print_Help is
@@ -128,8 +128,8 @@ procedure Ssprep.GetBuildOrder.Main is
          end if;
          Ret := GNAT.OS_Lib.Spawn (Cmd.all, Args.all);
       else
-         for i of Line loop
-            Put (Expand (i) & " ");
+         for I of Line loop
+            Put (Expand (I) & " ");
          end loop;
          New_Line;
       end if;
@@ -202,16 +202,16 @@ procedure Ssprep.GetBuildOrder.Main is
                                   "-path= " &
                                   "-dump " &
                                   "h ? -help -version";
-   GNAT_Version : GNAT.Strings.String_Access;
+   GNAT_Version               : GNAT.Strings.String_Access;
 begin
-   Initialize (env);
-   env.Set_Path_From_Gnatls ("gnatls", GNAT_Version);
+   Initialize (Env);
+   Env.Set_Path_From_Gnatls ("gnatls", GNAT_Version);
 
    Initialize_Option_Scan ('-', False, "-echo -exec");
    Param_Loop : loop
       case Getopt (Options) is
          when ASCII.NUL => exit Param_Loop;
-            when '-'  =>
+         when '-'  =>
             if Full_Switch = "-help" then
                Print_Help;
                return;
@@ -324,14 +324,14 @@ begin
       S : constant Filesystem_String := Filesystem_String (Get_Argument (False));
    begin
       if S'Length > 0 then
-         root.Load (GNATCOLL.VFS.Create (S), env);
+         Root.Load (GNATCOLL.VFS.Create (S), Env);
          Executed := True;
       end if;
    end;
 
    if Executed then
       declare
-         Iter    : Project_Iterator := Start (root.Root_Project);
+         Iter    : Project_Iterator := Start (Root.Root_Project);
          Project : Project_Type;
       begin
          loop
@@ -358,4 +358,4 @@ exception
    when E : others =>
       Put_Line (Ada.Exceptions.Exception_Information (E) &
                   GNAT.Traceback.Symbolic.Symbolic_Traceback (E));
-end Ssprep.getBuildOrder.Main;
+end Ssprep.GetBuildOrder.Main;

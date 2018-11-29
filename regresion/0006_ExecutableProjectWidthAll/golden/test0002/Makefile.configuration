@@ -1,0 +1,5 @@
+PREFIX=/usr/gnat/bin/..
+OBJECT_DIR=.obj
+PROJECT=test0002
+export LIBDIR=/lib/test0002
+export INCLUDEDIR=/include/test0002

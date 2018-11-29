@@ -38,7 +38,7 @@ package body Ssprep.GNATls is
          GNAT.Expect.Get_Command_Output ("gnatls", Args.all, "", Status'Access, True),
          "" & ASCII.LF & ASCII.CR);
       GNAT.Strings.Free (Args);
-      if not ((Status = 4)  or (Status = 0)) then
+      if Status  not in 0 | 4 then
          GNAT.OS_Lib.Set_Errno (Status);
          raise Program_Error with "gnatls -l failed with " & Status'Img;
       end if;
