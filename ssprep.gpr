@@ -21,8 +21,8 @@ Project Ssprep is
         ("-C", -- Cache source mappings
          "-g",
          "-s",
-         "-k", -- Keep going after compilation errors
-         "-j" &  External ("NUMBER_OF_PROCESSORS", "1"));
+         "-k",
+         "-j0");
 
       for Executable ("ssprep-main.adb") use "ssprep";
       for Executable ("ssprep-deps2symbs.adb") use "deps2symbs";
@@ -37,7 +37,6 @@ Project Ssprep is
         ("-gnatf",  -- Full source path in brief error messages
          "-gnatq",  -- Don't quit, try semantics, even if parse errors
          "-gnatQ",  -- Don't quit, write ali/tree file even if compile errors
-         "-gnat12", -- Full Ada12
          "-gnatyM256",
          "-gnatwae",
          "-g",
@@ -92,9 +91,11 @@ Project Ssprep is
    end Linker;
 
    package IDE is
-      for Vcs_Kind use "Subversion";
+      for Vcs_Kind use "git";
    end IDE;
 
+   package Install is
+
+   end Install;
 
 end Ssprep;
-

@@ -31,6 +31,6 @@ endif
 	${MAKE}	-C .. regresion
 
 clean:  # IGNORE
-	${MAKE}	-C .. ${@}
+	git clean . -xdf
 
 

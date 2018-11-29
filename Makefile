@@ -31,11 +31,7 @@ metric: # Get metrics
 
 
 install: .PHONY # install
-	mkdir -p ${DESTDIR}${PREFIX}/bin
-	cp bin/deps2symbs  ${DESTDIR}${PREFIX}/bin
-	cp bin/getbuildorder ${DESTDIR}${PREFIX}/bin
-	cp bin/report-keywords ${DESTDIR}${PREFIX}/bin
-	cp bin/ssprep ${DESTDIR}${PREFIX}/bin
+	gprinstal -p -P ssprep.gpr
 	for i in `find share -type d | grep -v .svn` ; do \
 		mkdir -p ${DESTDIR}${PREFIX}/$$i; \
         done
@@ -61,7 +57,7 @@ regresion: .PHONY  # IGNORE
 	${MAKE}	-C regresion regresion
 
 clean:  # IGNORE
-	git clean -xdf
+	git clean . -xdf
 
 TARGET=ssprep-$(shell bin/ssprep --version)
 
@@ -79,8 +75,9 @@ rebuild:
 
 .PHONY: # IGNORE
 Makefile.config: # IGNOREs
-	echo CP=cp -f >$@
-	echo RM=rm -rf >>$@
-	echo TAR=tar >>$@
-	echo GPRBUILD=gprbuild -p >>$@
-	echo PREFIX=$(dir $(shell which gnatls)).. >>$@
+	@echo "CP=cp -f" >$@
+	@echo "PATH:=${PATH}" >>$@
+	@echo "RM=rm -rf" >>$@
+	@echo "TAR=tar" >>$@
+	@echo "GPRBUILD=gprbuild -p" >>$@
+	@echo "PREFIX=$(dir $(shell dirname $(shell which gnatls)))" >>$@
