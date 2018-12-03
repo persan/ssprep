@@ -31,14 +31,8 @@ metric: # Get metrics
 
 
 install: .PHONY # install
-	gprinstal -p -P ssprep.gpr
-	for i in `find share -type d | grep -v .svn` ; do \
-		mkdir -p ${DESTDIR}${PREFIX}/$$i; \
-        done
-
-	for i in `find share -type f | grep -v .svn` ; do \
-		cp  $$i $; ${DESTDIR}${PREFIX}/`dirname $$i`; \
-        done
+	@-rm -rf _
+	gprinstall -p -P ssprep.gpr --prefix=${CURDIR}/_
 
 docs: # docs
 	echo not implemented

@@ -38,3 +38,5 @@ clang_ref_cache.db
 /tests/bin/ssprep-tests-testharnesses-test_all
 /tests/symb.xml
 /tests/test-results.xml
+/.obj
+_

@@ -1,7 +1,7 @@
 with "aws";
 with "xmlada.gpr";
 with "gnatcoll";
-Project Ssprep is
+project Ssprep is
 
    for Languages use ("Ada");
 
@@ -95,6 +95,158 @@ Project Ssprep is
    end IDE;
 
    package Install is
+      for Mode use "dev";
+
+      --  begin read only
+      --  begin Required_Artifacts
+      for Required_Artifacts ("share/ssprep/templates") use
+        ("share/ssprep/templates/ssprep_config.xml",
+         "share/ssprep/templates/AUnit.xml",
+         "share/ssprep/templates/source.xml");
+
+      for Required_Artifacts ("share/ssprep/templates/AUnitTests/tests") use
+        ("share/ssprep/templates/AUnitTests/tests/@_root_file_@-testharnesses.ads",
+         "share/ssprep/templates/AUnitTests/tests/@_root_file_@-testsuits.ads",
+         "share/ssprep/templates/AUnitTests/tests/@_root_file_@.ads",
+         "share/ssprep/templates/AUnitTests/tests/@_root_file_@.gpr",
+         "share/ssprep/templates/AUnitTests/tests/testcases-compile.ssprep");
+
+      for Required_Artifacts ("share/ssprep/templates/AUnitTests/tests/testcases") use
+        ("share/ssprep/templates/AUnitTests/tests/testcases/@_root_file_@-testcases.ads",
+         "share/ssprep/templates/AUnitTests/tests/testcases/testcases-compile.ssprep");
+
+      for Required_Artifacts ("share/ssprep/templates/ApplicationSpecific/AWS/src") use
+        ("share/ssprep/templates/ApplicationSpecific/AWS/src/@_root_file_@-simple_web_server-callbacks.ads",
+         "share/ssprep/templates/ApplicationSpecific/AWS/src/@_root_file_@-simple_web_server.ads",
+         "share/ssprep/templates/ApplicationSpecific/AWS/src/@_root_file_@-simple_web_server-main.adb",
+         "share/ssprep/templates/ApplicationSpecific/AWS/src/@_root_file_@-simple_web_server-callbacks.adb");
+
+      for Required_Artifacts ("share/ssprep/templates/ApplicationSpecific/ASIS/src") use
+        ("share/ssprep/templates/ApplicationSpecific/ASIS/src/@_root_file_@-unit_processing.adb",
+         "share/ssprep/templates/ApplicationSpecific/ASIS/src/@_root_file_@-asis_main.adb",
+         "share/ssprep/templates/ApplicationSpecific/ASIS/src/@_root_file_@-context_processing.ads",
+         "share/ssprep/templates/ApplicationSpecific/ASIS/src/@_root_file_@-element_processing.adb",
+         "share/ssprep/templates/ApplicationSpecific/ASIS/src/@_root_file_@-context_processing.adb",
+         "share/ssprep/templates/ApplicationSpecific/ASIS/src/@_root_file_@-unit_processing.ads",
+         "share/ssprep/templates/ApplicationSpecific/ASIS/src/@_root_file_@-actuals_for_traversing.adb",
+         "share/ssprep/templates/ApplicationSpecific/ASIS/src/@_root_file_@-asis_main.ads",
+         "share/ssprep/templates/ApplicationSpecific/ASIS/src/@_root_file_@-actuals_for_traversing.ads",
+         "share/ssprep/templates/ApplicationSpecific/ASIS/src/@_root_file_@-actuals_for_traversing-pre_op.adb",
+         "share/ssprep/templates/ApplicationSpecific/ASIS/src/@_root_file_@-element_processing.ads",
+         "share/ssprep/templates/ApplicationSpecific/ASIS/src/@_root_file_@-actuals_for_traversing-post_op.adb");
+
+      for Required_Artifacts ("share/ssprep/templates/ApplicationSpecific/XMLAda/src") use
+        ("share/ssprep/templates/ApplicationSpecific/XMLAda/src/@_root_file_@-xmlsample_main.adb");
+
+      for Required_Artifacts ("share/ssprep/templates/ApplicationSpecific/GTKAda/src/GUI") use
+        ("share/ssprep/templates/ApplicationSpecific/GTKAda/src/GUI/gui.glade",
+         "share/ssprep/templates/ApplicationSpecific/GTKAda/src/GUI/gui.gladep");
+
+      for Required_Artifacts ("share/ssprep/templates/simpleLibraryProject/@_project_dir_@") use
+        ("share/ssprep/templates/simpleLibraryProject/@_project_dir_@/@_project_file_@.gpr",
+         "share/ssprep/templates/simpleLibraryProject/@_project_dir_@/@_project_file_@_.gpr");
+
+      for Required_Artifacts ("share/ssprep/templates/simpleExecutableProject/@_project_dir_@") use
+        ("share/ssprep/templates/simpleExecutableProject/@_project_dir_@/@_project_file_@.gpr");
+
+      for Required_Artifacts ("share/ssprep/templates/simpleExecutableProject/@_project_dir_@/src") use
+        ("share/ssprep/templates/simpleExecutableProject/@_project_dir_@/src/@_project_file_@-main.adb");
+
+      for Required_Artifacts ("share/ssprep/templates/regresion") use
+        ("share/ssprep/templates/regresion/run_regresion_tests.py",
+         "share/ssprep/templates/regresion/Makefile",
+         "share/ssprep/templates/regresion/testsuite.py",
+         "share/ssprep/templates/regresion/gen_system_tags.py",
+         "share/ssprep/templates/regresion/buildTests.py",
+         "share/ssprep/templates/regresion/test_support.py");
+
+      for Required_Artifacts ("share/ssprep/templates/regresion/support") use
+        ("share/ssprep/templates/regresion/support/rlimit.c",
+         "share/ssprep/templates/regresion/support/rlimit-NT.c");
+
+      for Required_Artifacts ("share/ssprep/templates/regresion/0001_BasicTest") use
+        ("share/ssprep/templates/regresion/0001_BasicTest/test.py");
+
+      for Required_Artifacts ("share/ssprep/templates/regresion/0001_BasicTest/golden") use
+        ("share/ssprep/templates/regresion/0001_BasicTest/golden/test.res");
+
+      for Required_Artifacts ("share/ssprep/templates/regresion/python_support/gnatpython") use
+        ("share/ssprep/templates/regresion/python_support/gnatpython/ex.py",
+         "share/ssprep/templates/regresion/python_support/gnatpython/__init__.py",
+         "share/ssprep/templates/regresion/python_support/gnatpython/main.py",
+         "share/ssprep/templates/regresion/python_support/gnatpython/arch.py",
+         "share/ssprep/templates/regresion/python_support/gnatpython/optfileparser.py",
+         "share/ssprep/templates/regresion/python_support/gnatpython/config.py",
+         "share/ssprep/templates/regresion/python_support/gnatpython/logging_util.py");
+
+      for Required_Artifacts ("share/ssprep/templates/source") use
+        ("share/ssprep/templates/source/@_root_file_@-wide_wide_unbounded_string_ordered_sets.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_wide_unbounded_string_vectors.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_wide_string_hashed_sets.ads",
+         "share/ssprep/templates/source/@_root_file_@-unbounded_string_vectors.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_wide_string_hashed_maps.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_string_hashed_maps.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_wide_unbounded_string_hashed_sets.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_string_vectors.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_string_hashed_sets.ads",
+         "share/ssprep/templates/source/@_root_file_@-string_hashed_maps.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_unbounded_string_hashed_maps.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_wide_string_ordered_sets.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_unbounded_string_ordered_sets.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_wide_string_vectors.ads",
+         "share/ssprep/templates/source/@_root_file_@-unbounded_string_hashed_sets.ads",
+         "share/ssprep/templates/source/@_root_file_@-unbounded_string_hashed_maps.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_wide_unbounded_string_hashed_maps.ads",
+         "share/ssprep/templates/source/@_root_file_@-unbounded_string_ordered_sets.ads",
+         "share/ssprep/templates/source/@_root_file_@-string_ordered_sets.ads",
+         "share/ssprep/templates/source/@_root_file_@-string_hashed_sets.ads",
+         "share/ssprep/templates/source/@_root_file_@-string_vectors.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_string_ordered_sets.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_unbounded_string_hashed_sets.ads",
+         "share/ssprep/templates/source/@_root_file_@-wide_unbounded_string_vectors.ads");
+
+      for Required_Artifacts ("share/ssprep/templates/AUnitBase") use
+        ("share/ssprep/templates/AUnitBase/@_test_suite_package_file_@.ads",
+         "share/ssprep/templates/AUnitBase/@_test_case_package_file_@.ads",
+         "share/ssprep/templates/AUnitBase/@_test_suite_package_file_@.adb",
+         "share/ssprep/templates/AUnitBase/@_test_case_package_file_@.adb",
+         "share/ssprep/templates/AUnitBase/@_harness_name_file_@.adb");
+
+      for Required_Artifacts ("share/ssprep/templates/projectCommon/@_project_dir_@") use
+        ("share/ssprep/templates/projectCommon/@_project_dir_@/Makefile",
+         "share/ssprep/templates/projectCommon/@_project_dir_@/complementary.ssprep");
+
+      for Required_Artifacts ("share/ssprep/templates/projectCommon/@_project_dir_@/src") use
+        ("share/ssprep/templates/projectCommon/@_project_dir_@/src/@_project_file_@-version.ads",
+         "share/ssprep/templates/projectCommon/@_project_dir_@/src/@_project_file_@-folders.adb",
+         "share/ssprep/templates/projectCommon/@_project_dir_@/src/@_project_file_@.ads",
+         "share/ssprep/templates/projectCommon/@_project_dir_@/src/@_project_file_@-folders.ads");
+
+      for Required_Artifacts ("share/ssprep/templates/projectCommon/@_project_dir_@/tests") use
+        ("share/ssprep/templates/projectCommon/@_project_dir_@/tests/Makefile");
+
+      for Required_Artifacts ("share/ssprep/templates/projectCommon/@_project_dir_@/helpers") use
+        ("share/ssprep/templates/projectCommon/@_project_dir_@/helpers/helpers.gpr",
+         "share/ssprep/templates/projectCommon/@_project_dir_@/helpers/checkrelease.adb");
+
+      for Required_Artifacts ("share/ssprep/templates/Common") use
+        ("share/ssprep/templates/Common/LGPL_FileHeader.txt",
+         "share/ssprep/templates/Common/INSTALL",
+         "share/ssprep/templates/Common/FileHeader.txt",
+         "share/ssprep/templates/Common/release_notes.txt");
+
+      for Required_Artifacts ("share/gps/templates/ssprep.SimpleLibraryProject") use
+        ("share/gps/templates/ssprep.SimpleLibraryProject/SimpleLibraryProject.gpt",
+         "share/gps/templates/ssprep.SimpleLibraryProject/run_ssprep.sh",
+         "share/gps/templates/ssprep.SimpleLibraryProject/post_hook.py");
+
+      for Required_Artifacts ("share/gps/templates/ssprep.SimpleExecutableProject") use
+        ("share/gps/templates/ssprep.SimpleExecutableProject/run_ssprep.sh",
+         "share/gps/templates/ssprep.SimpleExecutableProject/post_hook.py",
+         "share/gps/templates/ssprep.SimpleExecutableProject/SimpleExecutableProject.gpt");
+
+      --  end  Required_Artifacts
+      --  end read only
 
    end Install;
 
