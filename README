@@ -43,8 +43,8 @@ such as Jam, Jet, XDoclet, CodeWorker....
 
 
 Dependencies:
-  Templates_Parser http://libre.act.com
-  XMLAda http://libre.act.com
+  [Templates_Parser](https://github.com/AdaCore/templates-parser)
+  [XMLAda](https://github.com/AdaCore/xmlada)
 
 
 Contents:
