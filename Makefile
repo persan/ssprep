@@ -7,8 +7,7 @@ export PATH:=$(shell bin/calculatePATH .)
 ifeq (${PREFIX},..)
 $(error   No GNAT Found)
 endif
-a:
-	echo ${PATH}
+
 info: # IGNORE
 	@echo "targets is"
 	@echo "   compile"

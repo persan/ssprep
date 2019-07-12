@@ -30,13 +30,14 @@ private with GNAT.Spitbol.Table_Boolean;
 private with Ada.Containers.Indefinite_Ordered_Maps;
 with Ssprep.String_Sets;
 with Ada.Containers.Indefinite_Vectors;
+with GNAT.Strings;
 package Ssprep.Templates is
 
    type Templates is tagged limited private;
-   type Any_Templates is access all Templates'class;
+   type Any_Templates is access all Templates'Class;
    --  Database of templates
    type Template is tagged private;
-   type Any_Template is access all Template'class;
+   type Any_Template is access all Template'Class;
    type Any_String_Set is access all String_Sets.Set'Class;
 
    procedure Add_Template (This : in out Templates;
@@ -88,7 +89,7 @@ package Ssprep.Templates is
    function Get_Errors_Found (This : Templates) return Boolean;
    --  Returns a True if any errors was found.
 
-   procedure Set_Break_On_Error (This : in out Templates; breake :  Boolean);
+   procedure Set_Break_On_Error (This : in out Templates; Breake :  Boolean);
    --  Control error handling
 
    function Is_Valid (This : Template) return Boolean;
@@ -120,50 +121,50 @@ package Ssprep.Templates is
      Templates_Parser.Translate_Set;
    function New_Template (Location  : String) return Template;
 
-   function getHint (this : Template) return access String;
+   function GetHint (This : Template) return access String;
 private
 
    type Variable is abstract tagged record
-      parent  : Any_Template;
-      Name    : access String;
-      ToolTip : access String;
-      Prompt  : access String;
+      Parent  : Any_Template;
+      Name    : GNAT.Strings.String_Access;
+      ToolTip : GNAT.Strings.String_Access;
+      Prompt  : GNAT.Strings.String_Access;
    end record;
-   type Any_Variable is access all Variable'class;
+   type Any_Variable is access all Variable'Class;
 
-   procedure Put_Element (This : Variable; Tag : String; Value : access String; indent : String := "");
-   procedure Put_Element (This : Variable; Tag : String; Value : String; indent : String := "");
-   procedure Put_Variable_Heading (This : Variable; V_Type : String; indent : String := "");
+   procedure Put_Element (This : Variable; Tag : String; Value : access String; Indent : String := "");
+   procedure Put_Element (This : Variable; Tag : String; Value : String; Indent : String := "");
+   procedure Put_Variable_Heading (This : Variable; V_Type : String; Indent : String := "");
    procedure Put_Variable_Footing (This : Variable; Indent : String := "");
-   procedure Read (this : access Variable; from : DOM.Core.Node) is null;
-   procedure Dump_XML (This : Variable; indent : String := "") is null;
+   procedure Read (This : access Variable; From : DOM.Core.Node) is null;
+   procedure Dump_XML (This : Variable; Indent : String := "") is null;
 
    type String_Variable is new Variable with null record;
-   procedure Dump_XML (This : String_Variable; indent : String := "");
+   procedure Dump_XML (This : String_Variable; Indent : String := "");
 
    type Project_Variable is new Variable with null record;
-   procedure Dump_XML (This : Project_Variable; indent : String := "");
+   procedure Dump_XML (This : Project_Variable; Indent : String := "");
 
    type File_Selection_Variable is new Variable with record
-      Must_exist : Boolean := False;
+      Must_Exist : Boolean := False;
    end record;
-   procedure Dump_XML (This : File_Selection_Variable; indent : String := "");
-   procedure Read (this : access File_Selection_Variable; from : DOM.Core.Node);
+   procedure Dump_XML (This : File_Selection_Variable; Indent : String := "");
+   procedure Read (This : access File_Selection_Variable; From : DOM.Core.Node);
 
    type Dir_Selection_Variable is new File_Selection_Variable with null record;
 
-   procedure Dump_XML (This : Dir_Selection_Variable; indent : String := "");
+   procedure Dump_XML (This : Dir_Selection_Variable; Indent : String := "");
 
    type Boolean_Variable is new Variable with null record;
-   procedure Dump_XML (This : Boolean_Variable; indent : String := "");
-   procedure Read (this : access Boolean_Variable; from : DOM.Core.Node);
+   procedure Dump_XML (This : Boolean_Variable; Indent : String := "");
+   procedure Read (This : access Boolean_Variable; From : DOM.Core.Node);
 
    type Selection_Variable is new Variable with record
       Prompts : String_Vectors.Vector;
       Values  : String_Vectors.Vector;
    end record;
-   procedure dump_xml (This : Selection_Variable; indent : String := "");
-   procedure Read (this : access Selection_Variable; from : DOM.Core.Node);
+   procedure Dump_Xml (This : Selection_Variable; Indent : String := "");
+   procedure Read (This : access Selection_Variable; From : DOM.Core.Node);
 
    package Variable_Vectors is new Ada.Containers.Indefinite_Vectors
      (Positive, Any_Variable);
@@ -174,14 +175,14 @@ private
       Simple    : Boolean := False;
       Helper    : Boolean := False;
       Variables : Variable_Vectors.Vector;
-      Alias     : access String;
-      Prompt    : access String;
-      Hint      : access String;
-      ToolTip   : access String;
-      Class     : access String;
-      Path      : access String;
-      Output    : access String;
-      Load      : access String;
+      Alias     : GNAT.Strings.String_Access;
+      Prompt    : GNAT.Strings.String_Access;
+      Hint      : GNAT.Strings.String_Access;
+      ToolTip   : GNAT.Strings.String_Access;
+      Class     : GNAT.Strings.String_Access;
+      Path      : GNAT.Strings.String_Access;
+      Output    : GNAT.Strings.String_Access;
+      Load      : GNAT.Strings.String_Access;
    end record;
 
    procedure Parse_Variables (This    : in out Template;
@@ -195,7 +196,7 @@ private
                              V_Type    : String;
                              V_Prompt  : String;
                              V_ToolTip : String);
-   procedure add_Variables (This       : in out Templates;
+   procedure Add_Variables (This       : in out Templates;
                             N          : DOM.Core.Node);
    package Template_Storages is new Ada.Containers.Indefinite_Ordered_Maps
      (String, Template'Class, "<", "=");

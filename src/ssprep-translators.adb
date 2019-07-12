@@ -48,25 +48,25 @@ package body Ssprep.Translators is
    use Ada;
    use type Ssprep.Templates.Any_Template;
 
-   Ada2File : constant Ada.Strings.Maps.Character_Mapping :=
-                Ada.Strings.Maps.To_Mapping (".ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ",
-                                             "-abcdefghijklmnopqrstuvwxyzåäö");
-   Lc       : constant Ada.Strings.Maps.Character_Mapping :=
-                Ada.Strings.Maps.To_Mapping ("ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ",
-                                             "abcdefghijklmnopqrstuvwxyzåäö");
-   Ada2Dir  : constant Ada.Strings.Maps.Character_Mapping :=
-                Ada.Strings.Maps.To_Mapping (".",
-                                             "-");
+   Ada2File   : constant Ada.Strings.Maps.Character_Mapping :=
+                  Ada.Strings.Maps.To_Mapping (".ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ",
+                                               "-abcdefghijklmnopqrstuvwxyzåäö");
+   Lc         : constant Ada.Strings.Maps.Character_Mapping :=
+                  Ada.Strings.Maps.To_Mapping ("ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ",
+                                               "abcdefghijklmnopqrstuvwxyzåäö");
+   Ada2Dir    : constant Ada.Strings.Maps.Character_Mapping :=
+                  Ada.Strings.Maps.To_Mapping (".",
+                                               "-");
    Ada2File2  : constant Ada.Strings.Maps.Character_Mapping :=
                   Ada.Strings.Maps.To_Mapping (".ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ",
                                                "_abcdefghijklmnopqrstuvwxyzåäö");
 
-   Ada2File3  : constant Ada.Strings.Maps.Character_Mapping :=
-                  Ada.Strings.Maps.To_Mapping (".-ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ",
-                                               "__abcdefghijklmnopqrstuvwxyzåäö");
+   Ada2File3   : constant Ada.Strings.Maps.Character_Mapping :=
+                   Ada.Strings.Maps.To_Mapping (".-ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ",
+                                                "__abcdefghijklmnopqrstuvwxyzåäö");
    Name2File3  : constant Ada.Strings.Maps.Character_Mapping :=
-                  Ada.Strings.Maps.To_Mapping (".-",
-                                               "__");
+                   Ada.Strings.Maps.To_Mapping (".-",
+                                                "__");
 
    function Is_Windows return Boolean is
    begin
@@ -97,9 +97,9 @@ package body Ssprep.Translators is
             Argv    : Argument_List_Access := new Argument_List (1 .. 3);
             Success : Boolean;
          begin
-               Argv (1) := new String'("cmd");
-               Argv (2) := new String'("/C");
-               Argv (3) := new String'(Cmd);
+            Argv (1) := new String'("cmd");
+            Argv (2) := new String'("/C");
+            Argv (3) := new String'(Cmd);
 
             if This.Verbose then
                Put_Line ("   " & Get_Current_Dir & ">" & Cmd);
@@ -226,8 +226,8 @@ package body Ssprep.Translators is
          end if;
          This.Translate_Inner (Source, Translations, Normalize_Pathname (Target_Dir));
       end if;
-      if This.Hint and then This.Template /= null and then This.Template.getHint /= null then
-         Ada.Text_IO.Put_Line ("hint:" & Translate_String (Translations, This.Template.getHint.all));
+      if This.Hint and then This.Template /= null and then This.Template.GetHint /= null then
+         Ada.Text_IO.Put_Line ("hint:" & Translate_String (Translations, This.Template.GetHint.all));
       end if;
    end Translate;
 
@@ -282,7 +282,7 @@ package body Ssprep.Translators is
                              Target       : String) is
       Exists         : constant Boolean := Is_Regular_File (Target);
       Success        : Boolean;
-      l_Translations : Templates_Parser.Translate_Set := Translations;
+      L_Translations : Templates_Parser.Translate_Set := Translations;
    begin
 
 
@@ -305,19 +305,19 @@ package body Ssprep.Translators is
       end if;
 
       Change_Dir (Dir_Name (Source));
-      Insert (l_Translations, Assoc ("this_source_file", Source));
-      Insert (l_Translations, Assoc ("this_source_dir", Dir_Name (Source) & "."));
-      Insert (l_Translations, Assoc ("this_source_parent", Dir_Name (Dir_Name (Source)) & "."));
+      Insert (L_Translations, Assoc ("this_source_file", Source));
+      Insert (L_Translations, Assoc ("this_source_dir", Dir_Name (Source) & "."));
+      Insert (L_Translations, Assoc ("this_source_parent", Dir_Name (Dir_Name (Source)) & "."));
 
       if This.Echo then
          Ada.Text_IO.Put (This.Log_File.all,
-                          Templates_Parser.Parse (Source, l_Translations, Keep_Unknown_Tags => True));
+                          Templates_Parser.Parse (Source, L_Translations, Keep_Unknown_Tags => True));
       elsif GNAT.Regexp.Match (Source, This.Dont_Expand) then
          Copy_File (Source, Target, Success, Preserve => None);
 
       else
          declare
-            SourceImage : constant String := Templates_Parser.Parse (Source, l_Translations, Keep_Unknown_Tags => True);
+            SourceImage : constant String := Templates_Parser.Parse (Source, L_Translations, Keep_Unknown_Tags => True);
          begin
             if This.Expand_Java and File_Extension (Target) = Java_Suffix then
                Java_Utils.Write (Dir_Name (Target), SourceImage);
@@ -380,17 +380,17 @@ package body Ssprep.Translators is
       end if;
 
       declare
-         dir  : Dir_Type;
+         Dir  : Dir_Type;
          Name : String (1 .. 1024);
          Last : Natural;
       begin
-         Open (dir, Source);
+         Open (Dir, Source);
          loop
-            Read (dir, Name, Last);
+            Read (Dir, Name, Last);
             exit when Last = 0;
             Process (Name (Name'First .. Last));
          end loop;
-         Close (dir);
+         Close (Dir);
       end;
    end Translate_Dir;
 
@@ -730,9 +730,9 @@ package body Ssprep.Translators is
       This.Delimiter := Delimiter;
    end Set_Delimiter;
 
-   function get_Delimiter (this : Translator) return Character is
+   function Get_Delimiter (This : Translator) return Character is
    begin
-      return this.Delimiter;
-   end get_Delimiter;
+      return This.Delimiter;
+   end Get_Delimiter;
 
 end Ssprep.Translators;

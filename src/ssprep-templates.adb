@@ -43,7 +43,6 @@ with GNAT.OS_Lib; use GNAT.OS_Lib;
 with GNAT.Regpat;
 with GNAT.Spitbol; use GNAT.Spitbol;
 with GNAT.String_Split;
-with GNAT.Strings;
 
 with Input_Sources.File;
 with Input_Sources.Strings;
@@ -63,9 +62,9 @@ package body Ssprep.Templates is
       return This.Errors_Found;
    end Get_Errors_Found;
 
-   procedure Set_Break_On_Error (This : in out Templates; breake :  Boolean) is
+   procedure Set_Break_On_Error (This : in out Templates; Breake :  Boolean) is
    begin
-      This.Abort_On_Error := breake;
+      This.Abort_On_Error := Breake;
    end Set_Break_On_Error;
 
 
@@ -125,18 +124,18 @@ package body Ssprep.Templates is
       return This.Symbols'Unrestricted_Access;
    end Get_Symbols;
 
-   procedure Read (this : access Boolean_Variable; from : DOM.Core.Node) is
+   procedure Read (This : access Boolean_Variable; From : DOM.Core.Node) is
    --      C    : DOM.Core.Node := First_Child (N);
    begin
       null;
    end Read;
 
-   procedure Read (this : access File_Selection_Variable; from : DOM.Core.Node) is
+   procedure Read (This : access File_Selection_Variable; From : DOM.Core.Node) is
    begin
       null;
    end Read;
 
-   procedure Read (this : access Selection_Variable; from : DOM.Core.Node) is
+   procedure Read (This : access Selection_Variable; From : DOM.Core.Node) is
    begin
       null;
    end Read;
@@ -263,7 +262,7 @@ package body Ssprep.Templates is
       end if;
    end Parse_Template;
 
-   procedure add_Variables (This        : in out Templates;
+   procedure Add_Variables (This        : in out Templates;
                             N           : in DOM.Core.Node) is
       pragma Unreferenced (This);
       C : DOM.Core.Node;
@@ -281,7 +280,7 @@ package body Ssprep.Templates is
          end;
          C := Next_Sibling (C);
       end loop;
-   end add_Variables;
+   end Add_Variables;
 
    procedure Parse_Templates (This        : in out Templates;
                               N           : in DOM.Core.Node) is
@@ -307,7 +306,7 @@ package body Ssprep.Templates is
                   Templates_Parser.Insert (This.Symbols, T);
                end;
             elsif Name = "variables" then
-               This.add_Variables (C);
+               This.Add_Variables (C);
             elsif Name = "" then
                null;
             end if;
@@ -393,9 +392,9 @@ package body Ssprep.Templates is
             This.Parse_Document (Doc);
             Free (Doc);
          exception
-            when e : Sax.Readers.XML_Fatal_Error  =>
+            when E : Sax.Readers.XML_Fatal_Error  =>
                Put_Line (Ada.Text_IO.Standard_Error,
-                         Config_File & First_Line (Ada.Exceptions.Exception_Message (e)));
+                         Config_File & First_Line (Ada.Exceptions.Exception_Message (E)));
                This.Errors_Found := True;
                if This.Abort_On_Error then
                   raise;
@@ -487,23 +486,23 @@ package body Ssprep.Templates is
    procedure Put_Element (This   : Variable;
                           Tag    : String;
                           Value  : access String;
-                          indent : String := "") is
+                          Indent : String := "") is
       pragma Unreferenced (This);
    begin
-      Put_Element (Tag, Value, indent);
+      Put_Element (Tag, Value, Indent);
    end Put_Element;
 
-   procedure Put_Element (This : Variable; Tag : String; Value : String; indent : String := "") is
+   procedure Put_Element (This : Variable; Tag : String; Value : String; Indent : String := "") is
       pragma Unreferenced (This);
    begin
-      Put_Element (Tag, Value, indent);
+      Put_Element (Tag, Value, Indent);
    end Put_Element;
 
-   procedure Put_Variable_Heading (This : Variable; V_Type : String; indent : String := "") is
+   procedure Put_Variable_Heading (This : Variable; V_Type : String; Indent : String := "") is
    begin
-      Put_Line (indent & "<variable name=""" & This.Name.all & """ type=""" & V_Type & """>");
-      Put_Element ("tooltip", This.ToolTip, indent & "  ");
-      Put_Element ("prompt", This.Prompt, indent & "  ");
+      Put_Line (Indent & "<variable name=""" & This.Name.all & """ type=""" & V_Type & """>");
+      Put_Element ("tooltip", This.ToolTip, Indent & "  ");
+      Put_Element ("prompt", This.Prompt, Indent & "  ");
    end Put_Variable_Heading;
 
    procedure Put_Variable_Footing (This : Variable; Indent : String := "") is
@@ -512,45 +511,45 @@ package body Ssprep.Templates is
       Put_Line (Indent & "</variable>");
    end Put_Variable_Footing;
 
-   procedure Dump_XML (This : String_Variable; indent : String := "") is
-      L_Indent : constant String := indent & "  ";
+   procedure Dump_XML (This : String_Variable; Indent : String := "") is
+      L_Indent : constant String := Indent & "  ";
    begin
       This.Put_Variable_Heading ("string", L_Indent);
       This.Put_Variable_Footing (L_Indent);
    end Dump_XML;
-   procedure Dump_XML (This : Project_Variable; indent : String := "") is
-      L_Indent : constant String := indent & "  ";
+   procedure Dump_XML (This : Project_Variable; Indent : String := "") is
+      L_Indent : constant String := Indent & "  ";
    begin
       This.Put_Variable_Heading ("project", L_Indent);
       This.Put_Variable_Footing (L_Indent);
    end Dump_XML;
 
-   procedure Dump_XML (This : File_Selection_Variable; indent : String := "") is
-      L_Indent : constant String := indent & "  ";
+   procedure Dump_XML (This : File_Selection_Variable; Indent : String := "") is
+      L_Indent : constant String := Indent & "  ";
    begin
       This.Put_Variable_Heading ("file", L_Indent);
       This.Put_Variable_Footing (L_Indent);
    end Dump_XML;
 
-   procedure Dump_XML (This : Dir_Selection_Variable; indent : String := "") is
-      L_Indent : constant String := indent & "  ";
+   procedure Dump_XML (This : Dir_Selection_Variable; Indent : String := "") is
+      L_Indent : constant String := Indent & "  ";
    begin
       This.Put_Variable_Heading ("dir", L_Indent);
-      This.Put_Element ("must_exist", This.Must_exist'Img, L_Indent);
+      This.Put_Element ("must_exist", This.Must_Exist'Img, L_Indent);
       This.Put_Variable_Footing (L_Indent);
    end Dump_XML;
 
-   procedure Dump_XML (This : Boolean_Variable; indent : String := "") is
+   procedure Dump_XML (This : Boolean_Variable; Indent : String := "") is
    begin
-      This.Put_Variable_Heading ("boolean", indent & "  ");
-      This.Put_Variable_Footing (indent & "  ");
+      This.Put_Variable_Heading ("boolean", Indent & "  ");
+      This.Put_Variable_Footing (Indent & "  ");
    end Dump_XML;
 
-   procedure dump_xml (This : Selection_Variable; indent : String := "") is
+   procedure Dump_Xml (This : Selection_Variable; Indent : String := "") is
    begin
-      This.Put_Variable_Heading ("selection", indent & "  ");
-      This.Put_Variable_Footing (indent & "  ");
-   end dump_xml;
+      This.Put_Variable_Heading ("selection", Indent & "  ");
+      This.Put_Variable_Footing (Indent & "  ");
+   end Dump_Xml;
 
    procedure Dump (This     : in Templates;
                    Put_Line : not null access procedure (Item : String);
@@ -725,9 +724,9 @@ package body Ssprep.Templates is
 
    begin
       return Executable_Prefix_Path & Directory_Separator &
-      "share" & Directory_Separator &
-      "ssprep" & Directory_Separator &
-      "templates";
+        "share" & Directory_Separator &
+        "ssprep" & Directory_Separator &
+        "templates";
    end Get_System_Templates_Dir;
 
    function Get_User_Templates_Dir return String is
@@ -792,9 +791,9 @@ package body Ssprep.Templates is
       return This.Valid;
    end Is_Valid;
 
-   function getHint (this : Template) return access String is
+   function GetHint (This : Template) return access String is
    begin
-      return this.Hint;
-   end getHint;
+      return This.Hint;
+   end GetHint;
 
 end Ssprep.Templates;

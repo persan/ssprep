@@ -140,7 +140,7 @@ package Ssprep.Translators is
 
    procedure Set_Delimiter (This         : in out Translator;
                             Delimiter    : Character);
-   function get_Delimiter (this : Translator) return Character;
+   function Get_Delimiter (This : Translator) return Character;
    --  sets the delimiter to be used in vector values.
    procedure Set_Dont_Expand (This         : in out Translator;
                               Regexp       : String);
