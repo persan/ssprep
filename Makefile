@@ -31,7 +31,7 @@ metric: # Get metrics
 
 install: .PHONY # install
 	@-rm -rf _
-	gprinstall -p -P ssprep.gpr --prefix=${CURDIR}/_
+	gprinstall -p -P ssprep.gpr --prefix=${PREFIX}
 
 docs: # docs
 	echo not implemented
