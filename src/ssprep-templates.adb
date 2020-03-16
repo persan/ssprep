@@ -39,11 +39,10 @@ with DOM.Core.Nodes; use DOM.Core; use DOM.Core.Nodes;
 with DOM.Readers;
 
 with GNAT.Directory_Operations; use GNAT.Directory_Operations;
-with GNAT.OS_Lib; use GNAT.OS_Lib;
+with GNAT.OS_Lib;
 with GNAT.Regpat;
 with GNAT.Spitbol; use GNAT.Spitbol;
 with GNAT.String_Split;
-with GNAT.Strings;
 
 with Input_Sources.File;
 with Input_Sources.Strings;
@@ -56,7 +55,7 @@ with Unicode.CES.Basic_8bit;
 with Unicode.CES.Utf8;
 
 package body Ssprep.Templates is
-
+   use GNAT;
 
    function Get_Errors_Found (This : Templates) return Boolean is
    begin
@@ -211,7 +210,7 @@ package body Ssprep.Templates is
             if N_Name = "name" then
                Name := V (N_Value);
             elsif N_Name = "location" then
-               T.Locations.Include (Normalize_Pathname (N_Value));
+               T.Locations.Include (OS_Lib.Normalize_Pathname (N_Value));
                Locations_Found := True;
 
             elsif N_Name = "alias" then
@@ -372,16 +371,16 @@ package body Ssprep.Templates is
          if This.Verbose then
             Ada.Text_IO.Put_Line ("Add_Config_File :" & Config_File);
          end if;
-         if not Is_Readable_File (Config_File) then
+         if not OS_Lib.Is_Readable_File (Config_File) then
             Ada.Text_IO.Put_Line (Config_File & ":0:0 Does not exist");
             This.Errors_Found := True;
             if This.Abort_On_Error then
                raise Ada.IO_Exceptions.Name_Error with "'" & Config_File & "' does not exist.";
             end if;
          end if;
-         This.PATH.Append (Containing_Directory (Normalize_Pathname (Config_File)));
+         This.PATH.Append (Containing_Directory (OS_Lib.Normalize_Pathname (Config_File)));
          Change_Dir
-           (Containing_Directory (Normalize_Pathname (Config_File)));
+           (Containing_Directory (OS_Lib.Normalize_Pathname (Config_File)));
          declare
          begin
             Input_Sources.File.Open (Config_File, Input);
@@ -404,7 +403,7 @@ package body Ssprep.Templates is
          end;
 
          if Temp_Dir (Temp_Dir'Last) = ':' then
-            Change_Dir (Temp_Dir & Directory_Separator);
+            Change_Dir (Temp_Dir & OS_Lib.Directory_Separator);
          else
             Change_Dir (Temp_Dir);
          end if;
@@ -436,7 +435,7 @@ package body Ssprep.Templates is
       Buffer     : String (1 .. 256);
       Last       : Natural;
    begin
-      if Directory'Length > 0 and then Is_Directory (Directory) then
+      if Directory'Length > 0 and then OS_Lib.Is_Directory (Directory) then
          Open (Dir, Directory);
          while True loop
             Read (Dir, Buffer, Last);
@@ -658,8 +657,8 @@ package body Ssprep.Templates is
    begin
       if This.Sources.Contains (Name) then
          return This.Sources.Element (Name);
-      elsif Is_Directory (Name)  or Is_Readable_File (Name) then
-         return New_Template (Normalize_Pathname (Name));
+      elsif OS_Lib.Is_Directory (Name)  or OS_Lib.Is_Readable_File (Name) then
+         return New_Template (OS_Lib.Normalize_Pathname (Name));
       else
          return New_Template ("");
       end if;
@@ -680,7 +679,7 @@ package body Ssprep.Templates is
       function Get_Install_Dir (S : String) return String is
          use GNAT.Regpat;
 
-         Exec      : constant String  := GNAT.Directory_Operations.Format_Pathname (Normalize_Pathname (S), GNAT.Directory_Operations.UNIX);
+         Exec      : constant String  := GNAT.Directory_Operations.Format_Pathname (OS_Lib.Normalize_Pathname (S), GNAT.Directory_Operations.UNIX);
          Matcher   : constant Pattern_Matcher :=
                        Compile ("(.*)/bin/.*" & Ada.Directories.Base_Name (Exec));
          Matches   :  Match_Array (1 .. Paren_Count (Matcher));
@@ -700,7 +699,7 @@ package body Ssprep.Templates is
       --  executable name.
 
       declare
-         Ret : GNAT.Strings.String_Access := Locate_Exec_On_Path (Exec_Name);
+         Ret : GNAT.Strings.String_Access := OS_Lib.Locate_Exec_On_Path (Exec_Name);
       begin
          if Ret /= null and then Ret.all /= "" then
             declare
@@ -712,7 +711,7 @@ package body Ssprep.Templates is
          end if;
       end;
       for J in reverse Exec_Name'Range loop
-         if Exec_Name (J) = Directory_Separator then
+         if Exec_Name (J) = OS_Lib.Directory_Separator then
             return Get_Install_Dir (Exec_Name);
          end if;
       end loop;
@@ -724,9 +723,9 @@ package body Ssprep.Templates is
    function Get_System_Templates_Dir return String is
 
    begin
-      return Executable_Prefix_Path & Directory_Separator &
-      "share" & Directory_Separator &
-      "ssprep" & Directory_Separator &
+      return Executable_Prefix_Path & OS_Lib.Directory_Separator &
+      "share" & OS_Lib.Directory_Separator &
+      "ssprep" & OS_Lib.Directory_Separator &
       "templates";
    end Get_System_Templates_Dir;
 
@@ -737,8 +736,8 @@ package body Ssprep.Templates is
       Free (HOME_REF);
 
       if HOME'Length /= 0 and then
-        Is_Absolute_Path (HOME) and then
-        Is_Directory (Ada.Directories.Compose (HOME, ".ssprep"))
+        OS_Lib.Is_Absolute_Path (HOME) and then
+        OS_Lib.Is_Directory (Ada.Directories.Compose (HOME, ".ssprep"))
       then
          return Ada.Directories.Compose (HOME, ".ssprep");
       else

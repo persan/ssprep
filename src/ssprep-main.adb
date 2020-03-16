@@ -23,46 +23,53 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 --  ---------------------------------------------------------------------------
+
+
+with Ada.Command_Line.Environment;
 with Ada.Command_Line;
 with Ada.Directories;
 with Ada.Environment_Variables;
 with Ada.Exceptions;
-with Ada.Text_IO; use Ada.Text_IO;
+with Ada.IO_Exceptions;
+with Ada.Text_IO;
+with Ada;
 
-with GNAT.Command_Line; use GNAT.Command_Line;
+with GNAT.Command_Line;
 with GNAT.Exception_Traces;
-with GNAT.OS_Lib; use GNAT.OS_Lib;
+with GNAT.OS_Lib;
+with GNAT.String_Split;
 with GNAT.Traceback.Symbolic;
 
+with Ssprep.TempDir;
 with Ssprep.Templates;
 with Ssprep.Translators;
-with Ada.Command_Line.Environment;
-with GNAT.String_Split; use GNAT.String_Split;
+with Ssprep.Utilities;
 with Ssprep.Version;
-with Ssprep.Utilities; use Ssprep.Translators;
 with Templates_Parser;
-with Ada; use Ada;
-with Ada.IO_Exceptions;
-with Ssprep.TempDir;
 
 procedure Ssprep.Main is
+   use Ada;
+   use Ada.Text_IO;
+   use GNAT.Command_Line;
+   use GNAT.OS_Lib;
+   use GNAT.String_Split;
+   use Ssprep.Translators;
 
    Command_Name : constant String := Ada.Directories.Base_Name
      (Ada.Command_Line.Command_Name);
 
 
-   Trans        : Translators.Translator;
-   DB           : Templates.Templates;
-   Dump_Db      : Boolean := False;
-   Symbols      : access String;
+   Trans                : Translators.Translator;
+   DB                   : Templates.Templates;
+   Dump_Db              : Boolean := False;
+   Symbols              : String_Access;
    Include_System_Paths : Boolean := True;
-   Output_Dir       : access String;
-   DumpFilePath : access String;
-   Execute_Children : Boolean := True;
-   Verbose          : Boolean := False;
-   pragma Unreferenced (Verbose);
-   Environment_Loaded : Boolean := False;
-   Dump_Db_XML  : Boolean := False;
+   Output_Dir           : String_Access;
+   DumpFilePath         : String_Access;
+   Execute_Children     : Boolean := True;
+   Verbose              : Boolean := False;   pragma Unreferenced (Verbose);
+   Environment_Loaded   : Boolean := False;
+   Dump_Db_XML          : Boolean := False;
 
    Translations : Templates_Parser.Translate_Set;
 

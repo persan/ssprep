@@ -28,9 +28,11 @@ private with Ssprep.String_Vectors;
 private with DOM.Core;
 private with GNAT.Spitbol.Table_Boolean;
 private with Ada.Containers.Indefinite_Ordered_Maps;
+with GNAT.Strings;
 with Ssprep.String_Sets;
 with Ada.Containers.Indefinite_Vectors;
 package Ssprep.Templates is
+   use GNAT.Strings;
 
    type Templates is tagged limited private;
    type Any_Templates is access all Templates'class;
@@ -125,9 +127,9 @@ private
 
    type Variable is abstract tagged record
       parent  : Any_Template;
-      Name    : access String;
-      ToolTip : access String;
-      Prompt  : access String;
+      Name    : String_Access;
+      ToolTip : String_Access;
+      Prompt  : String_Access;
    end record;
    type Any_Variable is access all Variable'class;
 
@@ -174,14 +176,14 @@ private
       Simple    : Boolean := False;
       Helper    : Boolean := False;
       Variables : Variable_Vectors.Vector;
-      Alias     : access String;
-      Prompt    : access String;
-      Hint      : access String;
-      ToolTip   : access String;
-      Class     : access String;
-      Path      : access String;
-      Output    : access String;
-      Load      : access String;
+      Alias     : String_Access;
+      Prompt    : String_Access;
+      Hint      : String_Access;
+      ToolTip   : String_Access;
+      Class     : String_Access;
+      Path      : String_Access;
+      Output    : String_Access;
+      Load      : String_Access;
    end record;
 
    procedure Parse_Variables (This    : in out Template;
