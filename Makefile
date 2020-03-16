@@ -3,7 +3,6 @@
 include Makefile.config
 export HOME=${CURDIR}
 
-export PATH:=$(shell bin/calculatePATH .)
 ifeq (${PREFIX},..)
 $(error   No GNAT Found)
 endif
@@ -30,8 +29,7 @@ metric: # Get metrics
 
 
 install: .PHONY # install
-	@-rm -rf _
-	gprinstall -p -P ssprep.gpr --prefix=${CURDIR}/_
+	gprinstall -f -p -P ssprep.gpr --prefix=${PREFIX}
 
 docs: # docs
 	echo not implemented
@@ -68,9 +66,9 @@ rebuild:
 
 .PHONY: # IGNORE
 Makefile.config: # IGNOREs
-	@echo "CP=cp -f" >$@
-	@echo "PATH:=${PATH}" >>$@
-	@echo "RM=rm -rf" >>$@
-	@echo "TAR=tar" >>$@
-	@echo "GPRBUILD=gprbuild -p" >>$@
-	@echo "PREFIX=$(dir $(shell dirname $(shell which gnatls)))" >>$@
+	@echo "export CP=cp -f" >$@
+	@echo "export PATH:=${PATH}" >>$@
+	@echo "export RM=rm -rf" >>$@
+	@echo "export TAR=tar" >>$@
+	@echo "export GPRBUILD=gprbuild -p" >>$@
+	@echo "export PREFIX=$(dir $(shell dirname $(shell which gnatls)))" >>$@

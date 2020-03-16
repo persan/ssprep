@@ -5,8 +5,7 @@ project Ssprep is
 
    for Languages use ("Ada");
 
-   for Main use ("ssprep-ssfetch-main.adb",
-                 "ssprep-getbuildorder-main.adb",
+   for Main use ("ssprep-getbuildorder-main.adb",
                  "ssprep-main.adb",
                  "ssprep-deps2symbs.adb",
                  "ssprep-report_keywords-main.adb");
@@ -28,7 +27,6 @@ project Ssprep is
       for Executable ("ssprep-deps2symbs.adb") use "deps2symbs";
       for Executable ("ssprep-getbuildorder-main.adb") use "getbuildorder";
       for Executable ("ssprep-report_keywords-main.adb") use "report-keywords";
-      for Executable ("ssprep-ssfetch-main.adb") use "ssfetch";
 
    end Builder;
 

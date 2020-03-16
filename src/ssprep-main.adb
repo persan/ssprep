@@ -23,37 +23,30 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 --  ---------------------------------------------------------------------------
-
-
-with Ada.Command_Line.Environment;
 with Ada.Command_Line;
 with Ada.Directories;
 with Ada.Environment_Variables;
 with Ada.Exceptions;
-with Ada.IO_Exceptions;
-with Ada.Text_IO;
-with Ada;
+with Ada.Text_IO; use Ada.Text_IO;
 
-with GNAT.Command_Line;
+with GNAT.Command_Line; use GNAT.Command_Line;
 with GNAT.Exception_Traces;
-with GNAT.OS_Lib;
-with GNAT.String_Split;
+with GNAT.OS_Lib; use GNAT.OS_Lib;
 with GNAT.Traceback.Symbolic;
 
-with Ssprep.TempDir;
 with Ssprep.Templates;
 with Ssprep.Translators;
-with Ssprep.Utilities;
+with Ada.Command_Line.Environment;
+with GNAT.String_Split; use GNAT.String_Split;
 with Ssprep.Version;
+with Ssprep.Utilities; use Ssprep.Translators;
 with Templates_Parser;
+with Ada; use Ada;
+with Ada.IO_Exceptions;
+with Ssprep.TempDir;
+with GNAT.Strings;
 
 procedure Ssprep.Main is
-   use Ada;
-   use Ada.Text_IO;
-   use GNAT.Command_Line;
-   use GNAT.OS_Lib;
-   use GNAT.String_Split;
-   use Ssprep.Translators;
 
    Command_Name : constant String := Ada.Directories.Base_Name
      (Ada.Command_Line.Command_Name);
@@ -62,12 +55,12 @@ procedure Ssprep.Main is
    Trans                : Translators.Translator;
    DB                   : Templates.Templates;
    Dump_Db              : Boolean := False;
-   Symbols              : String_Access;
+   Symbols              : GNAT.Strings.String_Access;
    Include_System_Paths : Boolean := True;
-   Output_Dir           : String_Access;
-   DumpFilePath         : String_Access;
+   Output_Dir           : GNAT.Strings.String_Access;
+   DumpFilePath         : GNAT.Strings.String_Access;
    Execute_Children     : Boolean := True;
-   Verbose              : Boolean := False;   pragma Unreferenced (Verbose);
+   Verbose              : Boolean := False with Unreferenced;
    Environment_Loaded   : Boolean := False;
    Dump_Db_XML          : Boolean := False;
 
@@ -79,36 +72,36 @@ procedure Ssprep.Main is
    begin
       Put_Line
         (Command_Name & " ("  & Ssprep.Version.Rev & ")" & LF & LF &
-         "Syntax :" & LF &
-         " " & Command_Name & " [Options] Templates [Options]" & LF & LF &
+           "Syntax :" & LF &
+           " " & Command_Name & " [Options] Templates [Options]" & LF & LF &
 
-         "Templates:" & LF &
-         "  Is ether an existing path or a name from the templates database." & LF &
+           "Templates:" & LF &
+           "  Is ether an existing path or a name from the templates database." & LF &
 
-         LF & "Options:" & LF &
-         LF & "  Symbol defenition:" & LF &
-         "    -x=file|--xml=file       Read symbols from xml-file file in Templates_Parser format." & LF &
-         "    -DSymbol=Value           Define a symbol value and coresponding support symbols" & LF &
-         "                              {Symbol}_file the value with '.' replaced with '-' and in lower case" & LF &
-         "                              {Symbol}_dir the value with '.' replaced with '-'." & LF &
-         "                              {Symbol}_file2 the value in lowercase with '.' replaced with '_'." & LF &
-         "                              {Symbol}_file3 the value in lowercase with '.' and '-' replaced with '_' ." & LF &
-         "                              {Symbol}_name t he value  with '.' and '-' replaced with '_' ." & LF &
-         "                              lc_{Symbol} the value in lower case." & LF &
-         "    -dSymbol=Value           Define a symbol value without filename." & LF &
-         "                              If the value is enclosed in parantheses then" & LF &
-         "                              the value is treated as a vector (not empty values will be ignored)." & LF &
-         "    -m{prefix=}file          Read symbols from a manifest or property file " & LF &
-         "                               and if prefix is present the values will get that prefix." & LF &
-         "                               If the full value is a {delimiter} separated string it " & LF &
-         "                               will be treated as a vector entry" & LF &
-         "                               Values are treated as multiline values if the last " & LF &
-         "                               nonblank character on the line is '\'." & LF &
-         "    -M{prefix=}file          Read symbols from a manifest or property file" & LF &
-         "                               and also get decorated symbols in the same way as '-D'." & LF &
-         "    -E|--environment         Include Environment variables as symbols," & LF &
-         "                               environment symbols are decoraded with 'env.' as prefix." & LF &
-         "" & LF &
+           LF & "Options:" & LF &
+           LF & "  Symbol defenition:" & LF &
+           "    -x=file|--xml=file       Read symbols from xml-file file in Templates_Parser format." & LF &
+           "    -DSymbol=Value           Define a symbol value and coresponding support symbols" & LF &
+           "                              {Symbol}_file the value with '.' replaced with '-' and in lower case" & LF &
+           "                              {Symbol}_dir the value with '.' replaced with '-'." & LF &
+           "                              {Symbol}_file2 the value in lowercase with '.' replaced with '_'." & LF &
+           "                              {Symbol}_file3 the value in lowercase with '.' and '-' replaced with '_' ." & LF &
+           "                              {Symbol}_name t he value  with '.' and '-' replaced with '_' ." & LF &
+           "                              lc_{Symbol} the value in lower case." & LF &
+           "    -dSymbol=Value           Define a symbol value without filename." & LF &
+           "                              If the value is enclosed in parantheses then" & LF &
+           "                              the value is treated as a vector (not empty values will be ignored)." & LF &
+           "    -m{prefix=}file          Read symbols from a manifest or property file " & LF &
+           "                               and if prefix is present the values will get that prefix." & LF &
+           "                               If the full value is a {delimiter} separated string it " & LF &
+           "                               will be treated as a vector entry" & LF &
+           "                               Values are treated as multiline values if the last " & LF &
+           "                               nonblank character on the line is '\'." & LF &
+           "    -M{prefix=}file          Read symbols from a manifest or property file" & LF &
+           "                               and also get decorated symbols in the same way as '-D'." & LF &
+           "    -E|--environment         Include Environment variables as symbols," & LF &
+           "                               environment symbols are decoraded with 'env.' as prefix." & LF &
+           "" & LF &
          --           "    --exec-{mode}={Command}  Execute to and parse output output values in acordance with mode." & LF &
          --           "                               Where mode may be:" & LF &
          --           "                                 D         Parse output as 'D' Symbol Value pairs." & LF &
@@ -116,54 +109,54 @@ procedure Ssprep.Main is
          --           "                                 m{prefix} Parse output as Manifest or Property file." & LF &
          --           "                                 M{prefix} Parse output as Manifest or Property file with decoration." & LF &
          --           "                                 x|xml     Parse output as Templates_Parser symbols." & LF & LF &
-         "    --delimiter={char}       Define delimiter for vector values default '" & Default_Delimiter & "'." & LF &
-         "      NOTE !" & LF &
-         "        Decorated single symbolnames are transformed to lowercase due to filenaming ambiguity on" & LF &
-         "        the windows operating system." & LF &
+           "    --delimiter={char}       Define delimiter for vector values default '" & Default_Delimiter & "'." & LF &
+           "      NOTE !" & LF &
+           "        Decorated single symbolnames are transformed to lowercase due to filenaming ambiguity on" & LF &
+           "        the windows operating system." & LF &
 
-         LF & "  Database defenition:" & LF &
-         "    -I=dir               Add templates from dbfiles 'dir/*.xml' to database." & LF &
-         "    -If=file             Add templates from dbfile file to database (the file must exist)." & LF &
-         "    -I-                  Dont use system templates." & LF &
-         "            Note !" & LF &
-         "                         The $" & SSPREP_PATH & " active for the root ssprep given all extra includes " & LF &
-         "                         will be the initial $" & SSPREP_PATH & " for children." & LF &
+           LF & "  Database defenition:" & LF &
+           "    -I=dir               Add templates from dbfiles 'dir/*.xml' to database." & LF &
+           "    -If=file             Add templates from dbfile file to database (the file must exist)." & LF &
+           "    -I-                  Dont use system templates." & LF &
+           "            Note !" & LF &
+           "                         The $" & SSPREP_PATH & " active for the root ssprep given all extra includes " & LF &
+           "                         will be the initial $" & SSPREP_PATH & " for children." & LF &
 
-         LF & "  Output Control and source limitation:" & LF &
-         "    --noexec             Dont execute *." & Ssprep_Suffix & " files after the translation." & LF &
-         "    -v|--verbose         Be verbose (inherited in SSPREP.verbose)." & LF &
-         "    -e|--effort          Effort only." & LF &
-         "    -f|--force           Force update (inherited in SSPREP.force)." & LF &
-         "    --java               Expand ." & Java_Suffix & " files to the proper directory (inherited in SSPREP.java)." & LF &
-         "    -o=dir               Set target dir (default=current dir)." & LF &
-         "    -O=dir               Set target dir and variable project."  & LF &
-         "    --echo               Echo the translated object to standard output" & LF &
-         "                           only meaningfull when as single file is used as template" & LF &
-         "    --hint               If hint is avalible in the template thet then echo ""hint:${hint}"" to standard output" & LF &
+           LF & "  Output Control and source limitation:" & LF &
+           "    --noexec             Dont execute *." & Ssprep_Suffix & " files after the translation." & LF &
+           "    -v|--verbose         Be verbose (inherited in SSPREP.verbose)." & LF &
+           "    -e|--effort          Effort only." & LF &
+           "    -f|--force           Force update (inherited in SSPREP.force)." & LF &
+           "    --java               Expand ." & Java_Suffix & " files to the proper directory (inherited in SSPREP.java)." & LF &
+           "    -o=dir               Set target dir (default=current dir)." & LF &
+           "    -O=dir               Set target dir and variable project."  & LF &
+           "    --echo               Echo the translated object to standard output" & LF &
+           "                           only meaningfull when as single file is used as template" & LF &
+           "    --hint               If hint is avalible in the template thet then echo ""hint:${hint}"" to standard output" & LF &
          --  "    --echo-file          Echo generated filenames to standard output" & lf &
-         "    --symbols{=file}      Dump the symbol database to file in Templates_Parser format." & LF &
-         "                           If no file is given then standard output is used." & LF &
-         "    --dontexpand=regexp  Do not expand file namaes matching regexp default: '" & Default_Dont_Expand  & "'." & LF &
-         "    --ignorefiles=regexp Do not process simple simple filenames matching regexp: '" & Default_Ignore  & "'." & LF &
-         LF & "  Misc:" & LF &
+           "    --symbols{=file}      Dump the symbol database to file in Templates_Parser format." & LF &
+           "                           If no file is given then standard output is used." & LF &
+           "    --dontexpand=regexp  Do not expand file namaes matching regexp default: '" & Default_Dont_Expand  & "'." & LF &
+           "    --ignorefiles=regexp Do not process simple simple filenames matching regexp: '" & Default_Ignore  & "'." & LF &
+           LF & "  Misc:" & LF &
 
-         "    --break-on-db-error Abort if ther is an errors in the database." & LF &
-         "    --dump              Dump current templates database." & LF &
-         "    --dump-xml{=file}   Dump current templates database in xml format." & LF &
-         "    --exceptions        Log all exceptions to standard output (inherited in SSPREP.exception)." & LF &
-         "    --version           Prints the current version." & LF &
-         "    -h|-?|--help        Print this  text." & LF &
-         LF & "Special Symbols:" & LF &
-         "    project               will define a the symbol 'parent' that contains the projects name" & LF &
-         "                          up to and excluding the last '.' or '-'" & LF &
-         LF &
-         "  Generated for each template used in the expansion." & LF &
-         "    TEMPLATE              Contains the logical name for the current template" & LF &
-         "    TEMPLATEPATH          Contains the full path current template" & LF &
-         "    TEMPLATEPROJECTPATH   Contains the full path of the closest enclosing directory containing " & LF &
-         "                            the file '.project' originating search in TEMPLATEPATH." & LF &
-         "    TEMPLATEPROJECT       Contains the basename of 'TEMPLATEPROJECTPATH'." & LF &
-         "    output_dir            Contains the output directory" & LF
+           "    --break-on-db-error Abort if ther is an errors in the database." & LF &
+           "    --dump              Dump current templates database." & LF &
+           "    --dump-xml{=file}   Dump current templates database in xml format." & LF &
+           "    --exceptions        Log all exceptions to standard output (inherited in SSPREP.exception)." & LF &
+           "    --version           Prints the current version." & LF &
+           "    -h|-?|--help        Print this  text." & LF &
+           LF & "Special Symbols:" & LF &
+           "    project               will define a the symbol 'parent' that contains the projects name" & LF &
+           "                          up to and excluding the last '.' or '-'" & LF &
+           LF &
+           "  Generated for each template used in the expansion." & LF &
+           "    TEMPLATE              Contains the logical name for the current template" & LF &
+           "    TEMPLATEPATH          Contains the full path current template" & LF &
+           "    TEMPLATEPROJECTPATH   Contains the full path of the closest enclosing directory containing " & LF &
+           "                            the file '.project' originating search in TEMPLATEPATH." & LF &
+           "    TEMPLATEPROJECT       Contains the basename of 'TEMPLATEPROJECTPATH'." & LF &
+           "    output_dir            Contains the output directory" & LF
         );
 
    end Print_Help;
@@ -209,13 +202,13 @@ begin
    Read_Environment;
    loop
       case Getopt ("x= -xml= v O= o= -hint -echo -symbols? -verbose " &
-                   "-delimiter= -dontexpand= -ignorefiles= e d: D: E M: m: -environment -effort -noexec -f I= I- If -java -force f " &
-                   "-dump? -dump-xml? --dump-path -db= " &
-                   "-exceptions h ? -help -version " &
-                   "-exec-x= -exec-xml= -exec-d= -exec-D= -exec-m: -exec-m:") is
+                     "-delimiter= -dontexpand= -ignorefiles= e d: D: E M: m: -environment -effort -noexec -f I= I- If -java -force f " &
+                     "-dump? -dump-xml? --dump-path -db= " &
+                     "-exceptions h ? -help -version " &
+                     "-exec-x= -exec-xml= -exec-d= -exec-D= -exec-m: -exec-m:") is
          when ASCII.NUL => exit;
 
-         when '-' =>
+            when '-' =>
             if Full_Switch = "-environment" then
                if not Environment_Loaded then
                   Add_Environment (Translations);
@@ -340,13 +333,13 @@ begin
                Include_System_Paths := False;
             end if;
          when 'D' =>
-            Set_Symbol (Translations, Parameter, Trans.get_Delimiter, True);
+            Set_Symbol (Translations, Parameter, Trans.Get_Delimiter, True);
          when 'd' =>
-            Set_Symbol (Translations, Parameter, Trans.get_Delimiter, False);
+            Set_Symbol (Translations, Parameter, Trans.Get_Delimiter, False);
          when 'M' =>
-            Read_Symbols_From_Manifest (Translations, Parameter, Trans.get_Delimiter, True);
+            Read_Symbols_From_Manifest (Translations, Parameter, Trans.Get_Delimiter, True);
          when 'm' =>
-            Read_Symbols_From_Manifest (Translations, Parameter, Trans.get_Delimiter, False);
+            Read_Symbols_From_Manifest (Translations, Parameter, Trans.Get_Delimiter, False);
          when 'o' =>
             Output_Dir := new String'(Parameter);
          when 'O' =>
@@ -354,7 +347,7 @@ begin
                P : constant String := Directories.Full_Name (Parameter);
             begin
                Output_Dir := new String'(Directories.Containing_Directory (P));
-               Set_Symbol (Translations, "project", Directories.Simple_Name (P), Trans.get_Delimiter, True);
+               Set_Symbol (Translations, "project", Directories.Simple_Name (P), Trans.Get_Delimiter, True);
             end;
          when 'h' | '?' =>
             Print_Help;
@@ -450,8 +443,8 @@ exception
       Put_Line ("Invalid Switch " & Full_Switch);
       Print_Help;
       Put ("Arguments:'");
-      for i in 1 .. Ada.Command_Line.Argument_Count loop
-         Put (Ada.Command_Line.Argument (i) & " ");
+      for I in 1 .. Ada.Command_Line.Argument_Count loop
+         Put (Ada.Command_Line.Argument (I) & " ");
       end loop;
       Put_Line ("'.");
       Ada.Command_Line.Set_Exit_Status (Ada.Command_Line.Failure);
