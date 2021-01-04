@@ -17,7 +17,6 @@ procedure Ssprep.Tests.Testharnesses.Test_All is
    --  Reporter : AUnit.Reporter.Empty.Empty_Reporter;
 
 begin
-   Ada.Text_IO.Put_Line ("<!-- " & Utilities.Get_Test_Dir & " -->");
    Ada.Directories.Set_Directory (Utilities.Get_Test_Dir);
    case Run (Reporter) is
    when AUnit.Success =>
