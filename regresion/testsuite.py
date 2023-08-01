@@ -82,13 +82,13 @@ def set_config():
     PATH=os.getenv('PATH').split(os.pathsep)
     if not BIN_DIR in PATH:
        PATH.insert(0,BIN_DIR)
-       os.putenv('PATH',string.join(PATH,os.pathsep))
+       os.putenv('PATH',os.pathsep.join(PATH))
     
     logging.basicConfig(level=logging.DEBUG,
                         datefmt='%%H:%%M:%%S',
                         filename=os.path.join(r'%(log_dir)s',
                                               log_filename),
-                        mode="w")
+                        filemode="w")
 
     console = logging.StreamHandler()
     formatter = logging.Formatter('%%(levelname)-8s %%(message)s')
@@ -315,7 +315,7 @@ class Runner(object):
 
                 if not dead:
                     test = os.path.join(test)
-                    print test
+                    print (test)
                     if opt is not None:
                         env = set_environment(opt.get_value("limit"))
                     process = Run(["python", test], bg=True, env=env,
@@ -393,7 +393,7 @@ def main():
     os.environ["PATH"] = os.environ["PATH"] + os.pathsep + CURDIR
 
     logging.basicConfig(level=logging.DEBUG,
-                        filename='%s/testsuite.log' % OUTPUTS_DIR, mode='w')
+                        filename='%s/testsuite.log' % OUTPUTS_DIR, filemode='w')
     main = Main(formatter=ConsoleColorFormatter('%(message)s'))
     main.add_option("--tests", dest="tests",
                     help="list of tests to run, a space separated string or " \
