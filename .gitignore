@@ -41,3 +41,6 @@ clang_ref_cache.db
 /.obj
 _
 ssprep-*.*
+alire
+config
+.clang*

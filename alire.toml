@@ -1,0 +1,16 @@
+name = "ssprep"
+description = "Template engine"
+version = "1.8.0-dev"
+
+authors = ["Per Sandberg"]
+licenses = "GPL2"
+maintainers = ["Per Sandberg <per.s.sandberg@bahnhof.se>"]
+maintainers-logins = ["persan"]
+
+executables = ["ssprep", "deps2symbs",  "getbuildorder"]
+project-files = ["ssprep.gpr"]
+
+[[depends-on]]
+aws = "^23.0.0"
+gnatcoll= "^23.0.0"
+
