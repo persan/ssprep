@@ -3,7 +3,8 @@ description = "Template engine"
 version = "1.8.0-dev"
 
 authors = ["Per Sandberg"]
-licenses = "GPL2"
+licenses = "GPL-2.0-or-later"
+
 maintainers = ["Per Sandberg <per.s.sandberg@bahnhof.se>"]
 maintainers-logins = ["persan"]
 

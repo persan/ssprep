@@ -5,153 +5,157 @@ This module contains support functions for all test.py
 import logging
 import os
 import sys
-from os.path import *
 
-#  Change directory
+from glob import glob
+from e3.env import Env
+from e3.os.fs import cd, mv
+from e3.os.process import Run
 
-TEST = sys.modules['__main__']
-TESTDIR = os.path.dirname(TEST.__file__)
-TEST_NAME = os.path.basename(TESTDIR)
-os.chdir(TESTDIR)
-ErrorCount = 0
-#  Load generated configuration
+Env().restore(os.environ["TEST_CONFIG"])
 
-from config import (
-    set_config, PROFILES_DIR, DIFFS_DIR,
-    WITH_GPROF, WITH_GDB, WITH_GPRBUILD,
-    BUILD_FAILURE, DIFF_FAILURE, UNKNOWN_FAILURE
-)
-set_config()
+# Move to test directory
+ROOT_DIR = os.getcwd()
+TEST_DIR = os.path.dirname(sys.modules["__main__"].__file__)
+TEST_NAME = os.path.basename(TEST_DIR)
 
-#  Now gnatpython modules should be visible
 
-from gnatpython.ex import Run
+def setup():
+    cd(TEST_DIR)
+    for prj in glob("*.gpr"):
+        with open(prj) as prj_orig:
+            lines = [line for line in prj_orig]
+            with open(prj + ".new", "w") as prj_new:
+                for line in lines:
+                    line = line.replace("../common", os.path.join(ROOT_DIR, "common"))
+                    prj_new.write(line)
+        mv(prj + ".new", prj)
+
+
+setup()
+
 
 def tail(infile_name, outfile_name, nb_line):
-    """Write outfile which contains infile with the top n lines removed"""
-    infile  = open(infile_name, 'r')
-    outfile = open(outfile_name, "w")
+    """Write outfile which contains infile with the top n lines removed
+
+    If outfile_name is None, print to stdout
+    """
+    infile = open(infile_name, "r")
+    if outfile_name is not None:
+        outfile = open(outfile_name, "w")
     pos = 0
     for line in infile:
         pos = pos + 1
         if pos >= nb_line:
-            outfile.write(line)
-    outfile.close()
+            if outfile_name is not None:
+                outfile.write(line)
+            else:
+                print(line)
+    if outfile_name is not None:
+        outfile.close()
     infile.close()
 
 
-def run(bin, options=None, output_file=None):
-    """Run a test"""
+def build(prj):
+    """Compile a project with gprbuild"""
+    cmd = ["gprbuild", f"-XHost_OS={Env().host.os.name}"]
+    if Env().is_cross:
+        cmd.append("--target=" + Env().target.triplet)
+        if Env().target.os.name.startswith("vxworks"):
+            cmd.append("-XPLATFORM=vxworks")
+    cmd = cmd + ["-p", "-gnat2012", "-P" + prj, "-bargs", "-E"]
+    if Env().options.with_gprof:
+        cmd = cmd + ["-cargs", "-pg", "-O2", "-largs", "-pg"]
+    process = Run(cmd)
+    if process.status:
+        #  Exit with error
+        logging.error(process.out)
+
+
+DEFAULT_RESOURCES = [
+    "*.txt",
+    "*.gz",
+    "*.dat",
+    "*.tmplt",
+    "*.thtml",
+    "*.html",
+    "*.ini",
+    "*.types",
+    "*.mime",
+    "*.gif",
+    "*.png",
+]
+
+
+def run(bin, options=None, output_file=None, resources=None):
+    """Run a test.
+
+    :param resources: list of files that the executable will need to
+        read, relative to the testcase directory.  This is used on
+        cross configurations to send the files to the target platform
+        before running BIN.
+
+        Each item in the list can be a glob pattern.  By default,
+        DEFAULT_RESOURCES will be used.
+    """
     if options is None:
         options = []
     if "TIMEOUT" in os.environ:
         timeout = int(os.environ["TIMEOUT"])
     else:
         timeout = 300
-    if output_file is None:
-        output_file = "test.res"
-    P=os.getcwd()
-    Run(["rm","-rf","output"])
-    os.makedirs("output")
-    os.chdir("output")
-    process = Run([bin] + options,
-                   output=output_file, timeout=timeout)
-    if process.status:
-        #  Exit with error
-        logging.error(open(output_file).read())
-        sys.exit(UNKNOWN_FAILURE)
+    if resources is None:
+        resources = DEFAULT_RESOURCES
+
+    if Env().is_cross:
+        # Import gnatpython excross module only when needed
+        from pycross.runcross.main import run_cross
+
+        run_cross(
+            [bin + Env().target.os.exeext] + options,
+            output=output_file,
+            timeout=timeout,
+            copy_files_on_target=resources,
+        )
     else:
-        logging.debug(open(output_file).read())
-    os.chdir(P)
+        if Env().options.with_gdb:
+            Run(
+                ["gdb", "--eval-command=run", "--batch-silent", "--args", bin]
+                + options,
+                output=output_file,
+                timeout=timeout,
+            )
+        elif Env().options.with_valgrind:
+            Run(
+                ["valgrind", "-q", "./" + bin] + options,
+                output=output_file,
+                timeout=timeout,
+            )
+        else:
+            Run(["./" + bin] + options, output=output_file, timeout=timeout)
+
+    if Env().options.with_gprof:
+        Run(
+            ["gprof", bin] + options,
+            output=os.path.join(
+                Env().PROFILES_DIR, f"{TEST_NAME}_{bin}_gprof.out"
+            ),
+        )
 
 
 def exec_cmd(bin, options=None, output_file=None, ignore_error=False):
     """Execute a binary"""
     if options is None:
         options = []
-    if output_file is None:
-        output_file = bin + ".res"
     process = Run([bin] + options, output=output_file)
     if process.status and not ignore_error:
         #  Exit with error
         logging.error(open(output_file).read())
-        sys.exit(UNKNOWN_FAILURE)
-    else:
-        logging.debug(open(output_file).read())
 
-def diff(left=None, right=None):
-    """Compare files line by line
 
-    Exit with DIFF_FAILURE if files differ and save the diff output
+def build_and_run(prj, resources=None):
+    """Compile and run a project and check the output.
+
+    :param resources: See :func:`run`.
     """
-    if left is None:
-        left = "test.out"
-    if right is None:
-        right = "test.res"
-    #  Print the result of diff test.out "process.out"
-    if isdir(left) or isdir(right):
-        process = Run(["diff", "-wr", "-x", ".svn",
-                                      "-x", ".obj",
-                                      "-x", "lib-obj",
-                                      "-x", "*.exe",
-                                      "-x", "*~" ,left, right])
-    else:
-        process = Run(["diff", "-wr", left, right])
-
-    if process.status:
-        #  Exit with error
-        logging.error(process.out)
-        global ErrorCount
-        ErrorCount = ErrorCount + 1
-        sys.exit(DIFF_FAILURE)
-    else:
-        logging.debug(process.out)
-
-def save_test_diff(left, right):
-    """Save the expected content and output content
-
-    Generate a .diff file that will be used for the global diff
-    """
-    # Save diff file
-    diff_filename = os.path.join(DIFFS_DIR, TEST_NAME + ".diff")
-    diff_file     = open(diff_filename, 'w')
-
-    diff_file.write("================ Bug %s\n" % TEST_NAME)
-
-    if not os.path.exists(left):
-        # No expected output. Write the first 100 line of the outputs
-        lineno = 0
-        right_file = open(right, 'r')
-        diff_file.write('---------------- unexpected output\n')
-        for line in right_file:
-            if lineno >= 100:
-                diff_file.write("[TRUNCATED]\n")
-                break
-            lineno = lineno + 1
-            diff_file.write(line)
-        right_file.close()
-    else:
-        # Output with diff
-        diff_file.write('---------------- expected output\n')
-        left_file = open(left, 'r')
-        diff_file.write(left_file.read())
-        left_file.close()
-
-        # Limit the actual output to 2000 lines
-        if os.path.exists(right):
-            diff_file.write('---------------- actual output\n')
-            right_file = open(right, 'r')
-            lineno = 0
-            for line in right_file:
-                if lineno >= 2000:
-                    break
-                lineno = lineno + 1
-                diff_file.write(line)
-            right_file.close()
-
-    diff_file.close()
-
-def build_diff(prj):
-    """Compile and run a project and check the output"""
-    #build(prj)
-    #diff()
+    build(prj)
+    run(prj, resources=resources)
